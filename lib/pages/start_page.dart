@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:jariapp/widgets/btn.start.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -52,13 +53,24 @@ class StartPage extends StatelessWidget {
                 child: animateLogo(),
               ),
             ),
+            //+++++++++ BTN START +++++
+            //ButtonStart()
+            Positioned(
+              top: (_height / 2) + 30.0,
+              left: (_width / 2) - 60.0,
+              child: ButtonStart(),
+            ),
+
+            //----------
           ],
         ),
       ),
     );
   }
 
-  animateLogo() {
+  //++++++++++++ Widgets +++++++++++++++++++++++++++++++++++
+
+  Widget animateLogo() {
     return PlayAnimation<double>(
       tween: (0.0).tweenTo(1.0),
 
@@ -90,7 +102,7 @@ class StartPage extends StatelessWidget {
     );
   }
 
-  animateLeafsMulti() {
+  Widget animateLeafsMulti() {
     return PlayAnimation<double>(
       tween: Tween(
         begin: 0.0,
@@ -120,7 +132,7 @@ class StartPage extends StatelessWidget {
     );
   }
 
-  animateLeafs() {
+  Widget animateLeafs() {
     return PlayAnimation<double>(
       tween: Tween(
         begin: 0.0,
@@ -153,4 +165,6 @@ class StartPage extends StatelessWidget {
       },
     );
   }
+
+  //+++++++++++++++++++ END +++++++++++++++++++++++++
 }
