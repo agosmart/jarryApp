@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:jariapp/animations/custom.fade.scale.animation.dart';
 import 'package:jariapp/widgets/btn.start.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
@@ -26,7 +25,6 @@ class StartPage extends StatelessWidget {
           //alignment: Alignment.topLeft,
           fit: StackFit.expand,
           children: <Widget>[
-            //++++
             Container(
               width: _width,
               height: _height,
@@ -39,6 +37,7 @@ class StartPage extends StatelessWidget {
                 ),
               ),
             ),
+
             //+++
             Positioned.fill(
               child: animateLeafsMulti(),
@@ -48,45 +47,21 @@ class StartPage extends StatelessWidget {
               bottom: 20.0,
               right: 20.0,
               child: animateLeafs(),
-            ),
-
-            //+++
+            ), //+++
             Positioned(
-              top: 100.0,
+              top: 150.0,
               width: _width,
               child: Center(
                 child: animateLogo(),
               ),
             ),
-            //+++
-
-            Positioned.fill(
-              child: CustomFadeScaleAnimation(
-                delay: 3,
-                duration: 2,
-                // widthContent: 216.0,
-                // heightContent: 155.0,
-                childContent: Container(
-                  // color: Colors.green,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/leafs-multi.png',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
+            //+++++++++ BTN START +++++
+            //ButtonStart()
+            Positioned(
+              top: (_height / 2),
+              left: (_width / 2) - 50.0,
+              child: btnWidget(),
             ),
-
-            // //+++++++++ BTN START +++++
-            // //ButtonStart()
-            // Positioned(
-            //   top: (_height / 2),
-            //   left: (_width / 2) - 50.0,
-            //   child: btnWidget(),
-            // ),
 
             //----------
           ],
@@ -98,66 +73,37 @@ class StartPage extends StatelessWidget {
   //++++++++++++ Widgets +++++++++++++++++++++++++++++++++++
 
   Widget animateLogo() {
-    return CustomFadeScaleAnimation(
-      delay: 1,
-      duration: 2,
-      widthContent: 200.0,
-      heightContent: 200.0,
-      childContent: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/images/logo-jari1.png',
+    return PlayAnimation<double>(
+      tween: (0.0).tweenTo(1.0),
+
+      duration: 4.seconds,
+      //delay: Duration(milliseconds: (300 * 2).round()),
+      delay: 600.milliseconds,
+      curve: Curves.easeOut,
+      builder: (context, child, value) {
+        return Opacity(
+          opacity: value,
+          //+++++++
+          child: Container(
+            width: 180.0 *
+                value, // <-- apply animated value obtained from builder function parameter
+            height: 180.0 *
+                value, // <-- apply animated value obtained from builder function parameter
+            // color: Colors.green,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/logo-jari1.png',
+                ),
+                fit: BoxFit.contain,
+              ),
             ),
-            fit: BoxFit.contain,
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget animateLeafsMulti() {
-    return CustomFadeScaleAnimation(
-      delay: 3,
-      duration: 2,
-      // widthContent: 216.0,
-      // heightContent: 155.0,
-      childContent: Container(
-        // color: Colors.green,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/images/leafs-multi.png',
-            ),
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget animateLeafs() {
-    return CustomFadeScaleAnimation(
-      delay: 4,
-      duration: 2,
-      widthContent: 216.0,
-      heightContent: 155.0,
-      childContent: Container(
-        // color: Colors.green,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-              'assets/images/leafs.png',
-            ),
-            fit: BoxFit.contain,
-          ),
-          // color: Colors.green,
-        ),
-      ),
-    );
-  }
-
-/*
   Widget animateLeafsMulti() {
     return PlayAnimation<double>(
       tween: Tween(
@@ -266,7 +212,4 @@ class StartPage extends StatelessWidget {
       ),
     );
   }
-
-
-  */
 }

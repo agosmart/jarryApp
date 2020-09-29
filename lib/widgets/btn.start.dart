@@ -17,7 +17,7 @@ class _ButtonStartState extends State<ButtonStart>
   AnimationController scaleController;
   AnimationController fadeController;
 
-  Animation<double> rippleAnimation;
+  Animation<Offset> rippleAnimation;
   Animation<double> scaleAnimation;
   Animation<double> fadeAnimation;
 
@@ -62,14 +62,16 @@ class _ButtonStartState extends State<ButtonStart>
           });
     */
     //++++
-    rippleAnimation =
-        Tween<double>(begin: 0.0, end: 120).animate(rippleController);
+    rippleAnimation = Tween<Offset>(begin: Offset(0, 0), end: Offset(0, 1.0))
+        .animate(CurvedAnimation(
+            parent: rippleController, curve: Curves.decelerate));
 
     //++++
     scaleAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(scaleController);
     //++++
-    fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(fadeAnimation);
+    fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: fadeController, curve: Curves.decelerate));
 
     //------------------------- SATART ANIM ------------------------------
 
@@ -87,39 +89,25 @@ class _ButtonStartState extends State<ButtonStart>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: rippleAnimation,
-        builder: (context, child) => Container(
-              width: rippleAnimation.value,
-              height: rippleAnimation.value,
-              child: InkWell(
-                onTap: () {
-                  scaleController.forward();
-                },
-                child: AnimatedBuilder(
-                  animation: scaleAnimation,
-                  builder: (context, child) => Transform.scale(
-                    scale: scaleAnimation.value,
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        //color: Colors.blue,
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment(0.0,
-                              1.0), // 10% of the width, so there are ten blinds.
-                          colors: [
-                            const Color(0xFF002775),
-                            const Color(0xFF008FD7)
-                          ], // whitish to gray
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ));
+    return FadeTransition(
+      opacity: fadeAnimation,
+      child: Container(
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          //color: Colors.blue,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(
+                0.0, 1.0), // 10% of the width, so there are ten blinds.
+            colors: [
+              const Color(0xFF002775),
+              const Color(0xFF008FD7)
+            ], // whitish to gray
+          ),
+        ),
+      ),
+    );
 
     /*
     return Align(
