@@ -8,33 +8,46 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         brightness: Brightness.light,
         backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          "Dashboard",
-          style: TextStyle(color: Colors.grey[800], fontSize: 20),
+        leading: null,
+        automaticallyImplyLeading: false,
+        elevation: 6,
+        // toolbarHeight: 60.0,
+        // title: Text(
+        //   "Jari App",
+        //   style: TextStyle(color: Colors.grey[800], fontSize: 20),
+        // ),
+
+        centerTitle: true,
+        title: Image.asset(
+          'assets/images/logo-jari-only.png',
+          //fit: BoxFit.scaleDown,
+          height: 58.0,
         ),
+
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundImage: ExactAssetImage('assets/images/logo-jari1.png'),
-            ),
-          )
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.shopping_basket,
+                color: Colors.black,
+              ))
         ],
       ),
+
+      //-----------------
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Text(
-                "Today",
+                "Bienvenue sur Jari!",
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[800]),
               ),
@@ -59,25 +72,26 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "Steps",
+                              "Promo 1",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 30),
+                                  TextStyle(color: Colors.white, fontSize: 24),
                             ),
                             SizedBox(
                               height: 20,
                             ),
                             Text(
-                              "3 500",
+                              "135.00 DA (Pack de 6 bites)",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w100),
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
+                  //+++++++++++++++++++++++++++++++++++++++++++++
                   Expanded(
                     child: Container(
                       width: 100,
@@ -94,19 +108,19 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "Sports",
+                              "Promo 2",
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 30),
+                                  TextStyle(color: Colors.white, fontSize: 24),
                             ),
                             SizedBox(
                               height: 20,
                             ),
                             Text(
-                              "25 Min",
+                              "120.00 DA (Pack de  6 bites)",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w100),
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),
@@ -116,87 +130,141 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
               Text(
-                "Health Categories",
+                "Jari Categories",
                 style: TextStyle(
                     color: Colors.grey[800],
                     fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                    fontSize: 24),
               ),
               SizedBox(
                 height: 20,
               ),
+
+              //+++++++++++++++++++++++ LIST ++++++++++++++++++++++
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(10),
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[200]))),
-                        child: Text(
-                          "Activity",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                child: SingleChildScrollView(
+                    //++++
+                    /*
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(10),
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[200]))),
-                        child: Text(
-                          "Activity",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(10),
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[200]))),
-                        child: Text(
-                          "Activity",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(10),
-                            border: Border(
-                                bottom: BorderSide(color: Colors.grey[200]))),
-                        child: Text(
-                          "Activity",
-                          style: TextStyle(
-                              color: Colors.grey[800],
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    ]),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(10),
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey[200]))),
+                          child: Text(
+                            "Activity",
+                            style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ]),
+                      */
+
+                    //++++
+                    ),
               )
             ],
           ),

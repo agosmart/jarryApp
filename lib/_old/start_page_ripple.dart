@@ -11,15 +11,16 @@ import 'package:supercharged/supercharged.dart';
 
 enum AniProps { width, height, opacity }
 
-class StartPage extends StatefulWidget {
+class StartPageRipple extends StatefulWidget {
 //------
   // bool _startAnim;
   // bool _startAnim2;
   @override
-  _StartPageState createState() => _StartPageState();
+  _StartPageRippleState createState() => _StartPageRippleState();
 }
 
-class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
+class _StartPageRippleState extends State<StartPageRipple>
+    with TickerProviderStateMixin {
   double _width;
   double _height;
 
@@ -33,10 +34,10 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
   // Animation<double> _widthAnimation;
   // Animation<double> _positionAnimation;
 
-  //AnimationController rippleController;
+  AnimationController rippleController;
   AnimationController scaleController;
 
-  // Animation<double> rippleAnimation;
+  Animation<double> rippleAnimation;
   Animation<double> scaleAnimation;
 
   bool hideIcon = false;
@@ -57,14 +58,9 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
     scaleAnimation =
         Tween<double>(begin: 1.0, end: 30.0).animate(scaleController);
 
-    /*
-
     rippleController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
 
-  
-
- 
     rippleAnimation =
         Tween<double>(begin: 80.0, end: 90.0).animate(rippleController)
           ..addStatusListener((status) {
@@ -75,9 +71,7 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
             }
           });
 
-
     rippleController.forward();
-  */
 
     //++++++++++++++++++++++++++++
 
@@ -137,7 +131,6 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
     _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      
       body: Container(
         //color: Colors.red,
         child: Stack(
@@ -186,8 +179,9 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
               width: _width,
               // width: _width,
               child: Center(
-                  // child: buttonStartRippleAnimation(),
-                  child: buttonStartHome()),
+                child: buttonStartRippleAnimation(),
+                // child: buttonStartHome()),
+              ),
             ),
             //+++
           ],
@@ -262,7 +256,7 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
       ),
     );
   }
-
+/*
   Widget buttonStartHome() {
     //CustomFadeTranslateAnimation()
     return CustomFadeTranslateAnimation(
@@ -323,8 +317,8 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
         ),
       ),
     );
-  }
-/*
+  }*/
+
   Widget buttonStartRippleAnimation() {
     //CustomFadeTranslateAnimation()
     return AnimatedBuilder(
@@ -380,7 +374,6 @@ class _StartPageState extends State<StartPage> with TickerProviderStateMixin {
     );
   }
 
-  */
 /*
   Widget buttonStart() {
     //++++

@@ -1,0 +1,29 @@
+{"status": "Success",
+"code": 200,
+"message": "Successfully",
+"data": [
+    {
+        "familleId": 1,
+        "familleName": "YAOURT DANONE FERME"
+    },
+    {
+        "familleId": 2,
+        "familleName": "YAOURT DANONE BRASSE"
+    },
+    {
+        "familleId": 3,
+        "familleName": "DANONE YAOURT A BOIRE"
+    },
+    {
+        "familleId": 4,
+        "familleName": "DANONE JUS AU LAIT"
+    },
+    {
+        "familleId": 5,
+        "familleName": "DANONE FROMAGE FRAIS"
+    },
+    {
+        "familleId": 6,
+        "familleName": "DANONE DESSERT"
+    }
+]}

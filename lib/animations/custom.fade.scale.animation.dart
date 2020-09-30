@@ -5,6 +5,7 @@ enum AniProps { width, height, opacity, translateY }
 
 class CustomFadeScaleAnimation extends StatelessWidget {
   // const CustomFadeScal({Key key}) : super(key: key);
+
   final int delay;
   final int duration;
   final Widget childContent;
@@ -28,22 +29,29 @@ class CustomFadeScaleAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('delay:::$delay');
+    print('Anim::: FADE + SCALE');
+    //print('delay:::$delay + $widthContent');
+    double w =
+        widthContent == null ? MediaQuery.of(context).size.width : widthContent;
+    double h = heightContent == null
+        ? MediaQuery.of(context).size.height
+        : heightContent;
+
+    //print('delay:::$delay + $w');
+
     return PlayAnimation<MultiTweenValues<AniProps>>(
       delay: Duration(milliseconds: (500 * delay).round()),
-      tween: _tween, // Pass in tween
       duration: Duration(seconds: duration),
+      tween: _tween, // Pass in tween
       child: childContent,
       // Pass in total duration obtained from MultiTween
-      builder: (context, childContent, value) {
+      builder: (context, childContent, animation) {
         return Container(
-          width: value.get(AniProps.width) *
-              widthContent, // Get animated width value
-          height: value.get(AniProps.height) *
-              heightContent, // Get animated height value
+          width: animation.get(AniProps.width) * w,
+          height: animation.get(AniProps.height) * h,
           //color: Colors.yellow,
           child: Opacity(
-            opacity: value.get(AniProps.opacity),
+            opacity: animation.get(AniProps.opacity),
             child: childContent,
           ),
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:jariapp/old/start_page_ripple.dart';
 
 import 'pages/start_page.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      //home: StartPageRipple(),
       home: StartPage(),
     );
   }
