@@ -1,0 +1,5 @@
+Animation floder can holde :
+++++++++++++++++++++++++++
+
+- All Customized widgets used for animation through the app
+ 

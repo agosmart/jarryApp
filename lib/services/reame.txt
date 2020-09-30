@@ -1,0 +1,7 @@
+Services floder can holde :
+++++++++++++++++++++++++++
+
+- Firebase function
+- your's Api or from auther services cloud .
+- Interaction outside of App
+ 

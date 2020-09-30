@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jariapp/screens/landing/landing_page.dart';
 //import 'package:jariapp/old/start_page_ripple.dart';
-
-import 'pages/start_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       //home: StartPageRipple(),
-      home: StartPage(),
+      home: LandingPage(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/pages/start_page.dart';
+
+import 'package:jariapp/screens/landing/landing_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StartPage(),
+      home: LandingPage(),
     );
   }
 }

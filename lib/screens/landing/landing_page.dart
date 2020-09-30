@@ -1,25 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:jariapp/animations/custom.fade.scale.animation.dart';
-import 'package:jariapp/animations/custom.fade.translate.animation.dart';
-import 'package:jariapp/pages/home.page.dart';
-import 'package:jariapp/widgets/btn.start.dart';
+
+import 'package:jariapp/screens/home/home.page.dart';
+import 'package:jariapp/_old/btn.start.dart';
+import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
+import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';
 
 enum AniProps { width, height, opacity }
 
-class StartPageRipple extends StatefulWidget {
+class LandingPage extends StatefulWidget {
 //------
   // bool _startAnim;
   // bool _startAnim2;
   @override
-  _StartPageRippleState createState() => _StartPageRippleState();
+  _LandingPageState createState() => _LandingPageState();
 }
 
-class _StartPageRippleState extends State<StartPageRipple>
+class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
   double _width;
   double _height;
@@ -34,10 +35,10 @@ class _StartPageRippleState extends State<StartPageRipple>
   // Animation<double> _widthAnimation;
   // Animation<double> _positionAnimation;
 
-  AnimationController rippleController;
+  //AnimationController rippleController;
   AnimationController scaleController;
 
-  Animation<double> rippleAnimation;
+  // Animation<double> rippleAnimation;
   Animation<double> scaleAnimation;
 
   bool hideIcon = false;
@@ -58,9 +59,14 @@ class _StartPageRippleState extends State<StartPageRipple>
     scaleAnimation =
         Tween<double>(begin: 1.0, end: 30.0).animate(scaleController);
 
+    /*
+
     rippleController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
 
+  
+
+ 
     rippleAnimation =
         Tween<double>(begin: 80.0, end: 90.0).animate(rippleController)
           ..addStatusListener((status) {
@@ -71,7 +77,9 @@ class _StartPageRippleState extends State<StartPageRipple>
             }
           });
 
+
     rippleController.forward();
+  */
 
     //++++++++++++++++++++++++++++
 
@@ -179,9 +187,8 @@ class _StartPageRippleState extends State<StartPageRipple>
               width: _width,
               // width: _width,
               child: Center(
-                child: buttonStartRippleAnimation(),
-                // child: buttonStartHome()),
-              ),
+                  // child: buttonStartRippleAnimation(),
+                  child: buttonStartHome()),
             ),
             //+++
           ],
@@ -256,7 +263,7 @@ class _StartPageRippleState extends State<StartPageRipple>
       ),
     );
   }
-/*
+
   Widget buttonStartHome() {
     //CustomFadeTranslateAnimation()
     return CustomFadeTranslateAnimation(
@@ -317,8 +324,8 @@ class _StartPageRippleState extends State<StartPageRipple>
         ),
       ),
     );
-  }*/
-
+  }
+/*
   Widget buttonStartRippleAnimation() {
     //CustomFadeTranslateAnimation()
     return AnimatedBuilder(
@@ -374,6 +381,7 @@ class _StartPageRippleState extends State<StartPageRipple>
     );
   }
 
+  */
 /*
   Widget buttonStart() {
     //++++

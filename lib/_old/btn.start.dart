@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/pages/home.page.dart';
+import 'package:jariapp/screens/home/home.page.dart';
+
 import 'package:page_transition/page_transition.dart';
 
 class ButtonStart extends StatefulWidget {

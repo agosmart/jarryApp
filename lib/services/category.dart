@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:jariapp/exeptions/exeptions.dart';
+
 import 'package:jariapp/models/category.dart';
+
+import 'exeptions/exeptions.dart';
 
 class CategoryProvider {
   List<Category> _categories = [];
@@ -42,11 +44,11 @@ class CategoryProvider {
           print("+++++++  DISPLAY CARD INFO CATEGORIES  +++++++++++ ");
 
           if (_categories.length > 0) {
-             print("+++++++++++++ LISt of Category ++++++++++++++++++++++ ");
+            print("+++++++++++++ LISt of Category ++++++++++++++++++++++ ");
             //--
             // notifyListeners();
           }
-         
+
           return Future.value(_categories);
         }
         //..
