@@ -64,8 +64,20 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  fonts:
+    - family: JariIcons
+      fonts:
+        - asset: assets/fonts/jari.ttf
+
+    - family: Bariol
+      fonts:
+        - asset: assets/fonts/Bariol.ttf
+      # - asset: assets/fonts/Bariol-Bold.otf
+      #   weight: 700
+
+
+
+
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf

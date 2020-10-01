@@ -81,17 +81,17 @@ class HomePage extends StatelessWidget {
 
             //+++++ Bloc header+++++++++
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              //-----
-              children: [
-                Expanded(
-                  child: Container(
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                //-----
+                children: [
+                  Container(
                     //-----
                     // color: Colors.red.withOpacity(0.2),
                     //-----
-                    padding: const EdgeInsets.only(top: 24.0),
+                    padding: const EdgeInsets.only(top: 16.0),
                     height: h / 4,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -137,76 +137,40 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
 
-                //+++++ List ategory +++++++++
+                  //+++++ List ategory +++++++++
 
-                DemoShader(
-                  child: Container(
-                    height: (h * 3 / 4) - 60.0,
-                    padding: const EdgeInsets.only(
-                        top: 10.0, left: 20.0, right: 20.0, bottom: 80.0),
-                    child: GridView.builder(
-                      //shrinkWrap: true,
-                      itemCount: 6,
-                      padding: const EdgeInsets.all(10.0),
-                      scrollDirection: Axis.vertical,
-                      gridDelegate:
-                          new SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        //----------
-
-                        return GestureDetector(
-                          child: Card(
-                            elevation: 5.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0)),
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text('Item $index'),
-                            ),
-                          ),
-                          onTap: () {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              child: new CupertinoAlertDialog(
-                                title: new Column(
-                                  children: <Widget>[
-                                    new Text("GridView"),
-                                    new Icon(
-                                      Icons.favorite,
-                                      color: Colors.green,
-                                    ),
-                                  ],
+                  DemoShader(
+                    child: Container(
+                      height: (h * 3 / 4) - 80.0,
+                      padding: const EdgeInsets.only(
+                          top: 10.0, left: 20.0, right: 20.0, bottom: 20.0),
+                      child: ListView.builder(
+                          itemExtent: 96,
+                          itemCount: 50,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Card(
+                                color: Colors.white,
+                                child: ListTile(
+                                  title: Text('Item $index'),
                                 ),
-                                content: new Text("Selected Item $index"),
-                                actions: <Widget>[
-                                  new FlatButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: new Text("OK"))
-                                ],
                               ),
                             );
-                          },
-                        );
-                      },
+                          }),
+
+                      //---
                     ),
                   ),
-                ),
-                //--------
+                  //--------
 
-                //------
-              ],
-              //-----
+                  //------
+                ],
+                //-----
 
-              //-----
+                //-----
+              ),
             ),
 
             //+++++
@@ -235,11 +199,11 @@ class _DemoShaderState extends State<DemoShader> {
     final double t =
         (((metrics.extentInside - metrics.extentAfter) / metrics.extentInside)
             .clamp(0.0, 1.0));
-    // if (t != _closeToTheEdge) {
-    //   setState(() {
-    //     _closeToTheEdge = t;
-    //   });
-    // }
+    if (t != _closeToTheEdge) {
+      setState(() {
+        _closeToTheEdge = t;
+      });
+    }
 
     return false;
   }

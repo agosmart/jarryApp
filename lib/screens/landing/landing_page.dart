@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jariapp/screens/home/home.page.dart';
 import 'package:jariapp/_old/btn.start.dart';
+import 'package:jariapp/utils/colors.dart';
 import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';
@@ -304,14 +305,14 @@ class _LandingPageState extends State<LandingPage>
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.blue,
+                        color: AppColors.lightblue,
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment(0.0,
                               1.0), // 10% of the width, so there are ten blinds.
                           colors: [
-                            const Color(0xFF002775),
-                            const Color(0xFF008FD7)
+                            AppColors.darkblue,
+                            AppColors.lightblue
                           ], // whitish to gray
                         ),
                       ),
