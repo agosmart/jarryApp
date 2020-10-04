@@ -8,7 +8,7 @@ import 'package:jariapp/services/exeptions/exeptions.dart';
 class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++
 
-  List<Product> _products;
+  List<Product> _products = [];
   get products => _products;
   setProducts(List<Product> values) {
     _products = values;
@@ -17,7 +17,7 @@ class ProductsProvider extends ChangeNotifier {
 
   //++++++++++++++++++++++++++++
 
-  Future<List<Product>> fetchProductsCategoryLocal() async {
+  Future<List<Product>> fetchProductsByCategoryLocal() async {
     Future.delayed(Duration(seconds: 5));
     //---
     print("++++++++ ENTER LIST Categories ++++++++++ ");
@@ -34,7 +34,7 @@ class ProductsProvider extends ChangeNotifier {
     // var response = await DefaultAssetBundle.of(context)
     //     .loadString("assets/jsons/users_group.json");
     var response =
-        await rootBundle.loadString('assets/jsons/product.cat4.json');
+        await rootBundle.loadString('assets/jsons/produits_cat4.json');
     var jsonObject = jsonDecode(response);
 
     //........
@@ -42,7 +42,7 @@ class ProductsProvider extends ChangeNotifier {
       case 200:
         //...
         if (jsonObject['data'].length == 0) {
-          throw ResourceNotFound('Categories');
+          throw ResourceNotFound('Produits');
           //...
         } else {
           for (var item in jsonObject['data']) {

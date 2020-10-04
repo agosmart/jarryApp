@@ -245,7 +245,6 @@ class _HomePageState extends State<HomePage> {
                               // return error('Acune catégorie n\'est disponible !');
                               return buildError();
                             }
-
                             //------------------
                             // print(snapShot.data);
 
@@ -489,57 +488,3 @@ class _HomePageState extends State<HomePage> {
 }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/*
-class DemoShader extends StatefulWidget {
-  const DemoShader({Key key, this.child}) : super(key: key);
-
-  final Widget child;
-
-  @override
-  _DemoShaderState createState() => _DemoShaderState();
-}
-
-class _DemoShaderState extends State<DemoShader> {
-  double _closeToTheEdge = 0.0;
-
-  bool _handleScrollNotification(ScrollNotification notification) {
-    final ScrollMetrics metrics = notification.metrics;
-    final double t =
-        (((metrics.extentInside - metrics.extentAfter) / metrics.extentInside)
-            .clamp(0.0, 1.0));
-    // if (t != _closeToTheEdge) {
-    //   setState(() {
-    //     _closeToTheEdge = t;
-    //   });
-    // }
-
-    return false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: _handleScrollNotification,
-        child: widget.child,
-      ),
-      shaderCallback: (Rect bounds) {
-        return LinearGradient.lerp(
-          const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[Color(0xFFFFFFFF), Color(0x00FFFFFF)],
-            stops: <double>[0.6, 0.9],
-          ),
-          const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[Color(0xFFFFFFFF), Color(0xFFFFFFFF)],
-          ),
-          _closeToTheEdge,
-        ).createShader(bounds);
-      },
-    );
-  }
-}
-*/
