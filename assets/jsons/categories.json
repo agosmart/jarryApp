@@ -1,29 +1,42 @@
-{"status": "Success",
-"code": 200,
-"message": "Successfully",
-"data": [
-    {
-        "familleId": 1,
-        "familleName": "YAOURT DANONE FERME"
-    },
-    {
-        "familleId": 2,
-        "familleName": "YAOURT DANONE BRASSE"
-    },
-    {
-        "familleId": 3,
-        "familleName": "DANONE YAOURT A BOIRE"
-    },
-    {
-        "familleId": 4,
-        "familleName": "DANONE JUS AU LAIT"
-    },
-    {
-        "familleId": 5,
-        "familleName": "DANONE FROMAGE FRAIS"
-    },
-    {
-        "familleId": 6,
-        "familleName": "DANONE DESSERT"
-    }
-]}
+{
+    "status": "Success",
+    "code": 200,
+    "message": "Successfully",
+    "data": [
+        {
+            "familleId": 1,
+            "familleName": "YAOURT DANONE FERME",
+            "iconId": 1
+        },
+        {
+            "familleId": 2,
+            "familleName": "YAOURT DANONE BRASSE",
+            "iconId": 2
+        },
+        {
+            "familleId": 3,
+            "familleName": "DANONE YAOURT A BOIRE",
+            "iconId": 3
+        },
+        {
+            "familleId": 4,
+            "familleName": "DANONE JUS AU LAIT",
+            "iconId": 4
+        },
+        {
+            "familleId": 5,
+            "familleName": "DANONE FROMAGE FRAIS",
+            "iconId": 5
+        },
+        {
+            "familleId": 6,
+            "familleName": "DANONE DESSERT",
+            "iconId": 6
+        },
+        {
+            "familleId": 7,
+            "familleName": "DANONE AUTRES PRODUITS",
+            "iconId": 7
+        }
+    ]
+}

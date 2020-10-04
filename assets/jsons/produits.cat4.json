@@ -1,0 +1,71 @@
+{
+    "status": "Success",
+    "code": 200,
+    "message": "Successfully",
+    "data": [
+        {
+            "productId": 28,
+            "productName": "DANAO 0,25L F EXOTIQUES",
+            "familleId": 4,
+            "unitPrice": 60.0,
+            "minimumOrder": 1,
+            "image": "28.png"
+        },
+        {
+            "productId": 29,
+            "productName": "DANAO 0,25L ORANGE/ANANAS",
+            "familleId": 4,
+            "unitPrice": 60.0,
+            "minimumOrder": 1,
+            "image": "29.png"
+        },
+        {
+            "productId": 30,
+            "productName": "DANAO 0,25L PECHE/ABRICOT",
+            "familleId": 4,
+            "unitPrice": 60.0,
+            "minimumOrder": 1,
+            "image": "30.png"
+        },
+        {
+            "productId": 31,
+            "productName": "DANAO 1L F EXOTIQUES",
+            "familleId": 4,
+            "unitPrice": 135.0,
+            "minimumOrder": 1,
+            "image": "31.png"
+        },
+        {
+            "productId": 32,
+            "productName": "DANAO 1L ORANGE/ANANAS",
+            "familleId": 4,
+            "unitPrice": 135.0,
+            "minimumOrder": 1,
+            "image": "32.png"
+        },
+        {
+            "productId": 33,
+            "productName": "DANAO 1L PECHE/ABRICOT",
+            "familleId": 4,
+            "unitPrice": 135.0,
+            "minimumOrder": 1,
+            "image": "33.png"
+        },
+        {
+            "productId": 34,
+            "productName": "DANAO 0,25 TCHINANAS PET",
+            "familleId": 4,
+            "unitPrice": 60.0,
+            "minimumOrder": 1,
+            "image": "34.png"
+        },
+        {
+            "productId": 35,
+            "productName": "DANAO 0,25 CREPONE PET",
+            "familleId": 4,
+            "unitPrice": 60.0,
+            "minimumOrder": 1,
+            "image": "35.png"
+        }
+    ]
+}

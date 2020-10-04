@@ -2,6 +2,7 @@ class Category {
   //++++
   int familleId;
   String familleName;
+  // int iconId;
 
   //+++++
   Category({this.familleId, this.familleName});

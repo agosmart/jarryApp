@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   
-
+  provider:
   simple_animations: ^2.2.2
   page_transition: ^1.1.6
 
@@ -51,6 +51,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/jsons/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -67,7 +68,7 @@ flutter:
   fonts:
     - family: JariIcons
       fonts:
-        - asset: assets/fonts/jari.ttf
+        - asset: assets/fonts/JariIcons.ttf
 
     - family: Bariol
       fonts:

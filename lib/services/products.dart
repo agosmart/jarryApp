@@ -1,15 +1,23 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:jariapp/models/product..dart';
+import 'package:jariapp/services/exeptions/exeptions.dart';
 
-import 'package:jariapp/models/category.dart';
+class ProductsProvider extends ChangeNotifier {
+//+++++++++++++++++++++++++++++++
 
-import 'exeptions/exeptions.dart';
+  List<Product> _products;
+  get products => _products;
+  setProducts(List<Product> values) {
+    _products = values;
+    notifyListeners();
+  }
 
-class CategoryProvider {
-  List<Category> _categories = [];
+  //++++++++++++++++++++++++++++
 
-  Future<List<Category>> fetchCategoriesLocal() async {
+  Future<List<Product>> fetchProductsCategoryLocal() async {
     Future.delayed(Duration(seconds: 5));
     //---
     print("++++++++ ENTER LIST Categories ++++++++++ ");
@@ -17,7 +25,7 @@ class CategoryProvider {
     // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
 
     //.......
-    _categories.clear();
+    _products.clear();
     //........
 
     // try {  } catch (e) {
@@ -25,7 +33,8 @@ class CategoryProvider {
     // }
     // var response = await DefaultAssetBundle.of(context)
     //     .loadString("assets/jsons/users_group.json");
-    var response = await rootBundle.loadString('assets/jsons/categories.json');
+    var response =
+        await rootBundle.loadString('assets/jsons/product.cat4.json');
     var jsonObject = jsonDecode(response);
 
     //........
@@ -37,22 +46,14 @@ class CategoryProvider {
           //...
         } else {
           for (var item in jsonObject['data']) {
-            _categories.add(Category.fromJson(item));
+            var product = Product.fromJson(item);
+            _products.add(product);
           }
-          print(_categories);
-          // _usersOfGroup =  List.from(jsonObject['data']).map((e) => e.UserGroupData.fromJson());
-          print('ITEM !!!!!! ${_categories.length}');
-          print("+++++++  DISPLAY CARD INFO CATEGORIES  +++++++++++ ");
 
-          return Future.value(_categories);
+          print('ITEM !!!!!! ${_products.length}');
+          print("+++++++  DISPLAY CARD INFO _products  +++++++++++ ");
 
-          // if (_categories.length > 0) {
-          //   print("+++++++++++++ LISt of Category ++++++++++++++++++++++ ");
-          //   //--
-          //   // notifyListeners();
-
-          // }
-
+          return Future.value(_products);
         }
         //..
         break;
@@ -75,4 +76,6 @@ class CategoryProvider {
       //..
     }
   }
+
+  //++++++++++++++++++++++++++++++
 }
