@@ -18,7 +18,7 @@ class ProductsProvider extends ChangeNotifier {
   //++++++++++++++++++++++++++++
 
   Future<List<Product>> fetchProductsByCategoryLocal() async {
-    Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(milliseconds: 1500));
     //---
     print("++++++++ ENTER LIST Categories ++++++++++ ");
     //----------------------------------------------------------------

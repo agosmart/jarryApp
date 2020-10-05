@@ -34,20 +34,20 @@ class _HomePageState extends State<HomePage> {
     JariIcons.danone_any,
   ];
 
-  static const List<Color> menuColorsList = [
-    Color(0xFF0090DF),
-    Color(0xFFE04F00),
-    Color(0xFFE93E49),
-    Color(0xFF2158C7),
-    Color(0xFFFB9600),
-    Color(0xFF39AE7C),
-    Color(0xFF7A71F0),
-    Color(0xFF737FA6),
-    Color(0xFFD153A7),
-    Color(0xFF8DB243),
-    Color(0xFFCC9544),
-    Color(0xFF39A2AE),
-  ];
+  // static const List<Color> menuColorsList = [
+  //   Color(0xFF0090DF),
+  //   Color(0xFFE04F00),
+  //   Color(0xFFE93E49),
+  //   Color(0xFF2158C7),
+  //   Color(0xFFFB9600),
+  //   Color(0xFF39AE7C),
+  //   Color(0xFF7A71F0),
+  //   Color(0xFF737FA6),
+  //   Color(0xFFD153A7),
+  //   Color(0xFF8DB243),
+  //   Color(0xFFCC9544),
+  //   Color(0xFF39A2AE),
+  // ];
 
   Future<List<Category>> _futureFetchingCat;
 
@@ -419,7 +419,7 @@ class _HomePageState extends State<HomePage> {
                       flex: 1,
                       child: Icon(
                         iconsMenuList[index],
-                        color: menuColorsList[index],
+                        color: AppColors.menuColorsList[index],
                         size: 60.0,
                       ),
                     ),
