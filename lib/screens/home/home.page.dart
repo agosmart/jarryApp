@@ -34,21 +34,6 @@ class _HomePageState extends State<HomePage> {
     JariIcons.danone_any,
   ];
 
-  // static const List<Color> menuColorsList = [
-  //   Color(0xFF0090DF),
-  //   Color(0xFFE04F00),
-  //   Color(0xFFE93E49),
-  //   Color(0xFF2158C7),
-  //   Color(0xFFFB9600),
-  //   Color(0xFF39AE7C),
-  //   Color(0xFF7A71F0),
-  //   Color(0xFF737FA6),
-  //   Color(0xFFD153A7),
-  //   Color(0xFF8DB243),
-  //   Color(0xFFCC9544),
-  //   Color(0xFF39A2AE),
-  // ];
-
   Future<List<Category>> _futureFetchingCat;
 
   List<Category> categoryList;
@@ -81,177 +66,205 @@ class _HomePageState extends State<HomePage> {
     //++++
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
-    //+++++
-    return Scaffold(
-      // backgroundColor: Colors.grey[100],
 
-      backgroundColor: AppColors.canvaColor,
+    return WillPopScope(
+      onWillPop: () async => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                  title: Text('Êtes-vous sûr de vouloir quitter ?'),
+                  actions: <Widget>[
+                    RaisedButton(
+                        child: Text('Quitter'),
+                        onPressed: () => Navigator.of(context).pop(true)),
+                    RaisedButton(
+                        child: Text('Annuler'),
+                        onPressed: () => Navigator.of(context).pop(false)),
+                  ])),
+      child: Scaffold(
+        // backgroundColor: Colors.grey[100],
 
-      //appBar: CustomAppBar() as AppBar,
+        backgroundColor: AppColors.canvaColor,
 
-      //+++++
+        //appBar: CustomAppBar() as AppBar,
 
-      appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
-        leading: null,
-        automaticallyImplyLeading: false,
-        elevation: 6,
-        centerTitle: true,
+        //+++++
 
-        title: AppBarCustom.logoHeader(),
-        actions: AppBarCustom.actionIcon(),
-        // title: Image.asset(
-        //   'assets/images/logo-jari-only.png',
-        //   //fit: BoxFit.scaleDown,
-        //   height: 58.0,
-        // ),
-        // actions: <Widget>[
-        //   Padding(
-        //     padding: const EdgeInsets.only(right: 16.0),
-        //     child: IconButton(
-        //       icon: Icon(
-        //         JariIcons.shopping_cart,
-        //         size: 32.0,
-        //         color: AppColors.icongray,
-        //       ),
-        //       onPressed: () {},
+        appBar: AppBar(
+          brightness: Brightness.light,
+          backgroundColor: Colors.white,
+          leading: null,
+          automaticallyImplyLeading: false,
+          elevation: 6,
+          centerTitle: true,
 
-        //       // Icons.shopping_basket,
-        //     ),
-        //   )
-        // ],
-      ),
+          title: AppBarCustom.logoHeader(),
+          actions: AppBarCustom.actionIcon(),
+          // title: Image.asset(
+          //   'assets/images/logo-jari-only.png',
+          //   //fit: BoxFit.scaleDown,
+          //   height: 58.0,
+          // ),
+          // actions: <Widget>[
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 16.0),
+          //     child: IconButton(
+          //       icon: Icon(
+          //         JariIcons.shopping_cart,
+          //         size: 32.0,
+          //         color: AppColors.icongray,
+          //       ),
+          //       onPressed: () {},
 
-      //-----------------
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.topCenter,
-          //fit: StackFit.expand,
-          overflow: Overflow.visible,
-          children: [
-            //+++++ Boc Background Image +++++++++
-            Positioned(
-              top: -22,
-              child: Container(
-                width: w,
-                height: h / 2,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/pattern3.jpg',
+          //       // Icons.shopping_basket,
+          //     ),
+          //   )
+          // ],
+        ),
+
+        //-----------------
+        body: SafeArea(
+          child: Stack(
+            alignment: Alignment.topCenter,
+            //fit: StackFit.expand,
+            overflow: Overflow.visible,
+            children: [
+              //+++++ Boc Background Image +++++++++
+              Positioned(
+                top: -22,
+                child: Container(
+                  width: w,
+                  height: h / 2,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/pattern3.webp',
+                      ),
+                      fit: BoxFit.fill,
+                      alignment: Alignment.topCenter,
                     ),
-                    fit: BoxFit.fill,
-                    alignment: Alignment.topCenter,
                   ),
                 ),
               ),
-            ),
 
-            //+++++ Bloc header+++++++++
+              //+++++ Bloc header+++++++++
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              //-----
-              children: [
-                Flexible(
-                  flex: 2,
-                  child: Container(
-                    //-----
-                    // color: Colors.red.withOpacity(0.2),
-                    //-----
-                    // padding: const EdgeInsets.only(top: 24.0),
-                    height: h / 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Bienvenue',
-                                  style: TextStyle(
-                                    // fontFamily: 'Bariol',
-                                    color: AppColors.darkblue,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 36,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                //-----
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      //-----
+                      // color: Colors.red.withOpacity(0.2),
+                      //-----
+                      // padding: const EdgeInsets.only(top: 24.0),
+                      height: h / 4,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 20.0,
                                   ),
-                                ),
-                                Text(
-                                  'sur jari!',
-                                  style: TextStyle(
-                                    // fontFamily: 'Bariol',
-                                    color: AppColors.lightblue3,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 48,
+                                  Text(
+                                    'Bienvenue',
+                                    style: TextStyle(
+                                      color: AppColors.darkblue,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 36,
+                                    ),
                                   ),
-                                ),
-                                //
-                              ],
+                                  RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                        text: 'Sur ',
+                                        style: TextStyle(
+                                          color: AppColors.darkblue,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 36,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'jari!',
+                                        style: TextStyle(
+                                          // fontFamily: 'Bariol',
+                                          color: AppColors.lightblue3,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 36,
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
+
+                                  //
+                                ],
+                              ),
                             ),
-                          ),
-                          //-----
-                          SizedBox(
-                            width: 10.0,
-                          ),
+                            //-----
+                            SizedBox(
+                              width: 10.0,
+                            ),
 
-                          //++++++
-                          Expanded(
-                              child: Padding(
-                            padding: const EdgeInsets.only(right: 30),
-                            child: Image.asset('assets/images/logo-jari1.png'),
-                          )),
-                        ],
+                            //++++++
+                            Expanded(
+                                child: Padding(
+                              padding: const EdgeInsets.only(right: 30),
+                              child:
+                                  Image.asset('assets/images/logo-jari1.webp'),
+                            )),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                //+++++++++++++++++++++++++++++++++++
+                  //+++++++++++++++++++++++++++++++++++
 
-                //+++++ Future  List ategory +++++++++
+                  //+++++ Future  List ategory +++++++++
 
-                //+++++++++++++++++++++++++++++++++++
+                  //+++++++++++++++++++++++++++++++++++
 
-                Flexible(
-                  flex: 5,
-                  child: FutureBuilder(
-                    //----------------------------------
-                    future: _futureFetchingCat,
-                    //----------------------------------
-                    //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Category>> snapShot) {
-                      switch (snapShot.connectionState) {
-                        case ConnectionState.none:
-                          // return Text('nothing happend !!!');
-                          return error('No connexion made!');
-                          break;
-                        case ConnectionState.waiting:
-                        case ConnectionState.active:
-                          return Center();
-                          //   return loading(AppColors.akablueLight);
-                          break;
-                        case ConnectionState.done:
-                          if (snapShot.hasError) {
-                            return error(snapShot.error.toString());
-                          } else {
-                            if (!snapShot.hasData) {
-                              // return error('Acune catégorie n\'est disponible !');
-                              return buildError();
-                            }
-                            //------------------
-                            // print(snapShot.data);
+                  Flexible(
+                    flex: 5,
+                    child: FutureBuilder(
+                      //----------------------------------
+                      future: _futureFetchingCat,
+                      //----------------------------------
+                      //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Category>> snapShot) {
+                        switch (snapShot.connectionState) {
+                          case ConnectionState.none:
+                            // return Text('nothing happend !!!');
+                            return error('No connexion made!');
+                            break;
+                          case ConnectionState.waiting:
+                          case ConnectionState.active:
+                            return Center();
+                            //   return loading(AppColors.akablueLight);
+                            break;
+                          case ConnectionState.done:
+                            if (snapShot.hasError) {
+                              return error(snapShot.error.toString());
+                            } else {
+                              if (!snapShot.hasData) {
+                                // return error('Acune catégorie n\'est disponible !');
+                                return buildError();
+                              }
+                              //------------------
+                              // print(snapShot.data);
 
-                            categoryList = [...snapShot.data];
+                              categoryList = [...snapShot.data];
 
-                            return ClipRect(
-                              child: ShaderMask(
+                              return ShaderMask(
                                 //blendMode: BlendMode.dstATop,
                                 shaderCallback: (Rect bounds) {
                                   return LinearGradient(
@@ -285,34 +298,30 @@ class _HomePageState extends State<HomePage> {
                                   //+++++++
                                   child: Column(
                                     children: [
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
+                                      SizedBox(height: 10.0),
                                       Expanded(child: buildGrideCategories()),
-                                      SizedBox(
-                                        height: 20.0,
-                                      ),
+                                      SizedBox(height: 24.0),
                                     ],
                                   ),
                                 ),
-                              ),
-                            );
-                          }
-                      }
-                      return error('Data messing! 22222');
-                    },
+                              );
+                            }
+                        }
+                        return error('Data messing!');
+                      },
+                    ),
                   ),
-                ),
 
-                //+++++++++++++
-              ],
-              //-----
+                  //+++++++++++++
+                ],
+                //-----
 
-              //-----
-            ),
+                //-----
+              ),
 
-            //+++++
-          ],
+              //+++++
+            ],
+          ),
         ),
       ),
     );
@@ -371,12 +380,12 @@ class _HomePageState extends State<HomePage> {
     return GridView.builder(
       //shrinkWrap: true,
       itemCount: categoryList.length,
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.only(top: 30),
       scrollDirection: Axis.vertical,
       gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 0,
-        crossAxisSpacing: 10,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
       ),
       itemBuilder: (BuildContext context, int index) {
         //----------
@@ -402,95 +411,71 @@ class _HomePageState extends State<HomePage> {
 
     //++++++
 
-    return GestureDetector(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
+    return Container(
+      // padding: const EdgeInsets.only(top: 20.0),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              //-------------------------------------------------
+              builder: (BuildContext context) => ProductsPage(
+                colorCat: _color,
+                iconCat: _icon,
+                category: categoryName,
+              ),
+              //--------------------------------------------------
+            ),
+          );
+        },
         child: Card(
-          elevation: 5.0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+          // child: Material(
+          //   borderRadius: BorderRadius.circular(16),
+          elevation: 6.0,
+          shadowColor: AppColors.darkblue.withOpacity(0.3),
           child: Container(
-            alignment: Alignment.center,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    //  color: Colors.red.withOpacity(0.3),
-                    child: Flexible(
-                      flex: 1,
-                      child: Icon(
-                        // iconsMenuList[_index],
-                        // color: AppColors.menuColorsList[_index],
-                        _icon,
-                        color: _color,
-                        size: 60.0,
-                      ),
+            //color: Colors.amber.withOpacity(0.5),
+
+            // padding:
+            //     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              //mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Icon(
+                    // iconsMenuList[_index],
+                    // color: AppColors.menuColorsList[_index],
+                    _icon,
+                    color: _color,
+                    size: 48.0,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Text(
+                      '$categoryName',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14.0,
+                          letterSpacing: 0.4,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.lightblue3),
                     ),
                   ),
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: Text(
-                        '$categoryName',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            letterSpacing: 0.6,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.lightblue3),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
       ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            //-------------------------------------------------
-            builder: (BuildContext context) => ProductsPage(
-              colorCat: _color,
-              iconCat: _icon,
-              category: categoryName,
-            ),
-            //--------------------------------------------------
-          ),
-        );
-      },
-      /* onTap: () {
-        showDialog(
-          barrierDismissible: false,
-          context: context,
-          child: CupertinoAlertDialog(
-            title: Column(
-              children: <Widget>[
-                Text("GridView"),
-                Icon(
-                  Icons.favorite,
-                  color: Colors.green,
-                ),
-              ],
-            ),
-            content: Text("Selected Item $index"),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("OK"))
-            ],
-          ),
-        );
-      },*/
     );
   }
 

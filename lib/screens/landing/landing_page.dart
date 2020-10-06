@@ -1,15 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:jariapp/screens/home/home.page.dart';
-import 'package:jariapp/_old/btn.start.dart';
 import 'package:jariapp/utils/colors.dart';
 import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:supercharged/supercharged.dart';
 
 enum AniProps { width, height, opacity }
 
@@ -46,13 +40,15 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   void initState() {
+    // ignore: todo
+    // TODO: implement initState
     super.initState();
 
     scaleController = AnimationController(
         vsync: this, duration: Duration(seconds: 1))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
               PageTransition(type: PageTransitionType.fade, child: HomePage()));
         }
       });
@@ -154,7 +150,7 @@ class _LandingPageState extends State<LandingPage>
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/images/bg3x.jpg',
+                    'assets/images/bg3x.webp',
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -208,7 +204,7 @@ class _LandingPageState extends State<LandingPage>
         decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                'assets/images/logo-jari1.png',
+                'assets/images/logo-jari1.webp',
               ),
               fit: BoxFit.contain,
             ),
@@ -235,7 +231,7 @@ class _LandingPageState extends State<LandingPage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/leafs-multi.png',
+              'assets/images/leafs-multi.webp',
             ),
             fit: BoxFit.contain,
           ),
@@ -255,7 +251,7 @@ class _LandingPageState extends State<LandingPage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/leafs.png',
+              'assets/images/leafs.webp',
             ),
             fit: BoxFit.contain,
           ),

@@ -20,6 +20,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     //.......... INIT Products Provider ...............
@@ -86,7 +87,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       child: FadeInImage(
                         fadeInCurve: Curves.decelerate,
                         fadeInDuration: const Duration(milliseconds: 1200),
-                        placeholder: AssetImage('assets/images/logo-jari1.png'),
+                        placeholder:
+                            AssetImage('assets/images/logo-jari1.webp'),
                         image: AssetImage(
                             'assets/images/products/${_currentProd.image}'),
                         fit: BoxFit.contain,

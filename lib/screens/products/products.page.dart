@@ -32,6 +32,8 @@ class _ProductsPageState extends State<ProductsPage> {
   //+++++
   @override
   void initState() {
+    // ignore: todo
+    // TODO: implement initState
     super.initState();
     _productsList = [];
     //.......... INIT Products Provider ...............
@@ -122,10 +124,8 @@ class _ProductsPageState extends State<ProductsPage> {
                             //...... icon ........
                             Icon(
                               //...........................
-
                               widget.iconCat,
                               //JariIcons.danone_ferme,
-
                               //...........................
                               color: AppColors.white,
                               size: 42.0,
@@ -136,10 +136,8 @@ class _ProductsPageState extends State<ProductsPage> {
                               flex: 4,
                               child: Text(
                                 //...........................
-
                                 '${widget.category}',
                                 //'YAOURT DANONE FERME',
-
                                 //...........................
                                 //softWrap: true,
                                 style: TextStyle(
