@@ -72,7 +72,7 @@ static const List<IconData> iconsMenuList = [
     return Scaffold(
       // backgroundColor: Colors.grey[100],
 
-      backgroundColor: AppColors.canvaColor1,
+      backgroundColor: AppColors.canvaColor,
 
       //+++++
       appBar: AppBar(

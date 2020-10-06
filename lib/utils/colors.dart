@@ -26,7 +26,7 @@ abstract class AppColors {
   static Color get black => const Color(0xFF222222);
   static Color get white => const Color(0xFFFFFFFF);
 
-  static Color get canvaColor1 => const Color(0xFFF3F3F3);
+  static Color get canvaColor => const Color(0xFFF3F3F3);
 //++++ ICONS COLOR +++++
   static Color get icongray => const Color(0xFF9299A5);
   static Color get darkgray => const Color(0xFF4e5b60);

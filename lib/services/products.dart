@@ -9,9 +9,18 @@ class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++
 
   List<Product> _products = [];
+  Product _currentProduct;
+//......
   get products => _products;
   setProducts(List<Product> values) {
     _products = values;
+    notifyListeners();
+  }
+
+//......
+  Product get currentProduct => _currentProduct;
+  setCurrentProduct(Product value) {
+    _currentProduct = value;
     notifyListeners();
   }
 

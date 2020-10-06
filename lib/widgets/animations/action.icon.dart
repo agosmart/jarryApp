@@ -21,7 +21,7 @@ class AppBarCustom {
       child: IconButton(
         icon: Icon(
           JariIcons.shopping_cart,
-          size: 32.0,
+          size: 30.0,
           color: AppColors.icongray,
         ),
         onPressed: () {},

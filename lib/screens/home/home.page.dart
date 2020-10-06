@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // backgroundColor: Colors.grey[100],
 
-      backgroundColor: AppColors.canvaColor1,
+      backgroundColor: AppColors.canvaColor,
 
       //appBar: CustomAppBar() as AppBar,
 
@@ -394,8 +394,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildCategoryItem(categoryName, index) {
     //+++++++
-    index = index > 6 ? 7 : index;
+    final _index = index > 6 ? 7 : index;
     //+++++++
+
+    final _color = AppColors.menuColorsList[_index];
+    final _icon = iconsMenuList[_index];
+
+    //++++++
 
     return GestureDetector(
       child: Padding(
@@ -418,8 +423,10 @@ class _HomePageState extends State<HomePage> {
                     child: Flexible(
                       flex: 1,
                       child: Icon(
-                        iconsMenuList[index],
-                        color: AppColors.menuColorsList[index],
+                        // iconsMenuList[_index],
+                        // color: AppColors.menuColorsList[_index],
+                        _icon,
+                        color: _color,
                         size: 60.0,
                       ),
                     ),
@@ -450,7 +457,11 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
             //-------------------------------------------------
-            builder: (BuildContext context) => ProductsPage(),
+            builder: (BuildContext context) => ProductsPage(
+              colorCat: _color,
+              iconCat: _icon,
+              category: categoryName,
+            ),
             //--------------------------------------------------
           ),
         );

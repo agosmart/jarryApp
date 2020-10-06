@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.grey[100],
 
-      backgroundColor: AppColors.canvaColor1,
+      backgroundColor: AppColors.canvaColor,
 
       //+++++
       appBar: AppBar(
