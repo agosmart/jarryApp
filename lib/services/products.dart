@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/services/exeptions/exeptions.dart';
@@ -11,13 +12,15 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> _products = [];
   Product _currentProduct;
 //......
-  get products => _products;
+
+  List<Product> get products => _products;
   setProducts(List<Product> values) {
     _products = values;
     notifyListeners();
   }
 
 //......
+
   Product get currentProduct => _currentProduct;
   setCurrentProduct(Product value) {
     _currentProduct = value;

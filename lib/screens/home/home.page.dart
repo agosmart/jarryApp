@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Category> categoryList;
 
-  CategoryProvider categoryProvider;
+  CategoryProvider _categoryProvider;
 
   //+++++categoryProvider
   @override
@@ -46,10 +46,10 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     categoryList = [];
-    categoryProvider = CategoryProvider();
+    _categoryProvider = CategoryProvider();
 
     //============================================
-    _futureFetchingCat = categoryProvider.fetchCategoriesLocal();
+    _futureFetchingCat = _categoryProvider.fetchCategoriesLocal();
     //  _futureFetchingCat = categoryProvider.fetchCategoriesLocal(); //_getFutureCategories();
     //============================================
   }
@@ -408,6 +408,7 @@ class _HomePageState extends State<HomePage> {
 
     final _color = AppColors.menuColorsList[_index];
     final _icon = iconsMenuList[_index];
+    final _categoryName = categoryName;
 
     //++++++
 
@@ -415,15 +416,18 @@ class _HomePageState extends State<HomePage> {
       // padding: const EdgeInsets.only(top: 20.0),
       child: GestureDetector(
         onTap: () {
+          //-------------------------------
+
+          _categoryProvider.setCurrentCategory(_categoryName);
+          _categoryProvider.setCurrentCatColor(_color);
+          _categoryProvider.setCurrentCatIcon(_icon);
+
+          //-------------------------------
           Navigator.push(
             context,
             MaterialPageRoute(
               //-------------------------------------------------
-              builder: (BuildContext context) => ProductsPage(
-                colorCat: _color,
-                iconCat: _icon,
-                category: categoryName,
-              ),
+              builder: (BuildContext context) => ProductsPage(),
               //--------------------------------------------------
             ),
           );

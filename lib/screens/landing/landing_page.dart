@@ -48,7 +48,7 @@ class _LandingPageState extends State<LandingPage>
         vsync: this, duration: Duration(seconds: 1))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Navigator.pushReplacement(context,
+          Navigator.push(context,
               PageTransition(type: PageTransitionType.fade, child: HomePage()));
         }
       });

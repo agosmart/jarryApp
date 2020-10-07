@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/product..dart';
+import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/utils/colors.dart';
 import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsPage extends StatefulWidget {
+//   //-------
+//   var colorCat;
+//   var iconCat;
+// //-----
+//   ProductDetailsPage(
+//     this.iconCat,
+//     this.colorCat,
+//   );
+
   @override
   _ProductDetailsPageState createState() => _ProductDetailsPageState();
 }
@@ -15,7 +25,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   int numOfItems = 1;
   double w;
   double h;
+  Color _catColor;
+  //---------
   ProductsProvider _productsProvider;
+  CategoryProvider _categoryProvider;
   //............
 
   @override
@@ -23,7 +36,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     // ignore: todo
     // TODO: implement initState
     super.initState();
-    //.......... INIT Products Provider ...............
+    //.......... INIT Products / category Provider ...............
+    _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
   }
 
@@ -32,6 +46,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     //............
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+    _catColor = _categoryProvider.currentCatColor;
     //............
 
     Product _currentProd = _productsProvider.currentProduct;
@@ -61,10 +76,32 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            //........ TITRE .......
+            Container(
+              padding: const EdgeInsets.only(
+                  top: 20.0, left: 20, right: 20, bottom: 20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    // Color(0xFF0090DF),
+                    // Color(0xFF0090DF).withOpacity(0.4),
+                    //...........................
+                    _catColor,
+                    _catColor.withOpacity(0.4),
+                    //...........................
+                  ],
+                ),
+              ),
+              child: Text(
+                '${_currentProd.productName}',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+              ),
+            ),
             //........ IMAGE .......
             Container(
                 width: w,
-                height: h * 1 / 2,
+                height: (h * 1 / 2) - 30,
                 decoration: BoxDecoration(
                     color: AppColors.white,
                     boxShadow: [
@@ -101,18 +138,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       right: 30.0,
                       child: Container(
                         //padding: const EdgeInsets.all(16.0),
-                        width: 120.0,
-                        height: 120.0,
+                        width: 100.0,
+                        height: 100.0,
                         child: Center(
-                          // child: Text(
-                          //   '300.00',
-                          //   style: TextStyle(
-                          //       color: AppColors.white,
-                          //       fontSize: 24.0,
-                          //       fontWeight: FontWeight.w600),
-                          // ),
                           //++++++++++++++++
-
                           child: RichText(
                             text: TextSpan(children: [
                               TextSpan(
@@ -120,21 +149,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       '${_currentProd.unitPrice.toStringAsFixed(2)}',
                                   style: TextStyle(
                                     color: AppColors.white,
-                                    fontSize: 21.0,
+                                    fontSize: 20.0,
                                     fontWeight: FontWeight.w600,
                                   )),
                               TextSpan(
                                 text: ' DA',
                                 style: TextStyle(
                                   color: AppColors.white,
-                                  fontSize: 16.0,
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                             ]),
                           ),
-                          //-------
-
                           //+++++++++++++++++++++
                         ),
                         decoration: BoxDecoration(
@@ -149,22 +176,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
                     //::::::::::::::::::::::::::::::
                   ],
-                )
+                )),
 
-                // child: Image.asset(
-                //   'assets/images/products/${_currentProd.image}',
-                //   fit: BoxFit.contain,
-                // ),
-                ),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 36.0),
-              child: Text(
-                '${_currentProd.productName}',
-                style: TextStyle(fontSize: 21.0, fontWeight: FontWeight.w600),
-                textAlign: TextAlign.center,
-              ),
-            ),
             SizedBox(
               height: 30.0,
             ),

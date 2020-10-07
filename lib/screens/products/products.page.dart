@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/screens/products/product.details.page.dart';
+import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/utils/_jari_icons.dart';
 import 'package:jariapp/utils/colors.dart';
@@ -11,13 +12,13 @@ import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
-  //............
-  final IconData iconCat;
-  final Color colorCat;
-  final String category;
-  //...........
-  const ProductsPage({Key key, this.iconCat, this.colorCat, this.category})
-      : super(key: key);
+  // //............
+  // final IconData catIcon;
+  // final Color catColor;
+  // final String category;
+  // //...........
+  // const ProductsPage({Key key, this.catIcon, this.catColor, this.category})
+  //     : super(key: key);
 
   @override
   _ProductsPageState createState() => _ProductsPageState();
@@ -26,8 +27,14 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   //+++++
   double h, w;
+  Color _catColor;
+  IconData _catIcon;
+  String _catName;
+
+  //------
   Future<List<Product>> _futureFetching;
   ProductsProvider _productsProvider;
+  CategoryProvider _categoryProvider;
   List<Product> _productsList;
   //+++++
   @override
@@ -36,7 +43,8 @@ class _ProductsPageState extends State<ProductsPage> {
     // TODO: implement initState
     super.initState();
     _productsList = [];
-    //.......... INIT Products Provider ...............
+    //.......... INIT Products / category Provider ...............
+
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     //.......... INIT FutureBuilder ...............
     _futureFetching = _productsProvider.fetchProductsByCategoryLocal();
@@ -49,6 +57,14 @@ class _ProductsPageState extends State<ProductsPage> {
     //++++
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+
+    _categoryProvider = Provider.of<CategoryProvider>(context);
+
+    _catColor = _categoryProvider.currentCatColor;
+    _catIcon = _categoryProvider.currentCatIcon;
+    _catName = _categoryProvider.currentCategory;
+
+    print('_catName ${_catName.toString()}');
 
     //+++++
     return Scaffold(
@@ -107,16 +123,18 @@ class _ProductsPageState extends State<ProductsPage> {
                         padding: const EdgeInsets.only(
                             top: 20, bottom: 20, left: 20, right: 20),
                         decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [
-                          // Color(0xFF0090DF),
-                          // Color(0xFF0090DF).withOpacity(0.4),
-                          //...........................
-
-                          widget.colorCat,
-
-                          //...........................
-                          widget.colorCat.withOpacity(0.4),
-                        ])),
+                          gradient: LinearGradient(
+                            colors: [
+                              // Color(0xFF0090DF),
+                              Color(0xFF0090DF).withOpacity(0.4),
+                              Color(0xFF0090DF).withOpacity(0.4),
+                              //...........................
+                              // _catColor,
+                              // _catColor.withOpacity(0.4),
+                              //...........................
+                            ],
+                          ),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +142,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             //...... icon ........
                             Icon(
                               //...........................
-                              widget.iconCat,
+                              _catIcon,
                               //JariIcons.danone_ferme,
                               //...........................
                               color: AppColors.white,
@@ -136,7 +154,7 @@ class _ProductsPageState extends State<ProductsPage> {
                               flex: 4,
                               child: Text(
                                 //...........................
-                                '${widget.category}',
+                                '$_catName',
                                 //'YAOURT DANONE FERME',
                                 //...........................
                                 //softWrap: true,

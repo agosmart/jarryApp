@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
+import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:provider/provider.dart';
 //import 'package:jariapp/old/start_page_ripple.dart';
@@ -16,23 +17,28 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (BuildContext context) => ProductsProvider(),
-          // lazy: false,
+          create: (_) => ProductsProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CategoryProvider(),
+          lazy: false,
         ),
       ],
+      builder: (context, child) {
+        return MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            fontFamily: 'Bariol',
+          ),
+          //home: StartPageRipple(),
+          home: LandingPage(),
+        );
+      },
       //+++++++++++++++++++++++++++++++
-
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: 'Bariol',
-        ),
-        //home: StartPageRipple(),
-        home: LandingPage(),
-      ),
     );
   }
 }

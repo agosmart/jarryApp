@@ -1,13 +1,61 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jariapp/models/category.dart';
 
 import 'exeptions/exeptions.dart';
 
-class CategoryProvider {
+class CategoryProvider extends ChangeNotifier {
+  //++++++++++++++++++++++++++++
+  // CategoryProvider();
+
+  CategoryProvider() {
+    init();
+  }
+
+  init() {
+    print(
+        '##### NAME CATEGORy FROM PROVIDER====INIT #### :::: $_currentCategory');
+
+    this.currentCategory;
+  }
+
   List<Category> _categories = [];
+  Color _currentCatColor;
+  String _currentCategory;
+  IconData _currentIcon;
+
+  //......
+
+  Color get currentCatColor => _currentCatColor;
+  setCurrentCatColor(Color value) {
+    // print('color :::: $value');
+    _currentCatColor = value;
+    notifyListeners();
+  }
+
+  //......
+  IconData get currentCatIcon => _currentIcon;
+  setCurrentCatIcon(IconData value) {
+    //print('Icon :::: $value');
+    _currentIcon = value;
+    notifyListeners();
+  }
+
+  //......
+  String get currentCategory {
+    print('NAME CATEGORy FROM PROVIDER :::: $_currentCategory');
+    return _currentCategory;
+  }
+
+  setCurrentCategory(String value) {
+    print('====== CatName ========= $value');
+    _currentCategory = value;
+    notifyListeners();
+  }
+
+  //++++++++++++++++++++++++++++
 
   Future<List<Category>> fetchCategoriesLocal() async {
     Future.delayed(Duration(seconds: 5));

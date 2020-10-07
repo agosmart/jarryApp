@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   
-  provider:
+  provider: ^4.3.2+2
   simple_animations: ^2.2.2
   page_transition: ^1.1.6
   
