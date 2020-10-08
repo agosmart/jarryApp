@@ -10,16 +10,16 @@ class CategoryProvider extends ChangeNotifier {
   //++++++++++++++++++++++++++++
   // CategoryProvider();
 
-  CategoryProvider() {
-    init();
-  }
+  // CategoryProvider() {
+  //   init();
+  // }
 
-  init() {
-    print(
-        '##### NAME CATEGORy FROM PROVIDER====INIT #### :::: $_currentCategory');
+  // init() {
+  //   print(
+  //       '##### NAME CATEGORy FROM PROVIDER====INIT #### :::: $_currentCategory');
 
-    this.currentCategory;
-  }
+  //   this.currentCategory;
+  // }
 
   List<Category> _categories = [];
   Color _currentCatColor;

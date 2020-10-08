@@ -12,6 +12,7 @@ import 'package:jariapp/utils/helpers.dart';
 import 'package:jariapp/utils/jari_icons.dart';
 import 'package:jariapp/widgets/_custom.appbar.dart';
 import 'package:jariapp/widgets/animations/action.icon.dart';
+import 'package:provider/provider.dart';
 // import 'package:jariapp/utils/_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -46,8 +47,9 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     categoryList = [];
-    _categoryProvider = CategoryProvider();
+    //_categoryProvider = CategoryProvider();
 
+    _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     //============================================
     _futureFetchingCat = _categoryProvider.fetchCategoriesLocal();
     //  _futureFetchingCat = categoryProvider.fetchCategoriesLocal(); //_getFutureCategories();

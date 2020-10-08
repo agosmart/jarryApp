@@ -16,7 +16,7 @@
             "productName": "ACTIVIA BRASSE MUESLI-MIEL 105 G",
             "familleId": 4,
             "unitPrice": 60.0,
-            "minimumOrder": 1,
+            "minimumOrder": 5,
             "image": "2.webp"
         },
         {
@@ -24,7 +24,7 @@
             "productName": "DANONE AROMATISE FRA 95G",
             "familleId": 4,
             "unitPrice": 60.0,
-            "minimumOrder": 1,
+            "minimumOrder": 12,
             "image": "3.png"
         },
         {
@@ -40,7 +40,7 @@
             "productName": "DANAO 1L F EXOTIQUES",
             "familleId": 4,
             "unitPrice": 135.0,
-            "minimumOrder": 1,
+            "minimumOrder": 2,
             "image": "31.png"
         },
         {
@@ -56,7 +56,7 @@
             "productName": "DANAO 1L PECHE/ABRICOT",
             "familleId": 4,
             "unitPrice": 135.0,
-            "minimumOrder": 1,
+            "minimumOrder": 2,
             "image": "33.png"
         },
         {
@@ -64,7 +64,7 @@
             "productName": "DANAO 0,25 TCHINANAS PET",
             "familleId": 4,
             "unitPrice": 60.0,
-            "minimumOrder": 1,
+            "minimumOrder": 3,
             "image": "34.png"
         }
 

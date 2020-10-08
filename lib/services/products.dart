@@ -9,8 +9,39 @@ import 'package:jariapp/services/exeptions/exeptions.dart';
 class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++
 
+  // ProductsProvider() {
+  //   init();
+  // }
+
+  // init() {
+  //   _numOfItems = 1;
+  // }
+
   List<Product> _products = [];
   Product _currentProduct;
+
+  int _numOfItems;
+  //int _total;
+  //int _price = 10;
+  //......
+  /*
+  get getTotalPrice => _total;
+  setTotalPrice(int value) {
+    print('Total ::: $_total');
+    _total = value * _price;
+    //notifyListeners();
+  }
+  */
+//......
+
+  //......
+  get getNumOfItems => _numOfItems;
+  setNumOfItems(int value) {
+    print('_numOfItems ::: $_numOfItems');
+    _numOfItems = value;
+    // setTotalPrice(_numOfItems);
+    notifyListeners();
+  }
 //......
 
   List<Product> get products => _products;

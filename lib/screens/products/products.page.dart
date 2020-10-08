@@ -126,11 +126,10 @@ class _ProductsPageState extends State<ProductsPage> {
                           gradient: LinearGradient(
                             colors: [
                               // Color(0xFF0090DF),
-                              Color(0xFF0090DF).withOpacity(0.4),
-                              Color(0xFF0090DF).withOpacity(0.4),
+                              // Color(0xFF0090DF).withOpacity(0.4),
                               //...........................
-                              // _catColor,
-                              // _catColor.withOpacity(0.4),
+                              _catColor,
+                              _catColor.withOpacity(0.4),
                               //...........................
                             ],
                           ),

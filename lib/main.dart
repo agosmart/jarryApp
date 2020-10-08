@@ -16,16 +16,18 @@ class MyApp extends StatelessWidget {
 //+++++++++++++++++++++++++++++++
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<ProductsProvider>(
           create: (_) => ProductsProvider(),
           lazy: false,
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<CategoryProvider>(
           create: (_) => CategoryProvider(),
           lazy: false,
         ),
       ],
       builder: (context, child) {
+
+        
         return MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
