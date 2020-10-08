@@ -34,6 +34,7 @@ abstract class AppColors {
   static Color get lightblue => const Color(0xFF008FD7);
 
   static Color get darkblue2 => const Color(0xFF263a44);
+  static Color get darkblue3 => const Color(0xFF072449);
   static Color get lightblue2 => const Color(0xFF48a1af);
   static Color get lightblue3 => const Color(0xFF006B8B);
   static Color get akablueLight => const Color(0xFF1DDDEB);

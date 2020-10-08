@@ -6,7 +6,11 @@ import 'package:jariapp/utils/colors.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 //import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
-import 'package:page_transition/page_transition.dart';
+//import 'package:page_transition/page_transition.dart';
+
+//----
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
 
 class ProductDetailsPage extends StatefulWidget {
 //   //-------
@@ -35,6 +39,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   ProductsProvider _productsProvider;
   CategoryProvider _categoryProvider;
   //............
+
+  final TransformationController _transformationController =
+      TransformationController();
+
+  //--------------------------
 
   @override
   void initState() {
@@ -119,14 +128,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         child: SingleChildScrollView(
           //........ IMAGE .......
           child: Stack(
+            fit: StackFit.passthrough,
             overflow: Overflow.visible,
             children: [
               //::::::::::::: incriment/decriment Bloc ::::::::::::::::::::
               //--------ANIMATION -01 -----------------------------
               CustomFadeTranslateAnimation(
                 begin: -100,
-                delay: 1,
-                duration: 1,
+                delay: 1000,
+                duration: 1200,
                 widthContent: w,
                 heightContent: (h * 5 / 7),
                 childContent: Container(
@@ -170,129 +180,147 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               //------------------------------------
 
               Positioned(
-                bottom: 60,
+                bottom: 50,
                 left: 0,
                 right: 0,
                 //--------ANIMATION -02 -----------------------------
                 child: CustomFadeTranslateAnimation(
                   begin: -100.0,
-                  delay: 2,
-                  duration: 2,
+                  delay: 1500,
+                  duration: 1500,
                   widthContent: w,
-                  heightContent: h / 11,
+                  heightContent: h / 10,
                   childContent: _buildCartCounter(),
                 ),
                 //---------------------------------------------------
               ),
 
               //:::::::::::: IMAGE BLOC ::::::::::::::::::
-              Stack(
-                children: [
-                  Container(
-                    width: w,
-                    height: (h * 1 / 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 12,
-                          spreadRadius: 8,
-                          color: AppColors.darkblue.withOpacity(0.5),
-                        )
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      ),
-                    ),
-                    child: //::::::::::::: PRODUCT IMAGE :::::::::::::::::
-                        Container(
-                      width: w,
-                      padding: const EdgeInsets.all(16.0),
-                      child: FadeInImage(
-                        fadeInCurve: Curves.decelerate,
-                        fadeInDuration: const Duration(milliseconds: 700),
-                        placeholder:
-                            AssetImage('assets/images/logo-jari1.webp'),
-                        image: AssetImage(
-                            'assets/images/products/${_currentProd.image}'),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  //+++++
-
-                  Positioned(
-                    bottom: 30,
-                    right: 30.0,
-                    child: Container(
-                      //padding: const EdgeInsets.all(16.0),
-                      width: 110.0,
-                      height: 110.0,
-
-                      child: Center(
-                        //++++++++++++++++
-                        child: RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text:
-                                    '${_currentProd.unitPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            TextSpan(
-                              text: ' DA',
-                              style: TextStyle(
-                                color: AppColors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ]),
-                        ),
-                        //+++++++++++++++++++++
-                      ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              // Color(0xFF0090DF),
-                              // Color(0xFF0090DF).withOpacity(0.4),
-                              //...........................
-                              _catColor,
-                              _catColor.withOpacity(0.6),
-                              //...........................
-                            ],
-                          ),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppColors.white,
-                            width: 6.0,
-                          ),
+              CustomFadeTranslateAnimation(
+                begin: -100,
+                delay: 500,
+                duration: 1200,
+                widthContent: w,
+                heightContent: (h * 5 / 7),
+                childContent: Stack(
+                  children: [
+                    //::::::::::::  ZOOM IMAGE - interactive_viewer ::::::::
+                    InteractiveViewer(
+                      transformationController: _transformationController,
+                      onInteractionEnd: (details) {
+                        _transformationController.value = Matrix4.identity();
+                      },
+                      child: Container(
+                        width: w,
+                        height: (h * 1 / 2),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
                           boxShadow: [
                             BoxShadow(
-                              blurRadius: 6.0,
-                              spreadRadius: 3.0,
-                              color: _catColor.withOpacity(0.2),
-                            ),
-                          ]
-                          // image: DecorationImage(
-                          //   image: AssetImage(
-                          //     'assets/images/bubble1.webp',
-                          //   ),
-                          //   fit: BoxFit.cover,
-                          // ),
+                              blurRadius: 12,
+                              spreadRadius: 8,
+                              color: AppColors.darkblue.withOpacity(0.5),
+                            )
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
                           ),
+                        ),
+                        child: //::::::::::::: PRODUCT IMAGE :::::::::::::::::
+                            Container(
+                          width: w,
+                          padding: const EdgeInsets.all(16.0),
+                          child: FadeInImage(
+                            fadeInCurve: Curves.decelerate,
+                            fadeInDuration: const Duration(milliseconds: 700),
+                            placeholder:
+                                AssetImage('assets/images/logo-jari1.webp'),
+                            image: AssetImage(
+                                'assets/images/products/${_currentProd.image}'),
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    //+++++
 
-                  //++++
-                ],
+                    Positioned(
+                      bottom: h * 2 / 4,
+                      right: 20.0,
+                      child: Container(
+                        //padding: const EdgeInsets.all(16.0),
+                        width: 110.0,
+                        height: 110.0,
+
+                        child: Center(
+                          //++++++++++++++++
+                          child: RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                  text:
+                                      '${_currentProd.unitPrice.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                              TextSpan(
+                                text: ' DA',
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ]),
+                          ),
+                          //+++++++++++++++++++++
+                        ),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                // Color(0xFF0090DF),
+                                // Color(0xFF0090DF).withOpacity(0.4),
+                                //...........................
+                                _catColor,
+                                _catColor.withOpacity(0.6),
+                                //...........................
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppColors.white,
+                              width: 6.0,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 6.0,
+                                spreadRadius: 3.0,
+                                color: _catColor.withOpacity(0.2),
+                              ),
+                            ]
+                            // image: DecorationImage(
+                            //   image: AssetImage(
+                            //     'assets/images/bubble1.webp',
+                            //   ),
+                            //   fit: BoxFit.cover,
+                            // ),
+                            ),
+                      ),
+                    ),
+
+                    //++++
+                  ],
+                ),
               ),
 
               //::::::::::::::::::::::::::::::
             ],
+
+            //:::::::::: Buttons Confirmation :::::::::::
+
+            //+++++++++++++++++++++++++++++++++++++++++++
           ),
 
           // //........ TITRE .......
@@ -318,6 +346,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ),
     );
   }
+//++++++++++++++++++++++
+
 //++++++++++++++++++++++
 
   Widget _buildCartCounter() {
@@ -346,7 +376,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           child: Container(
             //width: w / 4,
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             //+++++++++++++++++
             child: Selector<ProductsProvider, int>(
                 selector: (context, _productsProvider) =>
@@ -370,14 +400,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       //++++++
 
                       Container(
+                        width: double.infinity,
                         //height: numOfItems <= numOfItemsMin ? 20.0 : 40.0,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                            horizontal: 4, vertical: 4),
                         decoration: BoxDecoration(
                           color: numOfItems <= numOfItemsMin
                               ? AppColors.darkblue.withOpacity(0.5)
                               : AppColors.white.withOpacity(0.7),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
                         ),
                         child: Text(
                           '${numOfItems <= numOfItemsMin ? "Minimum" : "Articles"}',
@@ -385,7 +416,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             color: numOfItems <= numOfItemsMin
                                 ? AppColors.white
                                 : AppColors.black,
-                            fontSize: 16.0,
+                            fontSize: 12.0,
                             fontWeight: FontWeight.w600,
                           ),
                           softWrap: false,
@@ -416,12 +447,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         //------------------------
 
         Flexible(
-          flex: 4,
+          flex: 5,
           child: Container(
               width: w * 2 / 5,
               padding: const EdgeInsets.only(
                   top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
-              margin: const EdgeInsets.only(left: 16.0),
+              margin: const EdgeInsets.only(left: 10),
               decoration: BoxDecoration(
                 color: AppColors.white.withOpacity(0.2),
                 borderRadius: BorderRadius.all(
@@ -436,13 +467,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       _productsProvider.getNumOfItems,
                   builder: (_, getNumOfItems, child) {
                     print('TOTAL PRICE ::::$getNumOfItems');
+
+                    final total = numOfItems * 1 * _currentProd.unitPrice;
+
+                    //------------------
                     return RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(children: [
                         TextSpan(
                           // text: '$getTotalePrice',
-                          text:
-                              '${(numOfItems * _currentProd.unitPrice).toStringAsFixed(2)}',
+
+                          text: total > 9999
+                              ? '${total.toStringAsFixed(0)}'
+                              : '${total.toStringAsFixed(2)}',
                           style: TextStyle(
                             color: AppColors.white,
                             fontSize: 24.0,
@@ -523,11 +560,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Container buildOutlineButton({IconData icon, Function press}) {
     return Container(
       // margin: const EdgeInsets.all(16.0),
-      width: 56,
-      height: 56,
+      width: 42,
+      height: 42,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.white,
+        color: AppColors.white.withOpacity(0.4),
         boxShadow: [
           BoxShadow(
             blurRadius: 12,
@@ -542,14 +579,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         //   color: AppColors.darkgray.withOpacity(0.3),
         //   width: 2.0,
         // ),
-
+        //  color: AppColors.transparent,
+        padding: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(24),
         ),
         onPressed: press,
         child: Icon(
           icon,
           size: 24.0,
+          color: AppColors.white,
+          // color: AppColors.white,
         ),
       ),
     );

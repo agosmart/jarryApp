@@ -45,7 +45,7 @@ class _LandingPageState extends State<LandingPage>
     super.initState();
 
     scaleController = AnimationController(
-        vsync: this, duration: Duration(seconds: 1))
+        vsync: this, duration: Duration(milliseconds: 800))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           Navigator.push(context,
@@ -54,7 +54,7 @@ class _LandingPageState extends State<LandingPage>
       });
 
     scaleAnimation =
-        Tween<double>(begin: 1.0, end: 30.0).animate(scaleController);
+        Tween<double>(begin: 1.0, end: 20.0).animate(scaleController);
 
     /*
 
@@ -196,8 +196,8 @@ class _LandingPageState extends State<LandingPage>
 
   Widget animateLogo() {
     return CustomFadeScaleAnimation(
-      delay: 1,
-      duration: 2,
+      delay: 1000, //millisecondes
+      duration: 2000, //millisecondes
       widthContent: 200.0,
       heightContent: 200.0,
       childContent: Container(
@@ -222,8 +222,8 @@ class _LandingPageState extends State<LandingPage>
 
   Widget animateLeafsMulti() {
     return CustomFadeScaleAnimation(
-      delay: 4,
-      duration: 3,
+      delay: 2000, //millisecondes
+      duration: 3000, //millisecondes
       // widthContent: _width,
       // heightContent: _height,
       childContent: Container(
@@ -242,8 +242,8 @@ class _LandingPageState extends State<LandingPage>
 
   Widget animateLeafs() {
     return CustomFadeScaleAnimation(
-      delay: 4,
-      duration: 2,
+      delay: 3000, //millisecondes
+      duration: 2000, //millisecondes
       widthContent: 216.0,
       heightContent: 155.0,
       childContent: Container(
@@ -265,8 +265,8 @@ class _LandingPageState extends State<LandingPage>
     //CustomFadeTranslateAnimation()
     return CustomFadeTranslateAnimation(
       begin: 200.0,
-      delay: 5,
-      duration: 2,
+      delay: 4000, //millisecondes
+      duration: 2000, //millisecondes
       widthContent: 100.0,
       heightContent: 100.0,
       childContent: Container(

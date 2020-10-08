@@ -46,8 +46,8 @@ class CustomFadeTranslateAnimation extends StatelessWidget {
 
     return PlayAnimation<MultiTweenValues<AniProps>>(
         //++++++++++
-        delay: Duration(milliseconds: (500 * delay).round()),
-        duration: Duration(seconds: duration),
+        delay: Duration(milliseconds: delay),
+        duration: Duration(milliseconds: duration),
         tween: _tween,
         child: childContent,
         //++++++++++++
