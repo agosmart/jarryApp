@@ -5,6 +5,7 @@ import 'package:jariapp/models/product..dart';
 import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/utils/colors.dart';
+import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 //import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Product _currentProd;
   CartItem _cart;
   int _productId;
+  String _productName;
+  double _price;
+  String _image;
   //---------
   ProductsProvider _productsProvider;
   CategoryProvider _categoryProvider;
@@ -49,15 +53,26 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     _currentProd = _productsProvider.currentProduct;
+    //*************************************
     _productId = _currentProd.productId;
-    // numOfItems = _currentProd.minimumOrder;
-    if (_productsProvider.getNumOfItems(_productId) == null) {
-      numOfItems = _currentProd.minimumOrder;
-    } else {
+    _productName = _currentProd.productName;
+    _price = _currentProd.unitPrice;
+    _image = _currentProd.image;
+    //*************************************
+    /*
+    if (_productsProvider.getNumOfItems(_productId) != null) {
       numOfItems = _productsProvider.getNumOfItems(_productId);
-    }
+    } else {
+      numOfItems = _currentProd.minimumOrder;
+    }*/
 
-    numOfItemsMin = numOfItems;
+    numOfItemsMin = _currentProd.minimumOrder;
+
+    if (_productsProvider.isProductExist(_productId) != false) {
+      numOfItems = _productsProvider.getNumOfItems(_productId);
+    } else {
+      numOfItems = numOfItemsMin;
+    }
   }
 
   @override
@@ -85,10 +100,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         toolbarHeight: 80.0,
         // leading: null,
         automaticallyImplyLeading: true,
+
         elevation: 1,
         centerTitle: true,
         iconTheme: IconThemeData(color: AppColors.icongray),
         // title: AppBarCustom.logoHeader(),
+        actions: <Widget>[AppBarCustom()],
         /*
           title: Text(
             'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
@@ -104,14 +121,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
         //........ TITRE .......
         title: Container(
-          padding: const EdgeInsets.only(right: 20),
+          //color: Colors.red,
+          padding: const EdgeInsets.all(0),
           // width: double.infinity,
           child: Text(
             //  'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
-            '${_currentProd.productName}',
+            '$_productName',
             style: TextStyle(
               color: AppColors.darkblue2,
-              fontSize: 18.0,
+              fontSize: 16.0,
               fontWeight: FontWeight.w600,
               // color: _catColor,
             ),
@@ -135,78 +153,80 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               children: [
                 //::::::::::::: incriment/decriment Bloc ::::::::::::
 
-                //--------ANIMATION -01 --------
+                //--------Counter ANIMATION -01 --------
 
-                Stack(
-                    //-....
-                    children: [
-                      CustomFadeTranslateAnimation(
-                        begin: -100,
-                        delay: 1,
-                        duration: 1,
-                        widthContent: w,
-                        heightContent: (h * 5 / 7),
-                        childContent: Container(
-                          padding: const EdgeInsets.all(0),
-                          margin: const EdgeInsets.only(bottom: 30.0),
-                          width: w,
-                          height: (h * 1 / 2) + 110.0,
-                          child: Container(
-                            width: w,
-                            // height: (h * 1 / 4),
-                            decoration: BoxDecoration(
-                              //color: AppColors.lightblue,
-                              gradient: LinearGradient(
-                                colors: [
-                                  // Color(0xFF0090DF),
-                                  // Color(0xFF0090DF).withOpacity(0.4),
-                                  //...........................
-                                  _catColor,
-                                  _catColor.withOpacity(0.5),
-                                  //...........................
-                                ],
-                                begin: Alignment(0.5, 0.8),
-                                end: Alignment(0, 0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 20,
-                                  spreadRadius: 8,
-                                  color: AppColors.darkblue.withOpacity(0.2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(40),
-                                bottomRight: Radius.circular(40),
-                              ),
-                            ),
-                            //-----
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: CustomFadeTranslateAnimation(
-                                begin: -50,
-                                delay: 2,
-                                duration: 2,
-                                widthContent: w,
-                                heightContent: h / 6,
-                                childContent: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 4.0, vertical: 20.0),
-                                  child: _buildCartCounter(),
-                                ),
-                              ),
-                            ),
+                CustomFadeTranslateAnimation(
+                  begin: -50,
+                  delay: 600,
+                  duration: 1000,
+                  // begin: -100,
+                  // delay: 1000,
+                  // duration: 1,
+                  widthContent: w,
+                  heightContent: (h * 5 / 7),
+                  childContent: Container(
+                    padding: const EdgeInsets.all(0),
+                    margin: const EdgeInsets.only(bottom: 30.0),
+                    width: w,
+                    height: (h * 1 / 2) + 110.0,
+                    child: Container(
+                      width: w,
+                      // height: (h * 1 / 4),
+                      decoration: BoxDecoration(
+                        //color: AppColors.lightblue,
+                        gradient: LinearGradient(
+                          colors: [
+                            // Color(0xFF0090DF),
+                            // Color(0xFF0090DF).withOpacity(0.4),
+                            //...........................
+                            _catColor,
+                            _catColor.withOpacity(0.5),
+                            //...........................
+                          ],
+                          begin: Alignment(0.5, 0.8),
+                          end: Alignment(0, 0),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 20,
+                            spreadRadius: 8,
+                            color: AppColors.darkblue.withOpacity(0.2),
+                          )
+                        ],
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(40),
+                          bottomRight: Radius.circular(40),
+                        ),
+                      ),
+                      //-----
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomFadeTranslateAnimation(
+                          begin: -50.0,
+                          delay: 1000,
+                          duration: 1200,
+                          // begin: -50,
+                          // delay: 2,
+                          // duration: 2,
+                          widthContent: w,
+                          heightContent: h / 6,
+                          childContent: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 20.0),
+                            child: _buildCartCounter(),
                           ),
                         ),
                       ),
-                      //-....
-                    ]),
+                    ),
+                  ),
+                ),
 
-                //....... STACK -02 ..........
+                //#########. STACK - [ Image  + Price ] .#########
 
                 Stack(
                   children: [
-                    //-----
+                    //::::::::::::: PRODUCT PRICE :::::::::::::::::
+
                     Container(
                       width: w,
                       height: (h * 1 / 2),
@@ -234,74 +254,76 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           fadeInDuration: const Duration(milliseconds: 700),
                           placeholder:
                               AssetImage('assets/images/logo-jari1.webp'),
-                          image: AssetImage(
-                              'assets/images/products/${_currentProd.image}'),
+                          image: AssetImage('assets/images/products/${_image}'),
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
                     //+++++
-                    //::::::::::::: PRODUCT PRICE :::::::::::::::::
-                    Positioned(
-                      bottom: 30,
-                      right: 30.0,
-                      child: Container(
-                        width: 110.0,
-                        height: 110.0,
-                        child: Center(
-                          //++++++++++++++++
-                          child: RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                  text:
-                                      '${_currentProd.unitPrice.toStringAsFixed(2)}',
-                                  style: TextStyle(
+
+                    Container(
+                      // color: Colors.red.withOpacity(0.5),
+                      child: CustomFadeTranslateAnimation(
+                        begin: 50,
+                        delay: 300,
+                        duration: 1300,
+                        widthContent: w,
+                        heightContent: h / 2,
+                        childContent: Center(
+                          child: Align(
+                            alignment: Alignment(0.75, 0.75),
+                            // widthFactor: 3,
+                            // heightFactor: 2,
+                            child: Container(
+                              width: 110.0,
+                              height: 110.0,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      // Color(0xFF0090DF),
+                                      // Color(0xFF0090DF).withOpacity(0.4),
+                                      //...........................
+                                      _catColor,
+                                      _catColor.withOpacity(0.6),
+                                      //...........................
+                                    ],
+                                  ),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: AppColors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                              TextSpan(
-                                text: ' DA',
-                                style: TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w400,
+                                    width: 6.0,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 6.0,
+                                      spreadRadius: 3.0,
+                                      color: _catColor.withOpacity(0.2),
+                                    ),
+                                  ]),
+                              child: Center(
+                                child: RichText(
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                        text: '${_price.toStringAsFixed(2)}',
+                                        style: TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    TextSpan(
+                                      text: ' DA',
+                                      style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ]),
                                 ),
                               ),
-                            ]),
+                            ),
                           ),
-                          //+++++++++++++++++++++
                         ),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                // Color(0xFF0090DF),
-                                // Color(0xFF0090DF).withOpacity(0.4),
-                                //...........................
-                                _catColor,
-                                _catColor.withOpacity(0.6),
-                                //...........................
-                              ],
-                            ),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.white,
-                              width: 6.0,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 6.0,
-                                spreadRadius: 3.0,
-                                color: _catColor.withOpacity(0.2),
-                              ),
-                            ]
-                            // image: DecorationImage(
-                            //   image: AssetImage(
-                            //     'assets/images/bubble1.webp',
-                            //   ),
-                            //   fit: BoxFit.cover,
-                            // ),
-                            ),
                       ),
                     ),
 
@@ -319,9 +341,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   child: Container(
                     // color: Colors.yellow.withOpacity(0.5),
                     child: CustomFadeTranslateAnimation(
-                      begin: 100,
-                      delay: 3,
-                      duration: 1,
+                      begin: 50,
+                      delay: 600,
+                      duration: 1200,
                       widthContent: w,
                       heightContent: (h * 1 / 7),
                       childContent: Center(
@@ -331,59 +353,59 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             width: w - (w / 10),
                             height: 60,
                             child: RaisedButton(
-                              //+++++++++++++++++
+                              //*+++++++++++++++...................++++++++++++++
                               onPressed: () {
                                 // TODO: is product exist
-                                // 1 - non : add product
-                                // 2 -oui : update product
+                                //?__1 - non : Add product
+                                //?__2 -oui : Update product
                                 //...
-                                //Map<String, dynamic> _cartItem = {};
 
-                                final productId = _currentProd.productId;
-                                final qty =
-                                    _productsProvider.getNumOfItems(productId);
-                                final productName = _currentProd.productName;
-                                final total = qty * _currentProd.unitPrice;
+                                //final productId = _productId;
+                                //final qty =  _productsProvider.getNumOfItems(productId);
 
-                                bool _isProductExist =
-                                    _productsProvider.isProductExist(productId);
+                                final _qty = numOfItems;
+                                final _total = _qty * _price;
+
+                                bool _isProductExist = _productsProvider
+                                    .isProductExist(_productId);
 
                                 if (_isProductExist) {
                                   _productsProvider.updateProductCart(
-                                      productId, qty, total);
+                                      _productId, _qty, _total);
                                 } else {
-                                  // _cart.idProduct = productId;
-                                  // _cart.productName = _currentProd.productName;
-                                  // _cart.total =
-                                  //     _cart.qty * _currentProd.unitPrice;
-
-                                  // _cartItem['idProduct'] = productId;
-                                  // _cartItem['productName'] =
-                                  //     _currentProd.productName;
-                                  // _cartItem['total'] =
-                                  //     qty * _currentProd.unitPrice;
-
                                   _cart = CartItem(
-                                      productId, productName, qty, total);
+                                      _productId, _productName, _qty, _total);
+                                  _productsProvider.addProductToCart(_cart);
                                 }
 
                                 //..
-
-                                _productsProvider.addProductToCart(_cart);
                               },
-                              //+++++++++++++++++
-                              color: AppColors.darkblue2,
+                              //*+++++++++++++++...................++++++++++++++
+                              color: AppColors.darkblue4,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24.0)),
 
-                              child: Text(
-                                'CONFIRMER',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  letterSpacing: 2,
-                                  color: AppColors.akablueLight,
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: AppColors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 16.0,
+                                  ),
+                                  Text(
+                                    'CONFIRMER',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Poppins',
+                                      letterSpacing: 2,
+                                      color: AppColors.gold,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -402,7 +424,26 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 //++++++++++++++++++++++
 
   Widget _buildCartCounter() {
+    print('QUANTITY / TOTAL PRICE ::::$numOfItems');
     // _productsProvider?.setNumOfItems(numOfItems);
+    // Selector<ProductsProvider, int>(
+    //   selector: (context, _productsProvider) =>
+    //       _productsProvider.getNumOfItems(_productId),
+    //   builder: (_, getNumOfItems, child) {
+    //     print('TOTAL PRICE ::::$getNumOfItems');
+    //     return Center();
+    // })
+
+    /*  return Selector<ProductsProvider, int>(
+         selector: (context, _productsProvider) =>
+            _productsProvider.getNumOfItems(_productId),
+        builder: (_, getNumOfItems, child) {
+          print('QUANTITY / TOTAL PRICE ::::$getNumOfItems');
+          //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+          return 
+           });
+          */
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -414,9 +455,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               icon: Icons.remove,
               press: () {
                 if (numOfItems > numOfItemsMin) {
-                  print('DECRIMENT');
-                  numOfItems--;
-                  _productsProvider.setNumOfItems(numOfItems);
+                  print('_numOfItems DEC ::: $numOfItems');
+                  // numOfItems--;
+                  setState(() {
+                    numOfItems--;
+                  });
+                  // _productsProvider.setNumOfItems(numOfItems);
                 } else {
                   print('NON-----DECRIMENT');
                 }
@@ -427,55 +471,55 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           child: Container(
             //width: w / 4,
             // alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             //+++++++++++++++++
-            child: Selector<ProductsProvider, int>(
-                selector: (context, _productsProvider) =>
-                    _productsProvider.getNumOfItems(_productId),
-                builder: (_, getNumOfItems, child) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //++++++
-                      Text(
-                        numOfItems.toString().padLeft(2, "0"),
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      //+++++++
-                      // SizedBox(height: 4.0),
-                      //++++++
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //++++++
+                Text(
+                  '$numOfItems',
+                  // numOfItems.toString().padLeft(2, "0"),
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                //+++++++
+                // SizedBox(height: 4.0),
+                //++++++
 
-                      Container(
-                        //height: numOfItems <= numOfItemsMin ? 20.0 : 40.0,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: numOfItems <= numOfItemsMin
-                              ? AppColors.darkblue.withOpacity(0.5)
-                              : AppColors.white.withOpacity(0.7),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                        child: Text(
-                          '${numOfItems <= numOfItemsMin ? "Minimum" : "Articles"}',
-                          style: TextStyle(
-                            color: numOfItems <= numOfItemsMin
-                                ? AppColors.white
-                                : AppColors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          softWrap: false,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  );
-                }),
+                Container(
+                  width: double.infinity,
+                  //height: numOfItems <= numOfItemsMin ? 20.0 : 40.0,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: numOfItems <= numOfItemsMin
+                        //? AppColors.darkblue.withOpacity(0.5)
+                        ? AppColors.pinck
+                        : AppColors.darkblue.withOpacity(0.5),
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+                  child: Text(
+                    '${numOfItems <= numOfItemsMin ? "Minimum" : "Articles"}',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      /* color: numOfItems <= numOfItemsMin
+                          ? AppColors.white
+                          : AppColors.black, */
+
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    softWrap: false,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
             //+++++++++++++++++++
           ),
         ),
@@ -484,12 +528,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           child: buildOutlineButton(
             icon: Icons.add,
             press: () {
-              numOfItems++;
-              print('_numOfItems ::: $numOfItems');
-              _productsProvider.setNumOfItems(numOfItems);
-              // setState(() {
-              //   numOfItems++;
-              // });
+              //numOfItems++;
+              print('_numOfItems INC ::: $numOfItems');
+              // _productsProvider.setNumOfItems(numOfItems);
+              setState(() {
+                numOfItems++;
+              });
             },
           ),
         ),
@@ -497,67 +541,60 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         //------------------------
 
         Flexible(
-          flex: 4,
+          flex: 5,
           child: Container(
-              width: w * 2 / 5,
-              height: 56.0,
-              padding: const EdgeInsets.only(
-                  top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
-              margin: const EdgeInsets.only(left: 16.0),
-              decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8),
+            width: w * 2 / 5,
+            height: 56.0,
+            padding: const EdgeInsets.only(
+                top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
+            margin: const EdgeInsets.only(left: 16.0),
+            decoration: BoxDecoration(
+              color: AppColors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+
+            //++++++++++++++++
+
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(children: [
+                TextSpan(
+                  // text: '$getTotalePrice',
+                  text: '${(numOfItems * _price).toStringAsFixed(2)}',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
+                TextSpan(
+                  text: ' DA',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ]),
+            ),
 
-              //++++++++++++++++
+            //+++++++++++++++++++++
 
-              child: Selector<ProductsProvider, int>(
-                  selector: (context, _productsProvider) =>
-                      _productsProvider.getNumOfItems(_productId),
-                  builder: (_, getNumOfItems, child) {
-                    print('TOTAL PRICE ::::$getNumOfItems');
-                    return RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(children: [
-                        TextSpan(
-                          // text: '$getTotalePrice',
-                          text:
-                              '${(numOfItems * _currentProd.unitPrice).toStringAsFixed(2)}',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' DA',
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ]),
-                    );
-                  })
+            //--------
 
-              //+++++++++++++++++++++
+            // child: Text(
+            //   '5000',
+            //   style: TextStyle(
+            //     color: AppColors.white,
+            //     fontSize: 24.0,
+            //     fontWeight: FontWeight.w600,
+            //   ),
+            // ),
 
-              //--------
-
-              // child: Text(
-              //   '5000',
-              //   style: TextStyle(
-              //     color: AppColors.white,
-              //     fontSize: 24.0,
-              //     fontWeight: FontWeight.w600,
-              //   ),
-              // ),
-
-              //--------
-              ),
+            //--------
+          ),
         )
       ],
     );
@@ -605,11 +642,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Container buildOutlineButton({IconData icon, Function press}) {
     return Container(
       // margin: const EdgeInsets.all(16.0),
-      width: 56,
-      height: 56,
+      width: 42,
+      height: 42,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.white,
+        color: AppColors.white.withOpacity(0.4),
         boxShadow: [
           BoxShadow(
             blurRadius: 12,
@@ -624,14 +661,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         //   color: AppColors.darkgray.withOpacity(0.3),
         //   width: 2.0,
         // ),
-
+        //  color: AppColors.transparent,
+        padding: const EdgeInsets.all(0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(24),
         ),
         onPressed: press,
         child: Icon(
           icon,
           size: 24.0,
+          color: AppColors.white,
+          // color: AppColors.white,
         ),
       ),
     );

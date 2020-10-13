@@ -40,8 +40,8 @@ class CustomFadeScaleAnimation extends StatelessWidget {
     //print('delay:::$delay + $w');
 
     return PlayAnimation<MultiTweenValues<AniProps>>(
-      delay: Duration(milliseconds: (500 * delay).round()),
-      duration: Duration(seconds: duration),
+      delay: Duration(milliseconds: delay),
+      duration: Duration(milliseconds: duration),
       tween: _tween, // Pass in tween
       child: childContent,
       // Pass in total duration obtained from MultiTween

@@ -35,7 +35,41 @@ class ProductsProvider extends ChangeNotifier {
   */
 //......
 
-  //......
+  bool isProductExist(int id) {
+    //if (_cart.length <= 0) return false;
+
+    try {
+      return _cart.indexOf(
+                  _cart?.firstWhere((CartItem e) => e?.productId == id)) >=
+              0 ??
+          false;
+    } catch (e) {
+      return false;
+    }
+
+    /* var item =
+        _cart.indexOf(_cart?.firstWhere((CartItem e) => e?.productId == id));
+
+    return item >= 0 ? true : false;
+ */
+    /* return _cart.length <= 0
+        ? false
+        : _cart.indexOf(_cart?.firstWhere((e) => e.productId == id)) == -1
+            ? false
+            : true;
+     */
+    //  return _cart.every((e) => e.idProduct == id);
+    // bool result = false;
+    // for (var item in _cart) {
+    //   if (item.idProduct == id)
+    //     result = true;
+    //   else
+    //     result = false;
+    // }
+    // //...............................
+    // return result;
+  }
+
   // get getNumOfItems => _numOfItems;
   setNumOfItems(int value) {
     print('_numOfItems ::: $_numOfItems');
@@ -46,6 +80,7 @@ class ProductsProvider extends ChangeNotifier {
 
   int getNumOfItems(int id) {
     try {
+      /*
       //...........
       int numItems;
       //...........
@@ -54,6 +89,8 @@ class ProductsProvider extends ChangeNotifier {
           _isExist ? _cart.firstWhere((e) => e.idProduct == id)?.qty : null;
 
       return numItems;
+      */
+      return _cart?.firstWhere((e) => e.productId == id)?.qty;
     } catch (e) {
       return null;
     }
@@ -69,30 +106,12 @@ class ProductsProvider extends ChangeNotifier {
 
 //......
 
+  get getItemCount => _cart.length;
+//......
   Product get currentProduct => _currentProduct;
   setCurrentProduct(Product value) {
     _currentProduct = value;
     notifyListeners();
-  }
-
-  //.......
-  bool isProductExist(int id) {
-    bool result = false;
-    result = _cart?.indexOf(_cart?.firstWhere((e) => e.idProduct == id)) == -1
-        ? false
-        : true;
-    return result;
-
-    //  return _cart.every((e) => e.idProduct == id);
-    // bool result = false;
-    // for (var item in _cart) {
-    //   if (item.idProduct == id)
-    //     result = true;
-    //   else
-    //     result = false;
-    // }
-    // //...............................
-    // return result;
   }
 
   addProductToCart(CartItem cart) {
@@ -101,7 +120,7 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   updateProductCart(int id, int qty, double total) {
-    CartItem item = _cart.firstWhere((e) => e.idProduct == id);
+    CartItem item = _cart.firstWhere((e) => e.productId == id);
     item.qty = qty;
     item.total = total;
     notifyListeners();

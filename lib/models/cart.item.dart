@@ -1,12 +1,12 @@
 import 'package:jariapp/models/product..dart';
 
 class CartItem {
-  int idProduct;
+  int productId;
   String productName;
   int qty;
   double total;
 
-  CartItem(this.idProduct, this.productName, this.qty, this.total);
+  CartItem(this.productId, this.productName, this.qty, this.total);
 
   CartItem.fromJson(Map<String, dynamic> jsonObject) {
     /* print('||||||||||||||||||||||||||||');
@@ -15,7 +15,7 @@ class CartItem {
     print('||||||||||||||||||||||||||||');
     */
 
-    this.idProduct = jsonObject['id'];
+    this.productId = jsonObject['id'];
     this.productName = jsonObject['productName'];
     this.qty = (jsonObject['qty']).toInt();
     this.total = jsonObject['total'];
@@ -29,7 +29,7 @@ class CartItem {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idProduct'] = this.idProduct;
+    data['productId'] = this.productId;
     data['productName'] = this.productName;
     data['qty'] = this.qty;
     data['total'] = this.total;

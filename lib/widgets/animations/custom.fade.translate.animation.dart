@@ -26,7 +26,7 @@ class CustomFadeTranslateAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     print('Anim::: FADE + TRANSLATION - Y');
     //+++++
-    if (begin == null) begin = -130.0;
+    if (begin == null) begin = -100.0;
     // print('delay:::$delay + $widthContent');
     double w =
         widthContent == null ? MediaQuery.of(context).size.width : widthContent;
@@ -46,8 +46,8 @@ class CustomFadeTranslateAnimation extends StatelessWidget {
 
     return PlayAnimation<MultiTweenValues<AniProps>>(
         //++++++++++
-        delay: Duration(milliseconds: (500 * delay).round()),
-        duration: Duration(seconds: duration),
+        delay: Duration(milliseconds: delay),
+        duration: Duration(milliseconds: duration),
         tween: _tween,
         child: childContent,
         //++++++++++++
