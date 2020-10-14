@@ -107,6 +107,7 @@ class ProductsProvider extends ChangeNotifier {
 //......
 
   get getItemCount => _cart.length;
+  get getCartItems => _cart;
 //......
   Product get currentProduct => _currentProduct;
   setCurrentProduct(Product value) {
@@ -119,10 +120,10 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateProductCart(int id, int qty, double total) {
+  updateProductCart(int id, int qty, double priceTotal) {
     CartItem item = _cart.firstWhere((e) => e.productId == id);
     item.qty = qty;
-    item.total = total;
+    item.priceTotal = priceTotal;
     notifyListeners();
   }
 

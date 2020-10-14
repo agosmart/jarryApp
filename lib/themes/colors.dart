@@ -22,9 +22,20 @@ abstract class AppColors {
 
 //--------------------------------------------------------
 
+  static const Color titleTextColor = const Color(0xff1d2635);
+  static const Color subTitleTextColor = const Color(0xff797878);
+
+  static const Color orange = Color(0xffE65829);
+
   static Color get transparent => Colors.transparent;
-  static Color get black => const Color(0xFF222222);
+  // static Color get black => const Color(0xFF222222);
+  static Color get black => const Color(0xff20262C);
+  static Color get lightblack => const Color(0xff5F5F60);
   static Color get white => const Color(0xFFFFFFFF);
+
+  static Color get lightGrey => const Color(0xffE1E2E4);
+  static Color get grey => const Color(0xffA1A3A6);
+  static Color get darkgrey => const Color(0xff747F8F);
 
   static Color get canvaColor => const Color(0xFFF3F3F3);
 //++++ ICONS COLOR +++++

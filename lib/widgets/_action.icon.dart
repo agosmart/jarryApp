@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jariapp/utils/colors.dart';
-import 'package:jariapp/utils/jari_icons.dart';
+import 'package:jariapp/themes/colors.dart';
+import 'package:jariapp/utils/jari_icons_v1.dart';
 
 class AppBarCustom {
   //+++++++++++++++++++++

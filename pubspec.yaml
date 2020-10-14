@@ -70,7 +70,7 @@ flutter:
   fonts:
     - family: JariIcons
       fonts:
-        - asset: assets/fonts/JariIcons.ttf
+        - asset: assets/fonts/JariIcons-v2.ttf
 
     - family: Bariol
       fonts:

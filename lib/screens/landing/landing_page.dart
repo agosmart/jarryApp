@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/screens/home/home.page.dart';
-import 'package:jariapp/utils/colors.dart';
+import 'package:jariapp/themes/colors.dart';
+ 
 import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';

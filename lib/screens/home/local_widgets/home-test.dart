@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/category.dart';
 import 'package:jariapp/services/category.dart';
-import 'package:jariapp/utils/colors.dart';
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/utils/jari_icons.dart';
+import 'package:jariapp/themes/colors.dart';
+
+import 'package:jariapp/utils/jari_icons_v2.dart';
 // import 'package:jariapp/utils/_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   double w;
   double h;
 
-static const List<IconData> iconsMenuList = [
+  static const List<IconData> iconsMenuList = [
     JariIcons.danone_ferme,
     JariIcons.danone_fromage,
     JariIcons.danone_jus,

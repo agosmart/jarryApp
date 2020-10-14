@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jariapp/utils/_jari_icons.dart';
 import 'package:jariapp/utils/colors.dart';
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key key}) : super(key: key);
+class CustomAppBarTitle extends StatelessWidget {
+  const CustomAppBarTitle({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

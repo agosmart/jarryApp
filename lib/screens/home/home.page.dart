@@ -1,17 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/category.dart';
 import 'package:jariapp/screens/products/products.page.dart';
 import 'package:jariapp/services/category.dart';
-import 'package:jariapp/services/exeptions/exeptions.dart';
-import 'package:jariapp/utils/colors.dart';
+import 'package:jariapp/themes/colors.dart';
+
 import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/utils/jari_icons.dart';
-import 'package:jariapp/widgets/_custom.appbar.dart';
-import 'package:jariapp/widgets/animations/action.icon.dart';
+import 'package:jariapp/utils/jari_icons_v2.dart';
+
+import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
 // import 'package:jariapp/utils/_text.dart';
 
@@ -92,15 +90,16 @@ class _HomePageState extends State<HomePage> {
         //+++++
 
         appBar: AppBar(
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
           leading: null,
           automaticallyImplyLeading: false,
-          elevation: 6,
-          centerTitle: true,
+          brightness: Brightness.light,
 
-          title: AppBarCustom.logoHeader(),
-          actions: AppBarCustom.actionIcon(),
+          centerTitle: CustomAppBar.centerTitle,
+          backgroundColor: CustomAppBar.backgroundColor,
+          elevation: CustomAppBar.elevation,
+          toolbarHeight: CustomAppBar.toolbarHeight,
+          title: CustomAppBar.logoHeader(),
+          actions: <Widget>[CustomAppBar.builsActionIcons()],
           // title: Image.asset(
           //   'assets/images/logo-jari-only.png',
           //   //fit: BoxFit.scaleDown,

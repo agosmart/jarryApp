@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jariapp/services/products.dart';
-import 'package:jariapp/utils/colors.dart';
-import 'package:jariapp/utils/jari_icons.dart';
+import 'package:jariapp/themes/colors.dart';
+
+import 'package:jariapp/utils/jari_icons_v1.dart';
 import 'package:provider/provider.dart';
 
-// class AppBarCustom {
+// class CustomAppBarIcons {
 
 // }
 
-class AppBarCustom extends StatelessWidget {
-  const AppBarCustom({Key key}) : super(key: key);
+class CustomAppBarIcons extends StatelessWidget {
+  const CustomAppBarIcons({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

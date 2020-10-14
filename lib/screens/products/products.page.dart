@@ -3,12 +3,14 @@ import 'package:jariapp/models/product..dart';
 import 'package:jariapp/screens/products/product.details.page.dart';
 import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
+import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/_jari_icons.dart';
-import 'package:jariapp/utils/colors.dart';
 
 import 'package:jariapp/utils/helpers.dart';
 
-import 'package:jariapp/widgets/animations/action.icon.dart';
+import 'package:jariapp/widgets/_appbar.icons.dart';
+import 'package:jariapp/widgets/constants.dart';
+import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -76,14 +78,18 @@ class _ProductsPageState extends State<ProductsPage> {
 
       appBar: AppBar(
         brightness: Brightness.light,
-        backgroundColor: Colors.white,
+
         // leading: null,
-        automaticallyImplyLeading: true,
-        elevation: 6,
-        centerTitle: true,
         iconTheme: IconThemeData(color: AppColors.icongray),
-        title: AppBarCustom.logoHeader(),
-        actions: AppBarCustom.actionIcon(),
+        backgroundColor: CustomAppBar.backgroundColor,
+        automaticallyImplyLeading: true,
+        centerTitle: CustomAppBar.centerTitle,
+
+        elevation: CustomAppBar.elevation,
+        toolbarHeight: CustomAppBar.toolbarHeight,
+        title: CustomAppBar.logoHeader(),
+        actions: <Widget>[CustomAppBar.builsActionIcons()],
+        // toolbarHeight: 80.0,
       ),
 
       //-----------------

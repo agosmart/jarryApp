@@ -4,9 +4,11 @@ import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
-import 'package:jariapp/utils/colors.dart';
-import 'package:jariapp/widgets/animations/action.icon.dart';
+import 'package:jariapp/themes/colors.dart';
+
+import 'package:jariapp/widgets/_appbar.icons.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
+import 'package:jariapp/widgets/custom.appbar.dart';
 //import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,7 +39,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   CartItem _cart;
   int _productId;
   String _productName;
-  double _price;
+  double _priceUnit;
   String _image;
   //---------
   ProductsProvider _productsProvider;
@@ -56,7 +58,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     //*************************************
     _productId = _currentProd.productId;
     _productName = _currentProd.productName;
-    _price = _currentProd.unitPrice;
+    _priceUnit = _currentProd.unitPrice;
     _image = _currentProd.image;
     //*************************************
     /*
@@ -96,16 +98,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
       appBar: AppBar(
         brightness: Brightness.light,
-        backgroundColor: Colors.white,
-        toolbarHeight: 80.0,
         // leading: null,
         automaticallyImplyLeading: true,
 
-        elevation: 1,
-        centerTitle: true,
         iconTheme: IconThemeData(color: AppColors.icongray),
+        backgroundColor: CustomAppBar.backgroundColor,
         // title: AppBarCustom.logoHeader(),
-        actions: <Widget>[AppBarCustom()],
+        centerTitle: CustomAppBar.centerTitle,
+
+        elevation: CustomAppBar.elevation,
+        toolbarHeight: CustomAppBar.toolbarHeight,
+        // title: CustomAppBar.logoHeader(),
+        actions: <Widget>[CustomAppBar.builsActionIcons()],
+
         /*
           title: Text(
             'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
@@ -126,7 +131,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           // width: double.infinity,
           child: Text(
             //  'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
-            '$_productName',
+            '$_productName  ',
             style: TextStyle(
               color: AppColors.darkblue2,
               fontSize: 16.0,
@@ -304,7 +309,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 child: RichText(
                                   text: TextSpan(children: [
                                     TextSpan(
-                                        text: '${_price.toStringAsFixed(2)}',
+                                        text:
+                                            '${_priceUnit.toStringAsFixed(2)}',
                                         style: TextStyle(
                                           color: AppColors.white,
                                           fontSize: 20.0,
@@ -364,17 +370,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 //final qty =  _productsProvider.getNumOfItems(productId);
 
                                 final _qty = numOfItems;
-                                final _total = _qty * _price;
+                                final _pricetotal = _qty * _priceUnit;
 
                                 bool _isProductExist = _productsProvider
                                     .isProductExist(_productId);
 
                                 if (_isProductExist) {
                                   _productsProvider.updateProductCart(
-                                      _productId, _qty, _total);
+                                      _productId, _qty, _pricetotal);
                                 } else {
-                                  _cart = CartItem(
-                                      _productId, _productName, _qty, _total);
+                                  _cart = CartItem(_productId, _productName,
+                                      _qty, _pricetotal);
                                   _productsProvider.addProductToCart(_cart);
                                 }
 
@@ -562,7 +568,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               text: TextSpan(children: [
                 TextSpan(
                   // text: '$getTotalePrice',
-                  text: '${(numOfItems * _price).toStringAsFixed(2)}',
+                  text: '${(numOfItems * _priceUnit).toStringAsFixed(2)}',
                   style: TextStyle(
                     color: AppColors.white,
                     fontSize: 24.0,

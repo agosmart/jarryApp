@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/utils/colors.dart';
+import 'package:jariapp/themes/colors.dart';
 
 const Color colorus = const Color(0xFFFFFFFF);
 const Color progColorus = const Color(0xFF0088A9);

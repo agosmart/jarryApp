@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/utils/jari_icons.dart';
+import 'package:jariapp/utils/jari_icons_v1.dart';
 
 class HomePage extends StatelessWidget {
   @override
