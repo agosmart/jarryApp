@@ -391,7 +391,7 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (BuildContext context, int index) {
         //----------
         final category = categoryList[index];
-        final categoryName = category.familleName.toUpperCase();
+        final categoryName = category.categoryName.toUpperCase();
         // final iconId = ((category.familleId) - 1).toInt();
         return _buildCategoryItem(categoryName, index);
         //----------

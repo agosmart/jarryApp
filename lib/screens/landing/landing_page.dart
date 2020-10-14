@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/screens/home/home.page.dart';
 import 'package:jariapp/themes/colors.dart';
- 
+
 import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';
@@ -266,8 +266,8 @@ class _LandingPageState extends State<LandingPage>
     //CustomFadeTranslateAnimation()
     return CustomFadeTranslateAnimation(
       begin: 200.0,
-      delay: 4000, //millisecondes
-      duration: 2000, //millisecondes
+      delay: 1200, //millisecondes
+      duration: 1500, //millisecondes
       widthContent: 100.0,
       heightContent: 100.0,
       childContent: Container(
@@ -297,7 +297,17 @@ class _LandingPageState extends State<LandingPage>
                                 color: Colors.white,
                                 size: 30.0,
                               )
-                            : Center(),
+                            : Container(
+                                height: 12.0,
+                                width: 6.0,
+                                alignment: Alignment.topCenter,
+                                child: Image.asset(
+                                  'assets/images/logo-jari1.webp',
+                                  //fit: BoxFit.scaleDown,
+                                  height: 6.0,
+                                  width: 6.0,
+                                ),
+                              ),
                       ),
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(

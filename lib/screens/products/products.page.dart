@@ -4,12 +4,8 @@ import 'package:jariapp/screens/products/product.details.page.dart';
 import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/_jari_icons.dart';
 
 import 'package:jariapp/utils/helpers.dart';
-
-import 'package:jariapp/widgets/_appbar.icons.dart';
-import 'package:jariapp/widgets/constants.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
 
@@ -170,7 +166,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                 ),
                               ),
                             ),
-                            Spacer(flex: 2),
+                            Spacer(flex: 1),
                             //....... Product RESULT  .......
                             Expanded(
                               flex: 2,
@@ -280,8 +276,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                           right: 16.0,
                                           top: 8.0,
                                           bottom: 8.0),
+                                      //..............................
                                       title: Text(
-                                        _productsList[index].productName,
+                                        '${_productsList[index].productName}',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),

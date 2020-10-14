@@ -1,14 +1,14 @@
 class Category {
   //++++
-  int familleId;
-  String familleName;
+  int categoryId;
+  String categoryName;
   // int iconId;
 
   //+++++
-  Category({this.familleId, this.familleName});
+  Category({this.categoryId, this.categoryName});
 
   Category.fromJson(Map<String, dynamic> jsonObject) {
-    this.familleId = jsonObject['familleId'];
-    this.familleName = jsonObject['familleName'];
+    this.categoryId = jsonObject['familleId'];
+    this.categoryName = jsonObject['familleName'];
   }
 }

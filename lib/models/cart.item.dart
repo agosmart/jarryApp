@@ -5,8 +5,10 @@ class CartItem {
   String productName;
   int qty;
   double priceTotal;
+  String image;
 
-  CartItem(this.productId, this.productName, this.qty, this.priceTotal);
+  CartItem(
+      this.productId, this.productName, this.qty, this.priceTotal, this.image);
 
   CartItem.fromJson(Map<String, dynamic> jsonObject) {
     /* print('||||||||||||||||||||||||||||');
@@ -19,6 +21,8 @@ class CartItem {
     this.productName = jsonObject['productName'];
     this.qty = (jsonObject['qty']).toInt();
     this.priceTotal = jsonObject['priceTotal'];
+    this.image = jsonObject['image'];
+
     /*
       print('_ _ _ _ _ _ _ * CartItem * _ _ _ _ _ _ _ _ ');
       print('[ product 1 >>>> ] ->  ${jsonObject['product']}');

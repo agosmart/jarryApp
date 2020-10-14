@@ -9,6 +9,7 @@ import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/widgets/_appbar.icons.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
+import 'package:jariapp/widgets/title.text.dart';
 //import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
 import 'package:page_transition/page_transition.dart';
@@ -104,7 +105,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         iconTheme: IconThemeData(color: AppColors.icongray),
         backgroundColor: CustomAppBar.backgroundColor,
         // title: AppBarCustom.logoHeader(),
-        centerTitle: CustomAppBar.centerTitle,
+        centerTitle: false, //  CustomAppBar.centerTitle,
 
         elevation: CustomAppBar.elevation,
         toolbarHeight: CustomAppBar.toolbarHeight,
@@ -128,6 +129,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         title: Container(
           //color: Colors.red,
           padding: const EdgeInsets.all(0),
+          margin: const EdgeInsets.all(0),
+          width: double.infinity,
           // width: double.infinity,
           child: Text(
             //  'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
@@ -138,6 +141,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               fontWeight: FontWeight.w600,
               // color: _catColor,
             ),
+
             softWrap: true,
             overflow: TextOverflow.visible,
             textAlign: TextAlign.left,
@@ -380,7 +384,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       _productId, _qty, _pricetotal);
                                 } else {
                                   _cart = CartItem(_productId, _productName,
-                                      _qty, _pricetotal);
+                                      _qty, _pricetotal, _image);
                                   _productsProvider.addProductToCart(_cart);
                                 }
 
@@ -402,15 +406,22 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   SizedBox(
                                     width: 16.0,
                                   ),
-                                  Text(
-                                    'CONFIRMER',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontFamily: 'Poppins',
-                                      letterSpacing: 2,
-                                      color: AppColors.gold,
-                                    ),
+                                  TitleText(
+                                    text: 'Confirmer',
+                                    color: AppColors.gold,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    letterSpacing: 2.0,
                                   ),
+                                  // Text(
+                                  //   'CONFIRMER',
+                                  //   style: TextStyle(
+                                  //     fontSize: 18,
+                                  //     fontFamily: 'Poppins',
+                                  //     letterSpacing: 2,
+                                  //     color: AppColors.gold,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
