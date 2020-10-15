@@ -30,7 +30,7 @@ class CartItemsPage extends StatelessWidget {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
 
-    _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+    _productsProvider = Provider.of<ProductsProvider>(context, listen: true);
     _cartlist = [..._productsProvider.getCartItems];
 
     //++++
@@ -155,7 +155,7 @@ class CartItemsPage extends StatelessWidget {
                 ],
               ),
 
-//..........
+        //..........
 
         //++++++++++++++++++++++++++++
       ),
@@ -199,9 +199,9 @@ class CartItemsPage extends StatelessWidget {
         );
       },
       //++++++++++++++++++++
-      onDismissed: (_) {
+      /*  onDismissed: (_) {
         _cartlist = [..._productsProvider.getCartItems];
-      },
+      }, */
       //++++++++++++++++++++
       direction: DismissDirection.endToStart,
       //++++++++++++++++++++

@@ -21,9 +21,8 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> _products = [];
   Product _currentProduct;
 
-  int _numOfItems;
-  //int _total;
-  //int _price = 10;
+  //int _numOfItems;
+
   //......
   /*
   get getTotalPrice => _total;
@@ -70,13 +69,13 @@ class ProductsProvider extends ChangeNotifier {
     // return result;
   }
 
-  // get getNumOfItems => _numOfItems;
+  /*    get getNumOfItems => _numOfItems;
   setNumOfItems(int value) {
     print('_numOfItems ::: $_numOfItems');
     _numOfItems = value;
     // setTotalPrice(_numOfItems);
     notifyListeners();
-  }
+  } */
 
   int getNumOfItems(int id) {
     try {
@@ -128,9 +127,24 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   removeProductFromCart(id) {
-    _cartItems..removeWhere((item) => item.productId == id);
+    print('_cartItems BEFOR :: ${_cartItems.length}');
+    //+++++
+    _cartItems.removeWhere((item) => item.productId == id);
+    //+++++
+    print('_cartItems AFTER:: ${_cartItems.length}');
     notifyListeners();
   }
+
+  clearCartItems() {
+    _cartItems.clear();
+    print('_cartItems CLEARED:: ${_cartItems.length}');
+    notifyListeners();
+  }
+  // Future<bool> clearCartItems() {
+  //   _cartItems.clear();
+  //   notifyListeners();
+  //   return Future.value(true);
+  // }
 
   //++++++++++++++++++++++++++++
 

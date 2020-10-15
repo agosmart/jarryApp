@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jariapp/screens/cart.items/cart.items.page.dart';
-import 'package:jariapp/screens/home/local_widgets/home-test.dart';
+
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/themes/colors.dart';
 
@@ -16,6 +16,7 @@ class CustomAppBar {
   static const double elevation = 6.0;
   static const backgroundColor = Colors.white;
   static const bool centerTitle = true;
+  ProductsProvider _productsProvider;
 
   //++++++++++++ BUTTON LOGO APP +++++++++++++
   static Widget logoHeader() {
@@ -38,6 +39,9 @@ class CustomAppBar {
             _productsProvider.getItemCount,
         builder: (context, getItemCount, child) {
           print('TOTAL PRICE ::::$getItemCount');
+
+          //_productsProvider =
+
           //.............
           return getItemCount <= 0
               ? Center()
@@ -49,13 +53,18 @@ class CustomAppBar {
                         alignment: Alignment.center,
                         icon: Icon(
                           JariIcons.trash_2,
-                          size: 32.0,
+                          size: 30.0,
                           color: AppColors.icongray,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           //++++++
 
-                          Navigator.of(context).pop();
+                          await Provider.of<ProductsProvider>(context,
+                                  listen: false)
+                              .clearCartItems();
+
+                          //  Navigator.of(context).pop();
+                          //-------
 
                           /*
                           Navigator.push(

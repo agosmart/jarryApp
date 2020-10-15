@@ -6,13 +6,11 @@ import 'package:jariapp/services/category.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/themes/colors.dart';
 
-import 'package:jariapp/widgets/_appbar.icons.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/title.text.dart';
 //import 'package:jariapp/widgets/animations/action.icon.dart';
 import 'package:provider/provider.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ProductDetailsPage extends StatefulWidget {
 //   //-------
@@ -45,13 +43,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   //---------
   ProductsProvider _productsProvider;
   CategoryProvider _categoryProvider;
-  //............
+
+  bool _isProgress;
+
+  //............ _controller for InteractiveViewer .................
+
+  final TransformationController _controller = TransformationController();
+  //.........................
 
   @override
   void initState() {
     // ignore: todo
     // TODO: implement initState
     super.initState();
+    //++++++++++++++++++++++++++++++++
+    _isProgress = false;
     //.......... INIT Products / category Provider ...............
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
@@ -254,17 +260,26 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                       ),
 
-                      //::::::::::::: PRODUCT IMAGE :::::::::::::::::
-                      child: Container(
-                        width: w,
-                        padding: const EdgeInsets.all(16.0),
-                        child: FadeInImage(
-                          fadeInCurve: Curves.decelerate,
-                          fadeInDuration: const Duration(milliseconds: 700),
-                          placeholder:
-                              AssetImage('assets/images/logo-jari1.webp'),
-                          image: AssetImage('assets/images/products/${_image}'),
-                          fit: BoxFit.contain,
+                      //::::::::::::: PRODUCT IMAGE + Zoom :::::::::::::::::
+                      child: InteractiveViewer(
+                        //+++++
+
+                        maxScale: 2.0,
+                        minScale: 1.0,
+                        transformationController: _controller,
+                        //++++
+                        child: Container(
+                          width: w,
+                          padding: const EdgeInsets.all(16.0),
+                          child: FadeInImage(
+                            fadeInCurve: Curves.decelerate,
+                            fadeInDuration: const Duration(milliseconds: 700),
+                            placeholder:
+                                AssetImage('assets/images/logo-jari1.webp'),
+                            image:
+                                AssetImage('assets/images/products/${_image}'),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                     ),
@@ -360,72 +375,85 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            width: w - (w / 10),
-                            height: 60,
-                            child: RaisedButton(
-                              //*+++++++++++++++...................++++++++++++++
-                              onPressed: () {
-                                // TODO: is product exist
-                                //?__1 - non : Add product
-                                //?__2 -oui : Update product
-                                //...
+                              width: w - (w / 10),
+                              height: 60,
+                              child: RaisedButton(
+                                //*+++++++++++++++...................++++++++++++++
+                                onPressed: _isProgress
+                                    ? () {}
+                                    : () async {
+                                        //?TODO : is product exist
+                                        //?__1 - non : Add product
+                                        //?__2 -oui : Update product
+                                        //......................
+                                        setState(() {
+                                          _isProgress = true;
+                                        });
+                                        final _qty = numOfItems;
+                                        final _pricetotal = _qty * _priceUnit;
+                                        bool _isProductExist = _productsProvider
+                                            .isProductExist(_productId);
 
-                                //final productId = _productId;
-                                //final qty =  _productsProvider.getNumOfItems(productId);
+                                        await Future.delayed(
+                                            Duration(milliseconds: 1000), () {
+                                          setState(() {
+                                            _isProgress = false;
+                                          });
+                                        });
+                                        //......................
+                                        if (_isProductExist) {
+                                          await _productsProvider
+                                              .updateProductCart(_productId,
+                                                  _qty, _pricetotal);
+                                        } else {
+                                          _cart = CartItem(
+                                              _productId,
+                                              _productName,
+                                              _qty,
+                                              _pricetotal,
+                                              _image);
+                                          await _productsProvider
+                                              .addProductToCart(_cart);
+                                        }
 
-                                final _qty = numOfItems;
-                                final _pricetotal = _qty * _priceUnit;
+                                        //..
+                                      },
+                                //*+++++++++++++++...................++++++++++++++
+                                color: AppColors.darkblue4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
 
-                                bool _isProductExist = _productsProvider
-                                    .isProductExist(_productId);
-
-                                if (_isProductExist) {
-                                  _productsProvider.updateProductCart(
-                                      _productId, _qty, _pricetotal);
-                                } else {
-                                  _cart = CartItem(_productId, _productName,
-                                      _qty, _pricetotal, _image);
-                                  _productsProvider.addProductToCart(_cart);
-                                }
-
-                                //..
-                              },
-                              //*+++++++++++++++...................++++++++++++++
-                              color: AppColors.darkblue4,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24.0)),
-
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.check,
-                                    color: AppColors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 16.0,
-                                  ),
-                                  TitleText(
-                                    text: 'Confirmer',
-                                    color: AppColors.gold,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    letterSpacing: 2.0,
-                                  ),
-                                  // Text(
-                                  //   'CONFIRMER',
-                                  //   style: TextStyle(
-                                  //     fontSize: 18,
-                                  //     fontFamily: 'Poppins',
-                                  //     letterSpacing: 2,
-                                  //     color: AppColors.gold,
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            ),
-                          ),
+                                child: _isProgress
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: AppColors.white,
+                                        ),
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.check,
+                                            color: AppColors.white,
+                                          ),
+                                          SizedBox(
+                                            width: 16.0,
+                                          ),
+                                          TitleText(
+                                            text: 'Confirmer',
+                                            color: AppColors.gold,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            letterSpacing: 2.0,
+                                          ),
+                                        ],
+                                      ),
+                                //...........................................
+                              )),
                         ),
                       ),
                     ),
@@ -516,7 +544,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   decoration: BoxDecoration(
                     color: numOfItems <= numOfItemsMin
                         //? AppColors.darkblue.withOpacity(0.5)
-                        ? AppColors.pinck
+                        ? AppColors.orange
                         : AppColors.darkblue.withOpacity(0.5),
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),
