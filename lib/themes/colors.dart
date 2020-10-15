@@ -24,6 +24,7 @@ abstract class AppColors {
 
   static const Color titleTextColor = const Color(0xff1d2635);
   static const Color subTitleTextColor = const Color(0xff797878);
+  static const Color icongray_1 = const Color(0xFF9299A5);
 
   static const Color orange = Color(0xffE65829);
 

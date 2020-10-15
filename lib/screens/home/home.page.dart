@@ -63,23 +63,25 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //++++
+    //++++++++++++++++++++++++++++++++++++++++
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
-
+    //+++++++++++++++++++++++++++++++++++++++++
     return WillPopScope(
       onWillPop: () async => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                  title: Text('Êtes-vous sûr de vouloir quitter ?'),
-                  actions: <Widget>[
-                    RaisedButton(
-                        child: Text('Quitter'),
-                        onPressed: () => Navigator.of(context).pop(true)),
-                    RaisedButton(
-                        child: Text('Annuler'),
-                        onPressed: () => Navigator.of(context).pop(false)),
-                  ])),
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Êtes-vous sûr de vouloir quitter ?'),
+          actions: <Widget>[
+            RaisedButton(
+                child: Text('Quitter'),
+                onPressed: () => Navigator.of(context).pop(true)),
+            RaisedButton(
+                child: Text('Annuler'),
+                onPressed: () => Navigator.of(context).pop(false)),
+          ],
+        ),
+      ),
       child: Scaffold(
         // backgroundColor: Colors.grey[100],
 

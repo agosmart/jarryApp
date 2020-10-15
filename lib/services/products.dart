@@ -17,7 +17,7 @@ class ProductsProvider extends ChangeNotifier {
   // init() {
   //   _numOfItems = 1;
   // }
-  List<CartItem> _cart = [];
+  List<CartItem> _cartItems = [];
   List<Product> _products = [];
   Product _currentProduct;
 
@@ -36,11 +36,11 @@ class ProductsProvider extends ChangeNotifier {
 //......
 
   bool isProductExist(int id) {
-    //if (_cart.length <= 0) return false;
+    //if (_cartItems.length <= 0) return false;
 
     try {
-      return _cart.indexOf(
-                  _cart?.firstWhere((CartItem e) => e?.productId == id)) >=
+      return _cartItems.indexOf(
+                  _cartItems?.firstWhere((CartItem e) => e?.productId == id)) >=
               0 ??
           false;
     } catch (e) {
@@ -48,19 +48,19 @@ class ProductsProvider extends ChangeNotifier {
     }
 
     /* var item =
-        _cart.indexOf(_cart?.firstWhere((CartItem e) => e?.productId == id));
+        _cartItems.indexOf(_cartItems?.firstWhere((CartItem e) => e?.productId == id));
 
     return item >= 0 ? true : false;
  */
-    /* return _cart.length <= 0
+    /* return _cartItems.length <= 0
         ? false
-        : _cart.indexOf(_cart?.firstWhere((e) => e.productId == id)) == -1
+        : _cartItems.indexOf(_cartItems?.firstWhere((e) => e.productId == id)) == -1
             ? false
             : true;
      */
-    //  return _cart.every((e) => e.idProduct == id);
+    //  return _cartItems.every((e) => e.idProduct == id);
     // bool result = false;
-    // for (var item in _cart) {
+    // for (var item in _cartItems) {
     //   if (item.idProduct == id)
     //     result = true;
     //   else
@@ -86,11 +86,11 @@ class ProductsProvider extends ChangeNotifier {
       //...........
       bool _isExist = isProductExist(id);
       numItems =
-          _isExist ? _cart.firstWhere((e) => e.idProduct == id)?.qty : null;
+          _isExist ? _cartItems.firstWhere((e) => e.idProduct == id)?.qty : null;
 
       return numItems;
       */
-      return _cart?.firstWhere((e) => e.productId == id)?.qty;
+      return _cartItems?.firstWhere((e) => e.productId == id)?.qty;
     } catch (e) {
       return null;
     }
@@ -106,8 +106,8 @@ class ProductsProvider extends ChangeNotifier {
 
 //......
 
-  get getItemCount => _cart.length;
-  get getCartItems => _cart;
+  get getItemCount => _cartItems.length;
+  get getCartItems => _cartItems;
 //......
   Product get currentProduct => _currentProduct;
   setCurrentProduct(Product value) {
@@ -116,14 +116,19 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   addProductToCart(CartItem cart) {
-    _cart.add(cart);
+    _cartItems.add(cart);
     notifyListeners();
   }
 
   updateProductCart(int id, int qty, double priceTotal) {
-    CartItem item = _cart.firstWhere((e) => e.productId == id);
+    CartItem item = _cartItems.firstWhere((e) => e.productId == id);
     item.qty = qty;
     item.priceTotal = priceTotal;
+    notifyListeners();
+  }
+
+  removeProductFromCart(id) {
+    _cartItems..removeWhere((item) => item.productId == id);
     notifyListeners();
   }
 

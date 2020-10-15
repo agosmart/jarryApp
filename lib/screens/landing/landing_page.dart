@@ -134,8 +134,12 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   Widget build(BuildContext context) {
+    //+++++++++++++++++++++++++++++++++++++++++
+
     _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
+
+    //++++++++++++++++++++++++++++++++++++++++++++
     return Scaffold(
       body: Container(
         //color: Colors.red,
