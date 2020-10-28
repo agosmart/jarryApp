@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
+import 'package:jariapp/screens/lacation/location.page.dart';
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -380,6 +381,19 @@ class CartItemsPage extends StatelessWidget {
               //*+++++++++++++++...................++++++++++++++
               onPressed: () {
                 //..
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    //-------------------------------------------------
+                    builder: (BuildContext context) {
+                      return LocationPage();
+                    },
+                    fullscreenDialog: true,
+
+                    //--------------------------------------------------
+                  ),
+                );
                 //..
               },
               //*+++++++++++++++...................++++++++++++++
