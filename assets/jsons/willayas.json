@@ -1,0 +1,202 @@
+{
+    "status": "Success",
+    "code": 200,
+    "message": "Successfully",
+    "data": [
+        {
+            "id": 1,
+            "wilayaName": "Adrar"
+        },
+        {
+            "id": 2,
+            "wilayaName": "Chlef "
+        },
+        {
+            "id": 3,
+            "wilayaName": "Laghouat"
+        },
+        {
+            "id": 4,
+            "wilayaName": "Oum El Bouaghi"
+        },
+        {
+            "id": 5,
+            "wilayaName": "Batna"
+        },
+        {
+            "id": 6,
+            "wilayaName": "Bejaia"
+        },
+        {
+            "id": 7,
+            "wilayaName": "Biskra"
+        },
+        {
+            "id": 8,
+            "wilayaName": "Béchar"
+        },
+        {
+            "id": 9,
+            "wilayaName": "Blida"
+        },
+        {
+            "id": 10,
+            "wilayaName": "Bouira"
+        },
+        {
+            "id": 11,
+            "wilayaName": "Tamanrasset"
+        },
+        {
+            "id": 12,
+            "wilayaName": "Tébessa"
+        },
+        {
+            "id": 13,
+            "wilayaName": "Tlemcen"
+        },
+        {
+            "id": 14,
+            "wilayaName": "Tiaret "
+        },
+        {
+            "id": 15,
+            "wilayaName": "Tizi Ouzou"
+        },
+        {
+            "id": 16,
+            "wilayaName": "Alger"
+        },
+        {
+            "id": 17,
+            "wilayaName": "Djelfa"
+        },
+        {
+            "id": 18,
+            "wilayaName": "Jijel"
+        },
+        {
+            "id": 19,
+            "wilayaName": "Setif"
+        },
+        {
+            "id": 20,
+            "wilayaName": "Saida"
+        },
+        {
+            "id": 21,
+            "wilayaName": "Skikda"
+        },
+        {
+            "id": 22,
+            "wilayaName": "SidI BEL-ABBES"
+        },
+        {
+            "id": 23,
+            "wilayaName": "Annaba"
+        },
+        {
+            "id": 24,
+            "wilayaName": "Guelma"
+        },
+        {
+            "id": 25,
+            "wilayaName": "Constantine"
+        },
+        {
+            "id": 26,
+            "wilayaName": "Media"
+        },
+        {
+            "id": 27,
+            "wilayaName": "Mostaganem"
+        },
+        {
+            "id": 28,
+            "wilayaName": "M'Sila"
+        },
+        {
+            "id": 29,
+            "wilayaName": "Mascara"
+        },
+        {
+            "id": 30,
+            "wilayaName": "Ouargla"
+        },
+        {
+            "id": 31,
+            "wilayaName": "Oran"
+        },
+        {
+            "id": 32,
+            "wilayaName": "El Bayadh"
+        },
+        {
+            "id": 33,
+            "wilayaName": "Illizi"
+        },
+        {
+            "id": 34,
+            "wilayaName": "Bordj Bou Arreridj"
+        },
+        {
+            "id": 35,
+            "wilayaName": "Boumerdes"
+        },
+        {
+            "id": 36,
+            "wilayaName": "El-Tarf"
+        },
+        {
+            "id": 37,
+            "wilayaName": "Tindouf"
+        },
+        {
+            "id": 38,
+            "wilayaName": "Tissemsilt"
+        },
+        {
+            "id": 39,
+            "wilayaName": "El-Oued"
+        },
+        {
+            "id": 40,
+            "wilayaName": "Khenchela"
+        },
+        {
+            "id": 41,
+            "wilayaName": "Souk Ahras"
+        },
+        {
+            "id": 42,
+            "wilayaName": "Tipaza"
+        },
+        {
+            "id": 43,
+            "wilayaName": "Mila"
+        },
+        {
+            "id": 44,
+            "wilayaName": "Ain Defla"
+        },
+        {
+            "id": 45,
+            "wilayaName": "Naama"
+        },
+        {
+            "id": 46,
+            "wilayaName": "Ain Témouchent"
+        },
+        {
+            "id": 47,
+            "wilayaName": "Ghardaia"
+        },
+        {
+            "id": 48,
+            "wilayaName": "Relizane"
+        }
+    ]
+}
+
+
+

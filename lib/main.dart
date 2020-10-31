@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
 import 'package:jariapp/services/category.dart';
+import 'package:jariapp/services/location.api.dart';
+
 import 'package:jariapp/services/products.dart';
 import 'package:provider/provider.dart';
 //import 'package:jariapp/old/start_page_ripple.dart';
@@ -24,10 +26,12 @@ class MyApp extends StatelessWidget {
           create: (_) => CategoryProvider(),
           lazy: false,
         ),
+        ChangeNotifierProvider<LocationProvider>(
+          create: (_) => LocationProvider(),
+          lazy: false,
+        ),
       ],
       builder: (context, child) {
-
-        
         return MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,

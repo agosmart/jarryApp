@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/screens/lacation/location.page.dart';
+
 import 'package:jariapp/services/products.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -9,6 +9,7 @@ import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/show.dialogue.dart';
 import 'package:jariapp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
+import 'package:jariapp/screens/lacation/location.page.dart';
 
 class CartItemsPage extends StatelessWidget {
   //....
@@ -36,132 +37,134 @@ class CartItemsPage extends StatelessWidget {
 
     //++++
 
-    return Scaffold(
-      // backgroundColor: Colors.grey[100],
+    return SafeArea(
+      child: Scaffold(
+        // backgroundColor: Colors.grey[100],
 
-      // backgroundColor: AppColors.canvaColor,
+        // backgroundColor: AppColors.canvaColor,
 
-      //+++++ APP BAR ++++++++++++++++++++++++++++
-      appBar: AppBar(
-        brightness: Brightness.light,
+        //+++++ APP BAR ++++++++++++++++++++++++++++
+        appBar: AppBar(
+          brightness: Brightness.light,
 
-        // leading: null,
-        iconTheme: IconThemeData(color: AppColors.icongray),
-        backgroundColor: CustomAppBar.backgroundColor,
-        automaticallyImplyLeading: true,
-        centerTitle: CustomAppBar.centerTitle,
+          // leading: null,
+          iconTheme: IconThemeData(color: AppColors.icongray),
+          backgroundColor: CustomAppBar.backgroundColor,
+          automaticallyImplyLeading: true,
+          centerTitle: CustomAppBar.centerTitle,
 
-        elevation: CustomAppBar.elevation,
-        toolbarHeight: CustomAppBar.toolbarHeight,
-        title: CustomAppBar.logoHeader(),
-        // actions: <Widget>[CustomAppBar.builsActionIcons()],
-        actions: <Widget>[CustomAppBar.builsActionIconsClear()],
-        // toolbarHeight: 80.0,
-      ),
-
-      //+++++ APP BAR ++++++++++++++++++++++++++++
-
-      body: SafeArea(
-        /*
-        //++++++++++++++++++++++++++++
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                _cartItems(),
-                Divider(
-                  thickness: 1,
-                  height: 70,
-                ),
-                _price(),
-                SizedBox(height: 30),
-                _submitButton(context),
-              ],
-            ),
-          ),
+          elevation: CustomAppBar.elevation,
+          toolbarHeight: CustomAppBar.toolbarHeight,
+          title: CustomAppBar.logoHeader(),
+          // actions: <Widget>[CustomAppBar.builsActionIcons()],
+          actions: <Widget>[CustomAppBar.builsActionIconsClear()],
+          // toolbarHeight: 80.0,
         ),
-        //++++++++++++++++++++++++++++
-      */
 
-        //     child: Selector<ProductsProvider, List<CartItem>>(
-        //         //............
-        //         selector: (context, _productsProvider) =>
-        //             _productsProvider.getCartItems,
-        //         builder: (_, currentCartItems, child) {
-        //           print('TOTAL ITEMS IN CART ::::$currentCartItems');
+        //+++++ APP BAR ++++++++++++++++++++++++++++
 
-        //           //final List<CartItem> _carruentCartItem = getCartItems;
-        //  }),
-        child: _cartlist.length <= 0
-            ? Container(
-                color: AppColors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeInImage(
-                      placeholder: AssetImage(
-                        'assets/images/sopping-box-empty.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                      // placeholder: null,
-                      image: AssetImage(
-                        'assets/images/sopping-box-empty.jpg',
-                      ),
-                    ),
-                    //++++++++ MESSAGE ++++
-                    TitleText(
-                      color: AppColors.darkgrey,
-                      fontSize: 24.0,
-                      uppercase: false,
-                      fontWeight: FontWeight.w400,
-                      text: 'Votre panier est vide !',
-                    ),
-                    //++++++++ EMPTY SPACE ++++
-                    SizedBox(
-                      height: h / 4,
-                    )
-                  ],
-                ),
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //............
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: _cartlist.length,
-                        itemBuilder: (context, index) {
-                          //=========
-                          final item = _cartlist[index];
-                          //=========
-                          return _buildItemTile(context, index, item);
-                        }),
-                  ),
-                  //...........
+        body: SafeArea(
+          /*
+          //++++++++++++++++++++++++++++
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  _cartItems(),
                   Divider(
-                      thickness: 6,
-                      height: 6,
-                      color: AppColors.icongray.withOpacity(0.25)),
-                  //...........
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 16.0),
-                    child: _price(),
+                    thickness: 1,
+                    height: 70,
                   ),
-
-                  //   _submitButton(context),
-                  _submitButtonOrder(context),
-                  // SizedBox(height: 30),
+                  _price(),
+                  SizedBox(height: 30),
+                  _submitButton(context),
                 ],
               ),
+            ),
+          ),
+          //++++++++++++++++++++++++++++
+        */
 
-        //..........
+          //     child: Selector<ProductsProvider, List<CartItem>>(
+          //         //............
+          //         selector: (context, _productsProvider) =>
+          //             _productsProvider.getCartItems,
+          //         builder: (_, currentCartItems, child) {
+          //           print('TOTAL ITEMS IN CART ::::$currentCartItems');
 
-        //++++++++++++++++++++++++++++
+          //           //final List<CartItem> _carruentCartItem = getCartItems;
+          //  }),
+          child: _cartlist.length <= 0
+              ? Container(
+                  color: AppColors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FadeInImage(
+                        placeholder: AssetImage(
+                          'assets/images/sopping-box-empty.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                        // placeholder: null,
+                        image: AssetImage(
+                          'assets/images/sopping-box-empty.jpg',
+                        ),
+                      ),
+                      //++++++++ MESSAGE ++++
+                      TitleText(
+                        color: AppColors.darkgrey,
+                        fontSize: 24.0,
+                        uppercase: false,
+                        fontWeight: FontWeight.w400,
+                        text: 'Votre panier est vide !',
+                      ),
+                      //++++++++ EMPTY SPACE ++++
+                      SizedBox(
+                        height: h / 4,
+                      )
+                    ],
+                  ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //............
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: _cartlist.length,
+                          itemBuilder: (context, index) {
+                            //=========
+                            final item = _cartlist[index];
+                            //=========
+                            return _buildItemTile(context, index, item);
+                          }),
+                    ),
+                    //...........
+                    Divider(
+                        thickness: 6,
+                        height: 6,
+                        color: AppColors.icongray.withOpacity(0.25)),
+                    //...........
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 16.0),
+                      child: _price(),
+                    ),
+
+                    //   _submitButton(context),
+                    _submitButtonOrder(context),
+                    // SizedBox(height: 30),
+                  ],
+                ),
+
+          //..........
+
+          //++++++++++++++++++++++++++++
+        ),
+
+        // padding: const EdgeInsets
       ),
-
-      // padding: const EdgeInsets
     );
   }
 
@@ -382,14 +385,14 @@ class CartItemsPage extends StatelessWidget {
               onPressed: () {
                 //..
 
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     //-------------------------------------------------
                     builder: (BuildContext context) {
                       return LocationPage();
                     },
-                    fullscreenDialog: true,
+                    //  fullscreenDialog: true,
 
                     //--------------------------------------------------
                   ),

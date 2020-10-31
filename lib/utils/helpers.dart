@@ -5,6 +5,7 @@ const Color colorus = const Color(0xFFFFFFFF);
 const Color progColorus = const Color(0xFF0088A9);
 
 Widget error(String error, [IconData icons]) {
+  print('error::: $error');
   return Container(
     padding: const EdgeInsets.all(20.0),
     child: Center(
