@@ -24,7 +24,7 @@ class CustomFadeTranslateAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Anim::: FADE + TRANSLATION - Y');
+    // print('Anim::: FADE + TRANSLATION - Y');
     //+++++
     if (begin == null) begin = -100.0;
     // print('delay:::$delay + $widthContent');

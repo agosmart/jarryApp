@@ -173,7 +173,12 @@ class _LocationPageState extends State<LocationPage> {
                                       setState(() {
                                         _myStateId = id;
                                         _myCityId = null;
+
+                                        citiesList = [];
                                         _myLocalityId = null;
+
+                                        //++++ HIDE BTN SUBMIT +++++
+                                        localitiesList = [];
 
                                         // _getCitiesList();
                                         print('_myStateId : $_myStateId');
@@ -298,7 +303,7 @@ class _LocationPageState extends State<LocationPage> {
                                                 color: AppColors.white),
                                           ),
                                           onChanged: (String id) {
-                                            print('NEW STATE NAME ===  $id');
+                                            print('NEW CITY NAME ===  $id');
 
                                             //......SET STATE ID ..........
                                             _locationProvider
@@ -310,6 +315,9 @@ class _LocationPageState extends State<LocationPage> {
                                             setState(() {
                                               _myCityId = id;
                                               _myLocalityId = null;
+
+                                              //++++ HIDE BTN SUBMIT +++++
+                                              localitiesList = [];
                                               // _myStateId = null;
                                               print('_myCityId : $_myCityId');
                                             });
@@ -475,7 +483,11 @@ class _LocationPageState extends State<LocationPage> {
                   ),
             //.........................
 
-            localitiesList.length <= 0 ? Center() : _submitButtonOrder(context),
+            localitiesList.length <= 0
+                ? Center()
+                : _locationProvider.getcurrentLocalityName != null
+                    ? _submitButtonOrder(context)
+                    : Center(child: Text('choisir une commune')),
 
             //++++++++++++++++ END ++++++++++++++++
           ],
@@ -506,7 +518,10 @@ class _LocationPageState extends State<LocationPage> {
             child: RaisedButton(
               //*+++++++++++++++...................++++++++++++++
               onPressed: () {
+                var localityName = _locationProvider.getcurrentLocalityName;
+                print('localityName >>>>>> $localityName');
                 //..
+                return null;
 
                 Navigator.pushReplacement(
                   context,

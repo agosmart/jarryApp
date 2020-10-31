@@ -32,7 +32,7 @@ class LocationProvider extends ChangeNotifier {
   String _currentStateName;
   String _currentStateID;
   //....
-  String _currentCityArea;
+  String _currentCityName;
   String _currentCityID;
   //....
   String _currentLocalityName;
@@ -43,7 +43,7 @@ class LocationProvider extends ChangeNotifier {
   String get getcurrentStateID => _currentStateID;
   String get getcurrentStateName => _currentStateName;
   String get getcurrentCityID => _currentCityID;
-  String get getcurrentCityName => _currentCityArea;
+  String get getcurrentCityName => _currentCityName;
   String get getcurrentLocalityID => _currentLocalityID;
   String get getcurrentLocalityName => _currentLocalityName;
 
@@ -64,7 +64,7 @@ class LocationProvider extends ChangeNotifier {
 
   setCurrentCityName(String id) {
     print('====== Current City Name ========= $id');
-    _currentCityArea =
+    _currentCityName =
         _citiesList.firstWhere((CityArea e) => e.id.toString() == id).cityName;
     notifyListeners();
   }
@@ -77,19 +77,26 @@ class LocationProvider extends ChangeNotifier {
 
 //.....
 
-  setCurrentLocalityName(String value) {
-    print('====== Current State Name ========= $value');
-    _currentLocalityName = value;
+  setCurrentLocalityName(String id) {
+    _currentLocalityName = _localitiesList
+        .firstWhere((LocalityArea e) => e.id.toString() == id)
+        .localityName;
+    print('====== Current Locality Name ========= $_currentLocalityName');
+
     notifyListeners();
   }
 
   setCurrentLocalityID(String id) {
     print('====== Current State ID ========= $id');
-    _currentLocalityID = _localitiesList
-        .firstWhere((LocalityArea e) => e.id.toString() == id)
-        .localityName;
+    _currentLocalityID = id;
+
     notifyListeners();
   }
+
+  // resetLocationData() {
+  //   _currentCityID = null;
+  //   _currentLocalityID = null;
+  // }
 
   //+++++++++++++++++++ GET STATES FROM API +++++++++++++++++++++++++++
   Future<List<StateArea>> fetchStatesAreaAPI() async {
@@ -99,6 +106,12 @@ class LocationProvider extends ChangeNotifier {
     //  print("++++++++ ENTER LIST STATES ++++++++++ ");
     //----------------------------------------------------------------
     _statesList.clear();
+    /* _citiesList.clear();
+    _localitiesList.clear();
+    _currentLocalityID = null;*/
+
+    // _citiesList.clear();
+    // _localitiesList.clear();
     //........
     try {
       var response = await http.get(baseURL,
@@ -116,7 +129,7 @@ class LocationProvider extends ChangeNotifier {
             for (var item in jsonObject['data']) {
               _statesList.add(StateArea.fromJson(item));
             }
-            print("+++++++  DISPLAY STATES LIST  +++++++++++ ");
+            //  print("+++++++  DISPLAY STATES LIST  +++++++++++ ");
             //  print('_statesList ==== ${jsonEncode(_statesList)}');
             notifyListeners();
 
@@ -164,6 +177,9 @@ class LocationProvider extends ChangeNotifier {
     //----------------------------------------------------------------
     //.......
     _citiesList.clear();
+    // _localitiesList.clear();
+    //  _currentLocalityID = null;
+
     //........
     try {
       // var response = await rootBundle.loadString('assets/jsons/cities.json');
@@ -186,8 +202,8 @@ class LocationProvider extends ChangeNotifier {
             }
 
             notifyListeners();
-            print("+++++++  DISPLAY CITIES LIST  +++++++++++ ");
-            print('_statesList ==== ${jsonEncode(_citiesList)}');
+            //   print("+++++++  DISPLAY CITIES LIST  +++++++++++ ");
+            //  print('_statesList ==== ${jsonEncode(_citiesList)}');
 
             return Future.value(_citiesList);
           }
@@ -224,8 +240,7 @@ class LocationProvider extends ChangeNotifier {
   ...................................................................*/
   Future<List<LocalityArea>> fetchLocalitiesAreaAPI() async {
     //..........
-    print(
-        'LOCALITY NAME::: $getcurrentCityName | State ID ::: $getcurrentCityID');
+    print('CITY NAME::: $getcurrentCityName | CITY ID ::: $getcurrentCityID');
     //.....
     String baseURL = BASEURL + '/communes/$getcurrentCityID';
     //---
@@ -255,8 +270,8 @@ class LocationProvider extends ChangeNotifier {
             }
 
             notifyListeners();
-            print("+++++++  DISPLAY LOCALITIES LIST  +++++++++++ ");
-            print('_localitiesList ==== ${jsonEncode(_localitiesList)}');
+            //    print("+++++++  DISPLAY LOCALITIES LIST  +++++++++++ ");
+            //  print('_localitiesList ==== ${jsonEncode(_localitiesList)}');
 
             return Future.value(_localitiesList);
           }
