@@ -524,9 +524,7 @@ class _LocationPageState extends State<LocationPage> {
     );
   }
 
-  //++++++++++++++++++++++++++++++++++
-
-  //++++++++++++++++++++++++++++++++++++++++
+  //+++++++++++++++++ SUBMIT BUTTON +++++++++++++++++++++++
 
   Widget _submitButtonOrder(BuildContext context) {
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
@@ -544,9 +542,14 @@ class _LocationPageState extends State<LocationPage> {
             width: w - (w / 10),
             height: 60,
             child: RaisedButton(
-              //*+++++++++++++++...................++++++++++++++
+              //........
               onPressed: () {
-                var localityName = _locationProvider.getcurrentLocalityName;
+                //*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+                final localityName = _locationProvider.getcurrentLocalityName;
+                final localityID = _locationProvider.getcurrentLocalityID;
+
+                //*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 print('localityName >>>>>> $localityName');
                 //..
                 // return null;

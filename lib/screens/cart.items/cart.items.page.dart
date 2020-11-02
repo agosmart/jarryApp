@@ -9,7 +9,7 @@ import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/show.dialogue.dart';
 import 'package:jariapp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
-import 'package:jariapp/screens/lacation/location.page.dart';
+import 'package:jariapp/screens/location/location.page.dart';
 
 class CartItemsPage extends StatelessWidget {
   //....

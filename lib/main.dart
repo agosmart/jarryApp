@@ -31,10 +31,16 @@ class MyApp extends StatelessWidget {
           create: (_) => LocationProvider(),
           lazy: false,
         ),
+
         ChangeNotifierProvider<MapProvider>(
           create: (_) => MapProvider(),
           lazy: false,
         ),
+
+        // ProxyProvider<LocationProvider, MapProvider>(
+        //   update: (_, locality, __) =>
+        //       MapProvider(locality.getcurrentLocalityID),
+        // ),
       ],
       builder: (context, child) {
         return MaterialApp(
