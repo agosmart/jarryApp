@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/category.dart';
+
 import 'package:http/http.dart' as http;
+
 import 'package:jariapp/models/location.dart';
 import 'package:jariapp/utils/constantes.dart';
-import 'package:jariapp/utils/helpers.dart';
 
 import 'exeptions/exeptions.dart';
 
@@ -40,6 +40,7 @@ class LocationProvider extends ChangeNotifier {
   //......
 
   //......
+
   String get getcurrentStateID => _currentStateID;
   String get getcurrentStateName => _currentStateName;
   String get getcurrentCityID => _currentCityID;
@@ -97,6 +98,70 @@ class LocationProvider extends ChangeNotifier {
   //   _currentCityID = null;
   //   _currentLocalityID = null;
   // }
+
+//+++++++++++++++++++ GET STATES FROM LOCAL +++++++++++++++++++++++++++
+  Future<List<StateArea>> fetchStatesAreaLocal() async {
+    await Future.delayed(Duration(milliseconds: 700));
+    //---
+    print("++++++++ ENTER LIST STATES ++++++++++ ");
+    //----------------------------------------------------------------
+    // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
+
+    //.......
+    _statesList.clear();
+    //........
+    try {
+      var response = await rootBundle.loadString('assets/jsons/wilayas.json');
+      var jsonObject = jsonDecode(response);
+
+      //........
+      switch (jsonObject['code']) {
+        case 200:
+          //...
+          if (jsonObject['data'].length == 0) {
+            throw ResourceNotFound('willayas');
+            //...
+          } else {
+            for (var item in jsonObject['data']) {
+              _statesList.add(StateArea.fromJson(item));
+            }
+
+            notifyListeners();
+
+            print('_statesList ==== ${jsonEncode(_statesList)}');
+            // _usersOfGroup =  List.from(jsonObject['data']).map((e) => e.UserGroupData.fromJson());
+            // print('ITEM !!!!!! ${_statesList.length}');
+            print("+++++++  DISPLAY CARD INFO CATEGORIES  +++++++++++ ");
+
+            return Future.value(_statesList);
+          }
+          //..
+          break;
+        case 404:
+          throw ResourceNotFound('Willaya');
+          break;
+        case 111:
+          throw ConnectionRefused();
+          break;
+        case 301:
+        case 302:
+        case 303:
+          throw RedirectionFound();
+          break;
+        default:
+          print('List of users group is null :::::: ${jsonObject['data']}');
+          return null;
+
+          break;
+        //..
+      }
+    } catch (e) {
+      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+      //return Future.error('Erreur de connexion au serveur. veuillez réessayer');
+      // StateArea result = StateArea(stateName: e.toString(), id: 0);
+      // return Future.value([result]);
+    }
+  }
 
   //+++++++++++++++++++ GET STATES FROM API +++++++++++++++++++++++++++
   Future<List<StateArea>> fetchStatesAreaAPI() async {
@@ -156,7 +221,7 @@ class LocationProvider extends ChangeNotifier {
         //..
       }
     } catch (e) {
-      throw Exception(': Erreur de connexion, merci de réessayer');
+      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
       //return Future.error('Erreur de connexion au serveur. veuillez réessayer');
       // StateArea result = StateArea(stateName: 'Erreur de connexion', id: 0);
       // return Future.value([result]);
@@ -229,7 +294,7 @@ class LocationProvider extends ChangeNotifier {
       }
     } catch (e) {
       //return Future.error('Erreur de connexion au serveur. veuillez réessayer');
-      throw Exception(': Erreur de connexion, merci de réessayer');
+      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
       // CityArea result = CityArea(CityArea: e.toString(), id: 0);
       // return Future.value([result]);
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/category.dart';
-import 'package:jariapp/services/category.dart';
+import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/jari_icons_v2.dart';

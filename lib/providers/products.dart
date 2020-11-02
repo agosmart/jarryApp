@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/product..dart';
-import 'package:jariapp/services/exeptions/exeptions.dart';
+import 'package:jariapp/providers/exeptions/exeptions.dart';
 
 class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:jariapp/models/location.dart';
 import 'package:jariapp/screens/map/map.page.dart';
-import 'package:jariapp/services/exeptions/exeptions.dart';
+import 'package:jariapp/providers/exeptions/exeptions.dart';
 
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/helpers.dart';
@@ -14,8 +14,8 @@ import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/title.text.dart';
 //-----
 import 'package:provider/provider.dart';
-//import 'package:jariapp/services/location.local.dart';
-import 'package:jariapp/services/location.api.dart';
+//import 'package:jariapp/providers/location.local.dart';
+import 'package:jariapp/providers/location.api.dart';
 
 class LocationPage extends StatefulWidget {
   @override
@@ -50,10 +50,10 @@ class _LocationPageState extends State<LocationPage> {
     _locationProvider = Provider.of<LocationProvider>(context, listen: false);
     //============================================
     /*++++++---- GET LIST of STATE from API +++++++*/
-    _futureFetchingStates = _locationProvider.fetchStatesAreaAPI();
+    // _futureFetchingStates = _locationProvider.fetchStatesAreaAPI();
     //...............................................
     /*++++++---- GET LIST of STATE from LOCAL JSON  +++++++*/
-    // _futureFetchingStates = _locationProvider.fetchStateAreaLocal();
+    _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
   }
 
   @override
@@ -159,7 +159,7 @@ class _LocationPageState extends State<LocationPage> {
                                       color: AppColors.white,
                                       fontSize: 21,
                                     ),
-                                    hint: Text('Séléctionner votre Willaya',
+                                    hint: Text('Séléctionner votre Wilaya',
                                         style:
                                             TextStyle(color: AppColors.white)),
                                     onChanged: (String id) {
@@ -208,8 +208,36 @@ class _LocationPageState extends State<LocationPage> {
 
                                     items: statesList?.map((StateArea item) {
                                           return DropdownMenuItem(
-                                            child: Text(item.stateName ??
-                                                'Empty Willaya Name'),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                //......
+                                                CircleAvatar(
+                                                  backgroundColor: AppColors
+                                                      .black
+                                                      .withAlpha(35),
+                                                  child: Text(
+                                                    item.id
+                                                        .toString()
+                                                        .padRight(2),
+                                                    style: TextStyle(
+                                                        color: AppColors.white,
+                                                        fontSize: 21),
+                                                  ),
+                                                ),
+                                                //......
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  child: Text(item.stateName ??
+                                                      'Wilaya'),
+                                                ),
+                                              ],
+                                            ),
+
+                                            //
                                             value: item.id.toString(),
                                           );
                                         })?.toList() ??
@@ -521,9 +549,9 @@ class _LocationPageState extends State<LocationPage> {
                 var localityName = _locationProvider.getcurrentLocalityName;
                 print('localityName >>>>>> $localityName');
                 //..
-                return null;
+                // return null;
 
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     //-------------------------------------------------

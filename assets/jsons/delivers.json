@@ -1,0 +1,61 @@
+{
+    "status": "Success",
+"code": 200,
+"message": "Successfully",
+"data": [
+    {
+        "livreurId": 1,
+        "lastname": "Mouallem",
+        "firstname": "Zoheir",
+        "mobile1": "0560159966",
+        "mobile2": "0560159967",
+        "latitude": "36.7254317",
+        "longitude": "3.1001214",
+        "wilaya": {
+            "wilayaId": 16,
+            "wilayaName": "Alger"
+        },
+        "daira": {
+            "dairaId": 208,
+            "dairaName": "HUSSEIN DEY"
+        },
+        "communes": [
+            {
+                "communeId": 574,
+                "communeName": "HUSSEIN DEY"
+            },
+            {
+                "communeId": 575,
+                "communeName": "KOUBA"
+            }
+        ]
+    },
+    {
+        "livreurId": 2,
+        "lastname": "Amaouch",
+        "firstname": "Salim",
+        "mobile1": "0560159968",
+        "mobile2": "0560159969",
+        "latitude": "36.7250103",
+        "longitude": "3.1026212",
+        "wilaya": {
+            "wilayaId": 16,
+            "wilayaName": "Alger"
+        },
+        "daira": {
+            "dairaId": 208,
+            "dairaName": "HUSSEIN DEY"
+        },
+        "communes": [
+            {
+                "communeId": 574,
+                "communeName": "HUSSEIN DEY"
+            },
+            {
+                "communeId": 575,
+                "communeName": "KOUBA"
+            }
+        ]
+    }
+]
+}

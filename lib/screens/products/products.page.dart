@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/screens/products/product.details.page.dart';
-import 'package:jariapp/services/category.dart';
-import 'package:jariapp/services/products.dart';
+import 'package:jariapp/providers/category.dart';
+import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/helpers.dart';

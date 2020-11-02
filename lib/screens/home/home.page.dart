@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/category.dart';
 import 'package:jariapp/screens/products/products.page.dart';
-import 'package:jariapp/services/category.dart';
+import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/helpers.dart';

@@ -71,7 +71,7 @@ class CityArea {
     this.cityName = objJson['dairaName'];
   }
   //+++++
-  toJson() {
+  Map<String, dynamic> toJson() {
     var data = {};
     data['id'] = this.id;
     data['dairaName'] = this.cityName;

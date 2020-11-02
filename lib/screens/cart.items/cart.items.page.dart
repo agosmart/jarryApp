@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
 
-import 'package:jariapp/services/products.dart';
+import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
@@ -385,7 +385,7 @@ class CartItemsPage extends StatelessWidget {
               onPressed: () {
                 //..
 
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     //-------------------------------------------------

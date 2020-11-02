@@ -9,6 +9,7 @@ class TitleText extends StatelessWidget {
   final FontWeight fontWeight;
   final double letterSpacing;
   final bool uppercase;
+  final TextAlign textAlign;
   //-----------
   const TitleText({
     Key key,
@@ -18,6 +19,7 @@ class TitleText extends StatelessWidget {
     this.fontWeight = FontWeight.w800,
     this.letterSpacing = 0.0,
     this.uppercase = true,
+    this.textAlign = TextAlign.left,
   }) : super(key: key);
 
   //+++++++++++++++++++++
@@ -32,6 +34,7 @@ class TitleText extends StatelessWidget {
         fontWeight: fontWeight,
         color: color,
       ), */
+      textAlign: textAlign,
       style: TextStyle(
         fontFamily: 'Poppins',
         fontSize: fontSize,
