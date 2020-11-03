@@ -49,8 +49,9 @@ class _HomePageState extends State<HomePage> {
 
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     //============================================
-    _futureFetchingCat = _categoryProvider.fetchCategoriesLocal();
-    //  _futureFetchingCat = categoryProvider.fetchCategoriesLocal(); //_getFutureCategories();
+    // _futureFetchingCat = _categoryProvider.fetchCategoriesLocal();
+    _futureFetchingCat =
+        _categoryProvider.fetchCategoriesAPI(); //_getFutureCategories();
     //============================================
   }
 
@@ -251,8 +252,8 @@ class _HomePageState extends State<HomePage> {
                             break;
                           case ConnectionState.waiting:
                           case ConnectionState.active:
-                            return Center();
-                            //   return loading(AppColors.akablueLight);
+                            // return Center();
+                            return loading(AppColors.akablueLight);
                             break;
                           case ConnectionState.done:
                             if (snapShot.hasError) {

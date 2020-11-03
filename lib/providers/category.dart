@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/category.dart';
+import 'package:jariapp/utils/constantes.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'exeptions/exeptions.dart';
 
@@ -55,8 +58,66 @@ class CategoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //++++++++++++++++++++++++++++
+  //++++++++++++++++++ GET CATEGORIES FROM API  ++++++++++++++++++++++
 
+  Future<List<Category>> fetchCategoriesAPI() async {
+    //---
+    print("++++++++ ENTER LIST Categories ++++++++++ ");
+    //----------------------------------------------------------------
+    //http://danone.cooffa.shop/api/v1/clients/familles
+    String baseURL = BASEURL + '/familles';
+    //.......
+    _categories.clear();
+    //........
+
+    try {
+      var response = await http.get(baseURL,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'});
+      var jsonObject = jsonDecode(response.body);
+
+      //........
+      switch (jsonObject['code']) {
+        case 200:
+          //...
+          if (jsonObject['data'].length == 0) {
+            throw ResourceNotFound('Categories');
+            //...
+          } else {
+            for (var item in jsonObject['data']) {
+              _categories.add(Category.fromJson(item));
+            }
+            notifyListeners();
+            print(_categories);
+
+            print('ITEM !!!!!! ${_categories.length}');
+            return Future.value(_categories);
+          }
+          //..
+          break;
+        case 404:
+          throw ResourceNotFound('Coursiers');
+          break;
+        case 111:
+          throw ConnectionRefused();
+          break;
+        case 301:
+        case 302:
+        case 303:
+          throw RedirectionFound();
+          break;
+        default:
+          print('List of users group is null :::::: ${jsonObject['data']}');
+          return null;
+
+          break;
+        //..
+      }
+    } catch (e) {
+      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+    }
+  }
+
+  //++++++++++++++++++ GET CATEGORIES FROM LOCAL  +++++++++++++++++++++++
   Future<List<Category>> fetchCategoriesLocal() async {
     Future.delayed(Duration(seconds: 5));
     //---

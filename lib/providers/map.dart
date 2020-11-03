@@ -83,9 +83,10 @@ class MapProvider extends ChangeNotifier {
 
   //+++++++++++++++++++ GET DELIVERS LIST FROM API +++++++++++++++++++++++++++
 
-  Future<List<Deliver>> fetchDeliversDatasAPI(localityId) async {
+  Future<List<Deliver>> fetchDeliversDatasAPI({String localityId}) async {
     //---
-    print("++++++++ ENTER LIST DELIVERS ++++++++++ ");
+
+    print("++++++++ ENTER LIST DELIVERS / localityId :$localityId ++++++++++ ");
     //----------------------------------------------------------------
     // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
 
@@ -107,25 +108,49 @@ class MapProvider extends ChangeNotifier {
   };
 */
     //-----------------------------------------------------
-
-    var params = {
-      "clientMobile": "0550778822",
-      "latitude": "123",
-      "longitude": "987",
-      "order": [
-        {"productId": "25", "quantity": "15", "unitPrice": "20"},
-        {"productId": "26", "quantity": "8", "unitPrice": "35"},
-        {"productId": "31", "quantity": "9", "unitPrice": "135"}
-      ]
-    };
+    final json = const JsonCodec();
+    var order = [
+      {"productId": "25", "quantity": "15", "unitPrice": "20"},
+      {"productId": "26", "quantity": "8", "unitPrice": "35"},
+      {"productId": "31", "quantity": "9", "unitPrice": "135"}
+    ];
 
     final queryParameters = {
-      'name': 'Bob',
-      'age': '87',
+      "clientMobile": "0560159966",
+      "latitude": "36.725",
+      "longitude": "3.1004224",
+      "order": json.encode(order)
     };
 
-    final uri = Uri.http(BASEURL, '/livreurs/$localityId', queryParameters);
-    final headerData = {HttpHeaders.contentTypeHeader: 'application/json'};
+    //final queryParameters1 ='clientMobile=0560159966&latitude=36.725&longitude=3.1004224&order= "[{"productId": "25", "quantity": "15", "unitPrice": "20"},{"productId": "26", "quantity": "8", "unitPrice": "35"},{"productId": "31", "quantity": "9", "unitPrice": "135"}]';
+/*
+    final queryParameters1 = '''{
+        'clientMobile':'0560159966',
+        'latitude':'36.725',
+        'longitude':'3.1004224',
+        'order'= '[
+          [{"productId": "25", "quantity": "15", "unitPrice": "20"},{"productId": "26", "quantity": "8", "unitPrice": "35"},{"productId": "31", "quantity": "9", "unitPrice": "135"}]
+        ]'
+        }''';
+
+        */
+    //final queryParametersObj = json. (queryParameters);
+
+    /* ****************************************
+     NOTE : you sould avoid  to use 'http:// withe  Uri.http()   like this'http://danone.cooffa.shop' 
+     you get Error (Radix 10) , you need to use link without (http://)
+    
+    
+    *********************************  */
+    //localityId =575
+    final uri = Uri.http('danone.cooffa.shop',
+        '/api/v1/clients/livreurs/$localityId', queryParameters);
+    final headerData = {
+      // 'Content-Type': 'application/json;charset=UTF-8',
+      // 'Charset': 'utf-8'
+
+      HttpHeaders.contentTypeHeader: 'application/json'
+    };
 
 /*
   Uri uri = Uri.parse("http://theapiiamcalling:8000");
@@ -145,7 +170,7 @@ class MapProvider extends ChangeNotifier {
 
       var jsonData = json.decode(response.body);
 
-      print('---- slot: ${jsonData}');
+      print('---- slot: $jsonData');
 /*
     //........
     switch (jsonObject['code']) {
@@ -185,7 +210,8 @@ class MapProvider extends ChangeNotifier {
       //..
     }*/
     } catch (e) {
-      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+      print(e);
+      // throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
       //return Future.error('Erreur de connexion au serveur. veuillez réessayer');
       // StateArea result = StateArea(stateName: 'Erreur de connexion', id: 0);
       // return Future.value([result]);

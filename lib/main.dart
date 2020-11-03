@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 //import 'package:jariapp/old/start_page_ripple.dart';
 
 void main() {
+//----- Smooth Scrolling +++++++++
+  // GestureBinding.instance.resamplingEnabled = true;
   runApp(MyApp());
 }
 

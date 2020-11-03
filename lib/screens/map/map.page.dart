@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jariapp/models/deliver.dart';
+import 'package:jariapp/providers/location.api.dart';
 
 import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -25,6 +26,7 @@ class _MapPageState extends State<MapPage> {
   //+++++
   double h, w;
   List<Deliver> deliversList;
+  String _localityID;
   //............
 
   GoogleMapController mapController;
@@ -32,6 +34,7 @@ class _MapPageState extends State<MapPage> {
 
   Future<List<Deliver>> _futureFetchingDelivers;
   MapProvider _mapProvider;
+  LocationProvider _localityProvider;
 
   // initMarker(client) {
   //   mapController.clearMarkers().then((val) {
@@ -59,7 +62,21 @@ class _MapPageState extends State<MapPage> {
     //......
 
     deliversList = [];
+
     _mapProvider = Provider.of<MapProvider>(context, listen: false);
+
+    /*
+      //.............GET PROVIDER LOCATION   .................................
+    _localityProvider = Provider.of<LocationProvider>(context, listen: false);
+    //......................................................................
+    //.............GET CURRENT LOCALITY ID .................................
+    _localityID = _localityProvider.getcurrentLocalityID;
+    print('MAP => _localityID ::: $_localityID');
+    _futureFetchingDelivers =
+        _mapProvider.fetchDeliversDatasAPI(localityId: _localityID);
+        
+    */
+
     _futureFetchingDelivers = _mapProvider.fetchDeliversDatasLocal();
 
     //......
