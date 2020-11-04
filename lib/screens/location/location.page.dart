@@ -453,12 +453,10 @@ class _LocationPageState extends State<LocationPage> {
                                             color: AppColors.black,
                                             fontSize: 16,
                                           ),
-                                          hint: Expanded(
-                                            child: Text(
-                                              'Séléctionner votre Commune',
-                                              style: TextStyle(
-                                                  color: AppColors.black),
-                                            ),
+                                          hint: Text(
+                                            'Séléctionner votre Commune',
+                                            style: TextStyle(
+                                                color: AppColors.black),
                                           ),
                                           onChanged: (String id) {
                                             print('NEW LOCALITY NAME ===  $id');
