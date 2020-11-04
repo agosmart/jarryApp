@@ -69,15 +69,15 @@ class _MapPageState extends State<MapPage> {
     _localityProvider = Provider.of<LocationProvider>(context, listen: false);
     //......................................................................
     //.............GET CURRENT LOCALITY ID .................................
-    /*
+
     _localityID = _localityProvider.getcurrentLocalityID;
     print('MAP => _localityID ::: $_localityID');
     _futureFetchingDelivers =
         _mapProvider.fetchDeliversDatasAPI(localityId: _localityID);
-        */
 
+    /*
     _futureFetchingDelivers = _mapProvider.fetchDeliversDatasLocal();
-
+ */
     //......
     // allMarkers.add(
     //   Marker(
