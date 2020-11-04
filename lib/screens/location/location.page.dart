@@ -157,7 +157,7 @@ class _LocationPageState extends State<LocationPage> {
                                     icon: (null),
                                     style: TextStyle(
                                       color: AppColors.white,
-                                      fontSize: 21,
+                                      fontSize: 18,
                                     ),
                                     hint: Text('Séléctionner votre Wilaya',
                                         style:
@@ -223,7 +223,7 @@ class _LocationPageState extends State<LocationPage> {
                                                         .padRight(2),
                                                     style: TextStyle(
                                                         color: AppColors.white,
-                                                        fontSize: 21),
+                                                        fontSize: 18),
                                                   ),
                                                 ),
                                                 //......
@@ -322,7 +322,7 @@ class _LocationPageState extends State<LocationPage> {
                                           icon: (null),
                                           style: TextStyle(
                                             color: AppColors.white,
-                                            fontSize: 21,
+                                            fontSize: 18,
                                           ),
 
                                           hint: Text(
@@ -451,12 +451,14 @@ class _LocationPageState extends State<LocationPage> {
                                           icon: (null),
                                           style: TextStyle(
                                             color: AppColors.black,
-                                            fontSize: 21,
+                                            fontSize: 16,
                                           ),
-                                          hint: Text(
-                                            'Séléctionner votre Commune',
-                                            style: TextStyle(
-                                                color: AppColors.black),
+                                          hint: Expanded(
+                                            child: Text(
+                                              'Séléctionner votre Commune',
+                                              style: TextStyle(
+                                                  color: AppColors.black),
+                                            ),
                                           ),
                                           onChanged: (String id) {
                                             print('NEW LOCALITY NAME ===  $id');

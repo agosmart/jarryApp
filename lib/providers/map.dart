@@ -116,11 +116,11 @@ class MapProvider extends ChangeNotifier {
     ];
 
     final queryParameters = {
-      "clientMobile": "0560159966",
       "latitude": "36.725",
       "longitude": "3.1004224",
       "order": json.encode(order)
     };
+    print(queryParameters);
 
     //final queryParameters1 ='clientMobile=0560159966&latitude=36.725&longitude=3.1004224&order= "[{"productId": "25", "quantity": "15", "unitPrice": "20"},{"productId": "26", "quantity": "8", "unitPrice": "35"},{"productId": "31", "quantity": "9", "unitPrice": "135"}]';
 /*
@@ -143,13 +143,18 @@ class MapProvider extends ChangeNotifier {
     
     *********************************  */
     //localityId =575
-    final uri = Uri.http('danone.cooffa.shop',
-        '/api/v1/clients/livreurs/$localityId', queryParameters);
+    final uri = Uri.http(
+      'danone.cooffa.shop',
+      '/api/v1/clients/livreurs/$localityId',
+      queryParameters,
+    );
     final headerData = {
       // 'Content-Type': 'application/json;charset=UTF-8',
       // 'Charset': 'utf-8'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
 
-      HttpHeaders.contentTypeHeader: 'application/json'
+      // HttpHeaders.contentTypeHeader: 'application/json'
     };
 
 /*
@@ -165,7 +170,10 @@ class MapProvider extends ChangeNotifier {
     //....
     try {
       //var response = await http.get(baseURL, headers: headers);
-      final response = await http.get(uri, headers: headerData);
+      final response = await http.get(
+        uri,
+        headers: headerData,
+      );
       //var jsonObject = jsonDecode(response.body);
 
       var jsonData = json.decode(response.body);

@@ -65,17 +65,16 @@ class _MapPageState extends State<MapPage> {
 
     _mapProvider = Provider.of<MapProvider>(context, listen: false);
 
-    /*
-      //.............GET PROVIDER LOCATION   .................................
+    //.............GET PROVIDER LOCATION   .................................
     _localityProvider = Provider.of<LocationProvider>(context, listen: false);
     //......................................................................
     //.............GET CURRENT LOCALITY ID .................................
+    /*
     _localityID = _localityProvider.getcurrentLocalityID;
     print('MAP => _localityID ::: $_localityID');
     _futureFetchingDelivers =
         _mapProvider.fetchDeliversDatasAPI(localityId: _localityID);
-        
-    */
+        */
 
     _futureFetchingDelivers = _mapProvider.fetchDeliversDatasLocal();
 

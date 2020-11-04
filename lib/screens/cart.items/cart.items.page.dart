@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
-
+import 'package:jariapp/utils/constantes.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -37,134 +37,132 @@ class CartItemsPage extends StatelessWidget {
 
     //++++
 
-    return SafeArea(
-      child: Scaffold(
-        // backgroundColor: Colors.grey[100],
+    return Scaffold(
+      // backgroundColor: Colors.grey[100],
 
-        // backgroundColor: AppColors.canvaColor,
+      // backgroundColor: AppColors.canvaColor,
 
-        //+++++ APP BAR ++++++++++++++++++++++++++++
-        appBar: AppBar(
-          brightness: Brightness.light,
+      //+++++ APP BAR ++++++++++++++++++++++++++++
+      appBar: AppBar(
+        brightness: Brightness.light,
 
-          // leading: null,
-          iconTheme: IconThemeData(color: AppColors.icongray),
-          backgroundColor: CustomAppBar.backgroundColor,
-          automaticallyImplyLeading: true,
-          centerTitle: CustomAppBar.centerTitle,
+        // leading: null,
+        iconTheme: IconThemeData(color: AppColors.icongray),
+        backgroundColor: CustomAppBar.backgroundColor,
+        automaticallyImplyLeading: true,
+        centerTitle: CustomAppBar.centerTitle,
 
-          elevation: CustomAppBar.elevation,
-          toolbarHeight: CustomAppBar.toolbarHeight,
-          title: CustomAppBar.logoHeader(),
-          // actions: <Widget>[CustomAppBar.builsActionIcons()],
-          actions: <Widget>[CustomAppBar.builsActionIconsClear()],
-          // toolbarHeight: 80.0,
-        ),
+        elevation: CustomAppBar.elevation,
+        toolbarHeight: CustomAppBar.toolbarHeight,
+        title: CustomAppBar.logoHeader(),
+        // actions: <Widget>[CustomAppBar.builsActionIcons()],
+        actions: <Widget>[CustomAppBar.builsActionIconsClear()],
+        // toolbarHeight: 80.0,
+      ),
 
-        //+++++ APP BAR ++++++++++++++++++++++++++++
+      //+++++ APP BAR ++++++++++++++++++++++++++++
 
-        body: SafeArea(
-          /*
-          //++++++++++++++++++++++++++++
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  _cartItems(),
-                  Divider(
-                    thickness: 1,
-                    height: 70,
-                  ),
-                  _price(),
-                  SizedBox(height: 30),
-                  _submitButton(context),
-                ],
-              ),
+      body: SafeArea(
+        /*
+        //++++++++++++++++++++++++++++
+        child: Container(
+          padding: const EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                _cartItems(),
+                Divider(
+                  thickness: 1,
+                  height: 70,
+                ),
+                _price(),
+                SizedBox(height: 30),
+                _submitButton(context),
+              ],
             ),
           ),
-          //++++++++++++++++++++++++++++
-        */
+        ),
+        //++++++++++++++++++++++++++++
+      */
 
-          //     child: Selector<ProductsProvider, List<CartItem>>(
-          //         //............
-          //         selector: (context, _productsProvider) =>
-          //             _productsProvider.getCartItems,
-          //         builder: (_, currentCartItems, child) {
-          //           print('TOTAL ITEMS IN CART ::::$currentCartItems');
+        //     child: Selector<ProductsProvider, List<CartItem>>(
+        //         //............
+        //         selector: (context, _productsProvider) =>
+        //             _productsProvider.getCartItems,
+        //         builder: (_, currentCartItems, child) {
+        //           print('TOTAL ITEMS IN CART ::::$currentCartItems');
 
-          //           //final List<CartItem> _carruentCartItem = getCartItems;
-          //  }),
-          child: _cartlist.length <= 0
-              ? Container(
-                  color: AppColors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FadeInImage(
-                        placeholder: AssetImage(
-                          'assets/images/sopping-box-empty.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                        // placeholder: null,
-                        image: AssetImage(
-                          'assets/images/sopping-box-empty.jpg',
-                        ),
-                      ),
-                      //++++++++ MESSAGE ++++
-                      TitleText(
-                        color: AppColors.darkgrey,
-                        fontSize: 24.0,
-                        uppercase: false,
-                        fontWeight: FontWeight.w400,
-                        text: 'Votre panier est vide !',
-                      ),
-                      //++++++++ EMPTY SPACE ++++
-                      SizedBox(
-                        height: h / 4,
-                      )
-                    ],
-                  ),
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        //           //final List<CartItem> _carruentCartItem = getCartItems;
+        //  }),
+        child: _cartlist.length <= 0
+            ? Container(
+                color: AppColors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //............
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: _cartlist.length,
-                          itemBuilder: (context, index) {
-                            //=========
-                            final item = _cartlist[index];
-                            //=========
-                            return _buildItemTile(context, index, item);
-                          }),
+                    FadeInImage(
+                      placeholder: AssetImage(
+                        'assets/images/sopping-box-empty.jpg',
+                      ),
+                      fit: BoxFit.cover,
+                      // placeholder: null,
+                      image: AssetImage(
+                        'assets/images/sopping-box-empty.jpg',
+                      ),
                     ),
-                    //...........
-                    Divider(
-                        thickness: 6,
-                        height: 6,
-                        color: AppColors.icongray.withOpacity(0.25)),
-                    //...........
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 16.0),
-                      child: _price(),
+                    //++++++++ MESSAGE ++++
+                    TitleText(
+                      color: AppColors.darkgrey,
+                      fontSize: 24.0,
+                      uppercase: false,
+                      fontWeight: FontWeight.w400,
+                      text: 'Votre panier est vide !',
                     ),
-
-                    //   _submitButton(context),
-                    _submitButtonOrder(context),
-                    // SizedBox(height: 30),
+                    //++++++++ EMPTY SPACE ++++
+                    SizedBox(
+                      height: h / 4,
+                    )
                   ],
                 ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //............
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: _cartlist.length,
+                        itemBuilder: (context, index) {
+                          //=========
+                          final item = _cartlist[index];
+                          //=========
+                          return _buildItemTile(context, index, item);
+                        }),
+                  ),
+                  //...........
+                  Divider(
+                      thickness: 6,
+                      height: 6,
+                      color: AppColors.icongray.withOpacity(0.25)),
+                  //...........
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16.0),
+                    child: _price(),
+                  ),
 
-          //..........
+                  //   _submitButton(context),
+                  _submitButtonOrder(context),
+                  // SizedBox(height: 30),
+                ],
+              ),
 
-          //++++++++++++++++++++++++++++
-        ),
+        //..........
 
-        // padding: const EdgeInsets
+        //++++++++++++++++++++++++++++
       ),
+
+      // padding: const EdgeInsets
     );
   }
 
@@ -306,9 +304,29 @@ class CartItemsPage extends StatelessWidget {
               child: CircleAvatar(
                 backgroundColor: AppColors.white,
                 //backgroundImage:
-                child: item.image != '1.png'
-                    ? Image.asset('assets/images/products/${item.image}')
-                    : Image.asset('assets/images/products/3.png'),
+
+                child: Image.network(
+                  '${IMAGEURL + item.image}',
+                  //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
+
+                  errorBuilder: (BuildContext context, Object exception,
+                      StackTrace stackTrace) {
+                    // Appropriate logging or analytics, e.g.
+                    // myAnalytics.recordError(
+                    //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+                    //   exception,
+                    //   stackTrace,
+                    // );
+                    return Text(
+                      '😢',
+                      style: TextStyle(fontSize: 24),
+                    );
+                  },
+                ),
+
+                // child: item.image != '1.png'
+                //     ? Image.asset('assets/images/products/${item.image}')
+                //     : Image.asset('assets/images/products/3.png'),
               ),
               //=================
             ),

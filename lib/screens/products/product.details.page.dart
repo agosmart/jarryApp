@@ -5,6 +5,7 @@ import 'package:jariapp/models/product..dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
+import 'package:jariapp/utils/constantes.dart';
 
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
@@ -272,12 +273,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           width: w,
                           padding: const EdgeInsets.all(16.0),
                           child: FadeInImage(
+                            image: NetworkImage('${IMAGEURL + _image}',
+                                headers: {"header": "value"}),
+                            // image: AssetImage('assets/images/products/${_image}'),
                             fadeInCurve: Curves.decelerate,
-                            fadeInDuration: const Duration(milliseconds: 700),
+                            fadeInDuration: const Duration(milliseconds: 1700),
                             placeholder:
                                 AssetImage('assets/images/logo-jari1.webp'),
-                            image:
-                                AssetImage('assets/images/products/${_image}'),
+
                             fit: BoxFit.contain,
                           ),
                         ),

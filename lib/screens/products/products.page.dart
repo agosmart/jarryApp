@@ -4,6 +4,7 @@ import 'package:jariapp/screens/products/product.details.page.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
+import 'package:jariapp/utils/constantes.dart';
 
 import 'package:jariapp/utils/helpers.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
@@ -28,6 +29,7 @@ class _ProductsPageState extends State<ProductsPage> {
   Color _catColor;
   IconData _catIcon;
   String _catName;
+  String _categoryId;
 
   //------
   Future<List<Product>> _futureFetching;
@@ -42,10 +44,14 @@ class _ProductsPageState extends State<ProductsPage> {
     super.initState();
     _productsList = [];
     //.......... INIT Products / category Provider ...............
+    _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
+    _categoryId = _categoryProvider.currentCategoryID;
 
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     //.......... INIT FutureBuilder ...............
-    _futureFetching = _productsProvider.fetchProductsByCategoryLocal();
+    // _futureFetching = _productsProvider.fetchProductsByCategoryLocal();
+    _futureFetching =
+        _productsProvider.fetchProductsByCategoryAPI(categoryId: _categoryId);
     //-------------
   }
 
@@ -56,11 +62,9 @@ class _ProductsPageState extends State<ProductsPage> {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
 
-    _categoryProvider = Provider.of<CategoryProvider>(context);
-
     _catColor = _categoryProvider.currentCatColor;
     _catIcon = _categoryProvider.currentCatIcon;
-    _catName = _categoryProvider.currentCategory;
+    _catName = _categoryProvider.currentCategoryName;
 
     print('_catName ${_catName.toString()}');
 
@@ -360,19 +364,40 @@ class _ProductsPageState extends State<ProductsPage> {
 
                                         //=================
                                         child: CircleAvatar(
-                                          backgroundColor: AppColors.white,
+                                            backgroundColor: AppColors.white,
 
-                                          //backgroundImage:
-                                          child: _productsList[index].image !=
-                                                  '1.png'
-                                              ? Image.asset(
+                                            //backgroundImage:
+                                            child: Image.network(
+                                              '${IMAGEURL + _productsList[index].image}',
+                                              //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
+
+                                              errorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace stackTrace) {
+                                                // Appropriate logging or analytics, e.g.
+                                                // myAnalytics.recordError(
+                                                //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+                                                //   exception,
+                                                //   stackTrace,
+                                                // );
+                                                return Text(
+                                                  '😢',
+                                                  style:
+                                                      TextStyle(fontSize: 24),
+                                                );
+                                              },
+                                            )
+
+                                            /*asset(
                                                   'assets/images/products/${_productsList[index].image}')
                                               : Image.asset(
                                                   'assets/images/products/3.png'),
-                                          // backgroundImage: AssetImage(
-                                          //   'assets/images/products/${_productsList[index].image}',
-                                          // ),
-                                        ),
+                                            */
+                                            // backgroundImage: AssetImage(
+                                            //   'assets/images/products/${_productsList[index].image}',
+                                            // ),
+                                            ),
                                         //=================
                                       ),
                                     );

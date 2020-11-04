@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
               //   height: 10,
               // ),
               Text(
-                "Bienvenue sur Jari!",
+                "Bienvenue sur Jarry!",
                 style: TextStyle(
                     fontFamily: 'Bariol',
                     fontSize: 30,

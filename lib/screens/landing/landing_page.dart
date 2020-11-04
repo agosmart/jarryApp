@@ -162,17 +162,22 @@ class _LandingPageState extends State<LandingPage>
               ),
             ),
             //+++
+            /*
             Positioned(
               top: -15.0,
               left: -5.0,
               child: animateLeafsMulti(),
             ),
+            */
+
+            /*
             //++++
             Positioned(
               bottom: 10.0,
               right: 20.0,
               child: animateLeafs(),
             ),
+            */
 
             //+++
             Positioned(
@@ -183,6 +188,7 @@ class _LandingPageState extends State<LandingPage>
               ),
             ),
             //+++
+
             //+++++++++ BTN START +++++
             Positioned(
               top: _height / 2,
@@ -225,12 +231,14 @@ class _LandingPageState extends State<LandingPage>
     );
   }
 
+/*
   Widget animateLeafsMulti() {
     return CustomFadeScaleAnimation(
       delay: 2000, //millisecondes
-      duration: 3000, //millisecondes
-      // widthContent: _width,
-      // heightContent: _height,
+      //  duration: 3000, //millisecondes
+
+      duration: 1500, //millisecondes
+
       childContent: Container(
         // color: Colors.green,
         decoration: BoxDecoration(
@@ -265,7 +273,7 @@ class _LandingPageState extends State<LandingPage>
       ),
     );
   }
-
+*/
   Widget buttonStartHome() {
     //CustomFadeTranslateAnimation()
     return CustomFadeTranslateAnimation(

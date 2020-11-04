@@ -25,10 +25,10 @@ class _HomePageState extends State<HomePage> {
 
   static const List<IconData> iconsMenuList = [
     JariIcons.danone_ferme,
-    JariIcons.danone_fromage,
-    JariIcons.danone_jus,
-    JariIcons.danone_yaourt,
     JariIcons.danone_brasse,
+    JariIcons.danone_yaourt,
+    JariIcons.danone_jus,
+    JariIcons.danone_fromage,
     JariIcons.danone_dessert,
     JariIcons.danone_any,
   ];
@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                                   RichText(
                                     text: TextSpan(children: [
                                       TextSpan(
-                                        text: 'Sur ',
+                                        text: 'sur ',
                                         style: TextStyle(
                                           color: AppColors.darkblue,
                                           fontWeight: FontWeight.w400,
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: 'jari!',
+                                        text: 'Jarry!',
                                         style: TextStyle(
                                           // fontFamily: 'Bariol',
                                           color: AppColors.lightblue3,
@@ -394,9 +394,11 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (BuildContext context, int index) {
         //----------
         final category = categoryList[index];
+
+        final categoryId = category.categoryId.toString();
         final categoryName = category.categoryName.toUpperCase();
         // final iconId = ((category.familleId) - 1).toInt();
-        return _buildCategoryItem(categoryName, index);
+        return _buildCategoryItem(categoryName, categoryId, index);
         //----------
       },
     );
@@ -405,7 +407,7 @@ class _HomePageState extends State<HomePage> {
 //----------------------
   //++++
 
-  Widget _buildCategoryItem(categoryName, index) {
+  Widget _buildCategoryItem(categoryName, categoryId, index) {
     //+++++++
     final _index = index > 6 ? 7 : index;
     //+++++++
@@ -413,6 +415,7 @@ class _HomePageState extends State<HomePage> {
     final _color = AppColors.menuColorsList[_index];
     final _icon = iconsMenuList[_index];
     final _categoryName = categoryName;
+    final _categoryID = categoryId;
 
     //++++++
 
@@ -422,7 +425,9 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           //-------------------------------
 
-          _categoryProvider.setCurrentCategory(_categoryName);
+          _categoryProvider.setCurrentCategoryName(_categoryName);
+          _categoryProvider.setCurrentCategoryID(_categoryID);
+
           _categoryProvider.setCurrentCatColor(_color);
           _categoryProvider.setCurrentCatIcon(_icon);
 

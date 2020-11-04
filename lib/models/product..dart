@@ -21,7 +21,7 @@ class Product {
     this.productId = jsonObject['productId'];
     this.productName = jsonObject['productName'];
     this.familleId = jsonObject['familleId'];
-    this.unitPrice = jsonObject['unitPrice'];
+    this.unitPrice = double.tryParse((jsonObject['unitPrice']).toString());
     this.minimumOrder = jsonObject['minimumOrder'];
     this.image = jsonObject['image'];
   }

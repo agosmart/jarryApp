@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
+import 'package:jariapp/utils/constantes.dart';
+
+import 'package:http/http.dart' as http;
 
 class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++
@@ -189,7 +192,7 @@ class ProductsProvider extends ChangeNotifier {
         //..
         break;
       case 404:
-        throw ResourceNotFound('Coursiers');
+        throw ResourceNotFound('Produits');
         break;
       case 111:
         throw ConnectionRefused();
@@ -209,4 +212,67 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   //++++++++++++++++++++++++++++++
+
+  Future<List<Product>> fetchProductsByCategoryAPI({String categoryId}) async {
+    //---
+    print("++++++++ ENTER PRODUCTS / productId :$categoryId ++++++++++ ");
+    //  http: //danone.cooffa.shop/api/v1/clients/familles
+    String baseURL = BASEURL + '/products/famille/$categoryId';
+
+    //.......
+    _products.clear();
+    //........
+    try {
+      var response = await http.get(baseURL,
+
+          // headers: {'Content-Type': 'application/x-www-form-urlencoded'});
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          });
+
+      var jsonObject = jsonDecode(response.body);
+      //........
+      switch (jsonObject['code']) {
+        case 200:
+          //...
+          if (jsonObject['data'].length == 0) {
+            throw ResourceNotFound('Produits');
+            //...
+          } else {
+            for (var item in jsonObject['data']) {
+              _products.add(Product.fromJson(item));
+            }
+            //  print("+++++++  DISPLAY STATES LIST  +++++++++++ ");
+            //  print('_statesList ==== ${jsonEncode(_statesList)}');
+            notifyListeners();
+
+            return Future.value(_products);
+          }
+          //..
+          break;
+        case 404:
+          throw ResourceNotFound('Produits');
+          break;
+        case 111:
+          throw ConnectionRefused();
+          break;
+        case 301:
+        case 302:
+        case 303:
+          throw RedirectionFound();
+          break;
+        default:
+          print('List of users group is null :::::: ${jsonObject['data']}');
+          return null;
+
+          break;
+        //..
+      }
+    } catch (e) {
+      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+    }
+  }
+  //++++++++++++++++++++++++++++++
+
 }

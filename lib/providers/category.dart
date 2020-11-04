@@ -26,7 +26,8 @@ class CategoryProvider extends ChangeNotifier {
 
   List<Category> _categories = [];
   Color _currentCatColor;
-  String _currentCategory;
+  String _currentCategoryName;
+  String _currentCategoryID;
   IconData _currentIcon;
 
   //......
@@ -47,14 +48,25 @@ class CategoryProvider extends ChangeNotifier {
   }
 
   //......
-  String get currentCategory {
-    print('NAME CATEGORy FROM PROVIDER :::: $_currentCategory');
-    return _currentCategory;
+  String get currentCategoryID {
+    print('  CATEGORY ID FROM PROVIDER :::: $_currentCategoryID');
+    return _currentCategoryID;
   }
 
-  setCurrentCategory(String value) {
+  String get currentCategoryName {
+    print('NAME CATEGORY FROM PROVIDER :::: $_currentCategoryName');
+    return _currentCategoryName;
+  }
+
+  setCurrentCategoryName(String value) {
     print('====== CatName ========= $value');
-    _currentCategory = value;
+    _currentCategoryName = value;
+    notifyListeners();
+  }
+
+  setCurrentCategoryID(String value) {
+    print('====== CatName ========= $value');
+    _currentCategoryID = value;
     notifyListeners();
   }
 
