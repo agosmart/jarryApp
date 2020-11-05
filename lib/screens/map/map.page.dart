@@ -91,12 +91,19 @@ class _MapPageState extends State<MapPage> {
     // );
   }
 
+  final phoneNumber = TextEditingController();
+
+  getValues() {
+    print(phoneNumber.text);
+  }
+
   //............
   @override
   Widget build(BuildContext context) {
     //++++
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+
     //+++++
     return SafeArea(
       maintainBottomViewPadding: true,
@@ -181,200 +188,11 @@ class _MapPageState extends State<MapPage> {
                             //++++++++++++++++++++++++
                             print('Marker Tapped');
 
-                            return showModalBottomSheet(
-                              backgroundColor: AppColors.transparent,
-                              elevation: 0.0,
-                              // isDismissible: true,
-                              // enableDrag: true,
-                              // clipBehavior: Clip.hardEdge,
-                              context: (context),
-                              builder: ((builder) {
-                                return Container(
-                                  // height: h,
-                                  width: w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(40),
-                                        topRight: Radius.circular(40)),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      //.....
-                                      Container(
-                                        height: 80,
-                                        width: w,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.darkblue4,
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(42),
-                                            topRight: Radius.circular(42),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            //. . . . .
-                                            Icon(
-                                              JariIcons.user_check,
-                                              color: AppColors.gold,
-                                            ),
-                                            //. . . . .
-                                            SizedBox(width: 16.0),
-                                            //. . . . .
-                                            TitleText(
-                                              color: AppColors.white,
-                                              fontSize: 21.0,
-                                              uppercase: false,
-                                              fontWeight: FontWeight.w400,
-                                              textAlign: TextAlign.center,
-                                              text: 'Informations livreur ',
-                                            ),
-                                            //. . . . .
-                                            SizedBox(width: 16.0),
-                                            //. . . . .
-                                            Container(
-                                              child: CircleAvatar(
-                                                backgroundColor: AppColors.black
-                                                    .withOpacity(0.5),
-                                                child: TitleText(
-                                                  color: AppColors.white,
-                                                  fontSize: 18.0,
-                                                  uppercase: false,
-                                                  fontWeight: FontWeight.w400,
-                                                  textAlign: TextAlign.center,
-                                                  text: '$id',
-                                                ),
-                                              ),
-                                            )
-                                            //. . . . .
-                                          ],
-                                        ),
-                                      ),
-                                      //. . . . .
-
-                                      Container(
-                                        color: AppColors.white,
-                                        padding: const EdgeInsets.all(20),
-                                        //. . . . .
-
-                                        child: Column(
-                                          children: [
-                                            //. . . . .
-                                            TitleText(
-                                              color: AppColors.black,
-                                              fontSize: 16.0,
-                                              uppercase: true,
-                                              textAlign: TextAlign.center,
-                                              fontWeight: FontWeight.w600,
-                                              text:
-                                                  ' Saisissez votre numéro de Téléphone',
-                                            ),
-                                            //. . . . .
-                                            SizedBox(
-                                              height: 16.0,
-                                            ),
-                                            //. . . . .
-
-                                            TextField(
-                                              decoration: InputDecoration(
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.0),
-                                                  borderSide: BorderSide(
-                                                    color: AppColors.darkblue4,
-                                                  ),
-                                                ),
-                                                fillColor: AppColors.lightGrey,
-                                                //   border: InputBorder.none,
-                                                hintText: 'Votre numéro',
-                                                filled: true,
-                                                labelText:
-                                                    'Votre numéro de téléphone',
-                                                labelStyle: TextStyle(
-                                                  color: AppColors.darkblue3,
-                                                ),
-                                                hintStyle: TextStyle(
-                                                  fontSize: 24,
-                                                ),
-                                              ),
-                                              keyboardType: TextInputType.phone,
-                                            ),
-
-                                            //. . . . .
-                                          ],
-                                        ),
-                                      ),
-                                      //. . . . .
-                                      Expanded(
-                                        child: Container(
-                                          // width: w,
-                                          color: AppColors.white,
-
-                                          //+++++
-                                          //+++++
-                                          child: ListView(
-                                            children: [
-                                              ListTile(
-                                                leading: Icon(Icons
-                                                    .supervised_user_circle),
-                                                title: TitleText(
-                                                  color: AppColors.lightblue3,
-                                                  fontSize: 18.0,
-                                                  uppercase: false,
-                                                  fontWeight: FontWeight.w400,
-                                                  text: '$fullName',
-                                                ),
-                                              ),
-
-                                              //. . . . .
-                                              phone_1 == ''
-                                                  ? Center()
-                                                  : ListTile(
-                                                      leading: Icon(Icons.call),
-                                                      title: TitleText(
-                                                        color: AppColors
-                                                            .lightblue3,
-                                                        fontSize: 18.0,
-                                                        uppercase: false,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        text: '$phone_1',
-                                                      ),
-                                                    ),
-
-                                              //. . . . .
-                                              phone_2 == ''
-                                                  ? Center()
-                                                  : ListTile(
-                                                      leading: Icon(Icons.call),
-                                                      title: TitleText(
-                                                        color: AppColors
-                                                            .lightblue3,
-                                                        fontSize: 18.0,
-                                                        uppercase: false,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        text: '$phone_2',
-                                                      ),
-                                                    ),
-
-                                              //. . . . .
-
-                                              SizedBox(width: 20.0),
-                                            ],
-                                          ),
-                                          //+++++
-                                          //+++++
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                            );
+                            showDeliverInfoOrder(
+                                id: id,
+                                fullName: fullName,
+                                phone_1: phone_1,
+                                phone_2: phone_2);
 
                             //++++++++++++++++++++++++
                           },
@@ -496,6 +314,184 @@ class _MapPageState extends State<MapPage> {
       CameraPosition(target: positionInit, zoom: 12.0),
     ));
   }
+
+  showDeliverInfoOrder(
+      {int id, String fullName, String phone_1, String phone_2}) {
+    //. . . . .
+    print('SHOW DIALOGUE INFOS');
+    //. . . . .
+    Widget infoDeliver = Container(
+      color: Colors.white,
+      // height: h / 2,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            color: AppColors.darkblue4,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //. . . . .
+                Icon(
+                  JariIcons.user_check,
+                  color: AppColors.gold,
+                ),
+                //. . . . .
+                SizedBox(width: 18.0),
+                //. . . . .
+                TitleText(
+                  color: AppColors.white,
+                  fontSize: 18.0,
+                  uppercase: false,
+                  fontWeight: FontWeight.w400,
+                  textAlign: TextAlign.center,
+                  text: 'Informations livreur ',
+                ),
+                //. . . . .
+                SizedBox(width: 16.0),
+                //. . . . .
+                Container(
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.black.withOpacity(0.5),
+                    child: TitleText(
+                      color: AppColors.white,
+                      fontSize: 16.0,
+                      uppercase: false,
+                      fontWeight: FontWeight.w400,
+                      textAlign: TextAlign.center,
+                      text: '$id',
+                    ),
+                  ),
+                ),
+                //. . . . .
+              ],
+            ),
+          ),
+
+          //. . . . . . . . . . . . .
+          SizedBox(height: 21.0),
+          //. . . . . . . . . . . . . .  . .
+          TextField(
+            controller: phoneNumber,
+            autocorrect: false,
+            keyboardType: TextInputType.phone,
+            decoration: InputDecoration(
+              hintText: 'Saisissez votre numéro de Téléphone',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0),
+                borderSide: BorderSide(
+                  color: AppColors.darkblue4,
+                ),
+              ),
+              labelText: 'Votre numéro de téléphone',
+              labelStyle: TextStyle(color: AppColors.darkblue3, fontSize: 21),
+              hintStyle: TextStyle(
+                fontSize: 21,
+              ),
+            ),
+          ),
+
+          //. . . . . . . . . . . . .
+          SizedBox(height: 21.0),
+          //. . . . . . . . . . . . . .
+          infoList(fullName, phone_1, phone_2),
+
+          //. . . . . . . . . . . . . . .
+        ],
+      ),
+    );
+
+    //. . . . .
+
+    return showDialog(
+      barrierColor: AppColors.darkblue4.withOpacity(0.35),
+      context: context,
+      useSafeArea: false,
+      builder: (context) => AlertDialog(
+        insetPadding: EdgeInsets.all(8),
+        title: infoDeliver, //Text('Êtes-vous sûr de vouloir quitter ?'),
+        actions: <Widget>[
+          FlatButton(
+              child: Text(
+                'Annuler',
+                style: TextStyle(color: AppColors.darkblue3, fontSize: 21),
+              ),
+              onPressed: () => Navigator.of(context).pop()),
+          FlatButton(
+              child: Text(
+                'Valider',
+                style: TextStyle(color: AppColors.darkblue3, fontSize: 21),
+              ),
+              onPressed: () => Navigator.of(context).pop(false)),
+        ],
+      ),
+    );
+
+    //. . . . .
+  }
+
+  infoList(fullName, phone_1, phone_2) {
+    return Container(
+      // width: w,
+      height: 150,
+
+      //+++++
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.supervised_user_circle),
+              title: TitleText(
+                color: AppColors.lightblue3,
+                fontSize: 18.0,
+                uppercase: false,
+                fontWeight: FontWeight.w400,
+                text: '$fullName',
+              ),
+            ),
+
+            //. . . . .
+            phone_1 == ''
+                ? Center()
+                : ListTile(
+                    contentPadding: EdgeInsets.all(0),
+                    leading: Icon(Icons.call),
+                    title: TitleText(
+                      color: AppColors.lightblue3,
+                      fontSize: 18.0,
+                      uppercase: false,
+                      fontWeight: FontWeight.w400,
+                      text: '$phone_1',
+                    ),
+                  ),
+
+            //. . . . .
+            phone_2 == ''
+                ? Center()
+                : ListTile(
+                    contentPadding: EdgeInsets.all(0),
+                    leading: Icon(Icons.call),
+                    title: TitleText(
+                      color: AppColors.lightblue3,
+                      fontSize: 18.0,
+                      uppercase: false,
+                      fontWeight: FontWeight.w400,
+                      text: '$phone_2',
+                    ),
+                  ),
+
+            //. . . . .
+
+            // SizedBox(width: 20.0),
+          ],
+        ),
+      ),
+      //+++++
+      //+++++
+    );
+  }
+
   //.....
   // Future<void> _goToTheLake() async {
   //   final GoogleMapController controller = await _controller.future;

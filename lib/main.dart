@@ -5,6 +5,8 @@ import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
 
+import 'package:flutter/services.dart';
+
 import 'package:provider/provider.dart';
 //import 'package:jariapp/old/start_page_ripple.dart';
 
@@ -18,6 +20,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+//++++++++++++et Change Status Bar Background Color ++++++++++
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF172744),
+    ));
 //+++++++++++++++++++++++++++++++
     return MultiProvider(
       providers: [
