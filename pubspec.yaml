@@ -29,6 +29,7 @@ dependencies:
   page_transition: ^1.1.6
   http: ^0.12.2
   google_maps_flutter: ^1.0.5
+  geolocator: ^6.1.4
   
 
 

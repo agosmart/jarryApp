@@ -6,12 +6,12 @@ abstract class AppColors {
   // static MaterialColor myGreen = const MaterialColor(0xFFAAD400, {});
 
   static const List<Color> menuColorsList = [
-    Color(0xFF0090DF),
-    Color(0xFFE04F00),
+    Color(0xFF046A38),
+    Color(0xFF001489),
     Color(0xFFE93E49),
-    Color(0xFF2158C7),
-    Color(0xFFFB9600),
-    Color(0xFF39AE7C),
+    Color(0xFFF68D2E),
+    Color(0xFFCA1157),
+    Color(0xFF3F2021),
     Color(0xFF7A71F0),
     Color(0xFF737FA6),
     Color(0xFFD153A7),
@@ -20,10 +20,27 @@ abstract class AppColors {
     Color(0xFF39A2AE),
   ];
 
+  // static const List<Color> menuColorsList = [
+  //   Color(0xFF0090DF),
+  //   Color(0xFFE04F00),
+  //   Color(0xFFE93E49),
+  //   Color(0xFF2158C7),
+  //   Color(0xFFFB9600),
+  //   Color(0xFF39AE7C),
+  //   Color(0xFF7A71F0),
+  //   Color(0xFF737FA6),
+  //   Color(0xFFD153A7),
+  //   Color(0xFF8DB243),
+  //   Color(0xFFCC9544),
+  //   Color(0xFF39A2AE),
+  // ];
+
 //--------------------------------------------------------
 
   static const Color titleTextColor = const Color(0xff1d2635);
   static const Color subTitleTextColor = const Color(0xff797878);
+  static const Color bodyText = const Color(0xFF43464B);
+
   static const Color icongray_1 = const Color(0xFF9299A5);
 
   static const Color orange = Color(0xffE65829);
@@ -42,7 +59,7 @@ abstract class AppColors {
 //++++ ICONS COLOR +++++
   static Color get icongray => const Color(0xFF9299A5);
   static Color get darkgray => const Color(0xFF4e5b60);
-  static Color get darkblue => const Color(0xFF002775);
+  static Color get darkblue => const Color(0xFF001489);
   static Color get lightblue => const Color(0xFF008FD7);
 
   static Color get darkblue2 => const Color(0xFF263a44);

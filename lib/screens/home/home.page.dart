@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                         text: 'Jarry!',
                                         style: TextStyle(
                                           // fontFamily: 'Bariol',
-                                          color: AppColors.lightblue3,
+                                          color: AppColors.lightblue,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 36,
                                         ),

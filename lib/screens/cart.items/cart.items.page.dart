@@ -1,5 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
+import 'package:jariapp/screens/terms.condistions/cgv.dart';
+import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/constantes.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
@@ -11,24 +14,59 @@ import 'package:jariapp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 import 'package:jariapp/screens/location/location.page.dart';
 
-class CartItemsPage extends StatelessWidget {
+class CartItemsPage extends StatefulWidget {
   //....
   CartItemsPage({Key key}) : super(key: key);
-  //....
-  List<CartItem> _cartlist = [];
+
+  @override
+  _CartItemsPageState createState() => _CartItemsPageState();
+}
+
+class _CartItemsPageState extends State<CartItemsPage> {
+  //+++++++++++++++++++++++++
+  List<CartItem> _cartlist;
   double h, w;
   ProductsProvider _productsProvider;
-  //+++++++++++++++++++++++++++++++++++++++++
-  // Widget _cartItems() {
-  //   return Column(
-  //     children: _cartlist.map((item) => _item(item)).toList(),
-  //   );
-  // }
-  //++++++++++++++++++++++++++++++++++++++++
+  bool checkBoxValue;
+  //++++++++++++++++++++++++++
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _cartlist = [];
+    checkBoxValue = false;
+    //++++
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _openConditionsPage(context) {
+    print('READ MORE....');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        //-------------------------------------------------
+        builder: (BuildContext context) {
+          return CGVPage();
+        },
+        fullscreenDialog: true,
+
+        //--------------------------------------------------
+      ),
+    );
+  }
+
+  ///
 
   @override
   Widget build(BuildContext context) {
     //++++
+
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
 
@@ -150,6 +188,78 @@ class CartItemsPage extends StatelessWidget {
                         horizontal: 20, vertical: 16.0),
                     child: _price(),
                   ),
+                  //+++++++++++++++++++++++++++++++++
+
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     print('read');
+                  //   },
+                  //   child: TitleText(
+                  //     color: AppColors.icongray,
+                  //     fontSize: 16.0,
+                  //     uppercase: false,
+                  //     fontWeight: FontWeight.w400,
+                  //     textAlign: TextAlign.left,
+                  //     text:
+                  //         'Je reconnais avoir pris connaissance des conditions générales de vente et les accepte. ',
+                  //   ),
+                  // ),
+
+                  //...........
+                  Divider(
+                      thickness: 2,
+                      height: 2,
+                      color: AppColors.icongray.withOpacity(0.25)),
+                  //...........
+                  SizedBox(
+                    height: 16.0,
+                  ),
+
+                  Row(
+                    children: <Widget>[
+                      Checkbox(
+                          value: checkBoxValue,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              checkBoxValue = newValue;
+                            });
+                          }),
+                      Expanded(
+                        child: Text(
+                          "j'accepte les conditions générales de vente.",
+                          softWrap: true,
+                          style: TextStyle(
+                            color: AppColors.darkblue4,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      //++++++++
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: OutlineButton(
+                          onPressed: () {
+                            //+++++++++++++++++++++++++
+
+                            _openConditionsPage(context);
+
+                            //+++++++++++++++++++++++++
+                          },
+                          child: Text(
+                            "Lire Plus",
+                            style: TextStyle(
+                                color: AppColors.darkblue4,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+
+                  //+++++++++++++++++++++++++++++++++++
 
                   //   _submitButton(context),
                   _submitButtonOrder(context),
@@ -165,8 +275,6 @@ class CartItemsPage extends StatelessWidget {
       // padding: const EdgeInsets
     );
   }
-
-  //++++++++++++++++++++++++++++++++++++
 
   Widget _buildItemTile(BuildContext context, int index, CartItem item) {
     //...
@@ -350,7 +458,6 @@ class CartItemsPage extends StatelessWidget {
     );
   }
 
-//++++++++++++++++++++++++++++++++++++++++
   Widget _price() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -372,7 +479,6 @@ class CartItemsPage extends StatelessWidget {
     );
   }
 
-  //..........................
   double getPrice() {
     double price = 0;
     _cartlist.forEach((x) {
@@ -380,8 +486,6 @@ class CartItemsPage extends StatelessWidget {
     });
     return price;
   }
-
-//++++++++++++++++++++++++++++++++++++++++
 
   Widget _submitButtonOrder(BuildContext context) {
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
@@ -400,25 +504,28 @@ class CartItemsPage extends StatelessWidget {
             height: 60,
             child: RaisedButton(
               //*+++++++++++++++...................++++++++++++++
-              onPressed: () {
-                //..
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    //-------------------------------------------------
-                    builder: (BuildContext context) {
-                      return LocationPage();
-                    },
-                    //  fullscreenDialog: true,
-
-                    //--------------------------------------------------
-                  ),
-                );
-                //..
-              },
+              onPressed: checkBoxValue
+                  ? () {
+                      //..
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          //-------------------------------------------------
+                          builder: (BuildContext context) {
+                            return LocationPage();
+                          },
+                          //  fullscreenDialog: true,
+                          //--------------------------------------------------
+                        ),
+                      );
+                      //..
+                    }
+                  : null,
               //*+++++++++++++++...................++++++++++++++
               color: AppColors.darkblue4,
+              disabledColor: AppColors.darkblue4.withOpacity(0.35),
+              disabledTextColor: AppColors.white,
+              // textColor: AppColors.gold,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24.0)),
 
@@ -435,7 +542,7 @@ class CartItemsPage extends StatelessWidget {
                   ),
                   TitleText(
                     text: 'Lancez la commande',
-                    color: AppColors.gold,
+                    color: checkBoxValue ? AppColors.gold : AppColors.white,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                     letterSpacing: 2.0,
@@ -457,111 +564,4 @@ class CartItemsPage extends StatelessWidget {
       ),
     );
   }
-
-/*
-
-  Widget _item____(CartItem item) {
-    return Column(
-      children: [
-        Container(
-          height: 80,
-          child: Row(
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(4.0),
-                height: 56,
-                width: 56,
-                child: Stack(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5.0,
-                              spreadRadius: 2.0,
-                              color: AppColors.darkgray.withOpacity(0.3),
-                            )
-                          ]),
-                      child: Center(
-                        child: Icon(
-                          JariIcons.danone_any,
-                          color: AppColors.darkgrey,
-                          size: 40.0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                //++++
-                child: ListTile(
-                  title: TitleText(
-                    text: item.productName,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  subtitle: Row(
-                    children: <Widget>[
-                      TitleText(
-                        text: item.priceTotal.toString(),
-                        fontSize: 16,
-                        color: AppColors.darkgrey,
-                      ),
-                      TitleText(
-                        text: ' DA ',
-                        color: AppColors.orange,
-                        fontSize: 12,
-                      ),
-                    ],
-                  ),
-                  trailing: Container(
-                    width: 35,
-                    height: 35,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.orange,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TitleText(
-                      text: 'x${item.qty}',
-                      fontSize: 12,
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-                //+++
-              )
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
- 
-
-
- 
-Widget _submitButton(BuildContext context) {
-    return FlatButton(
-      
-      onPressed: () {},
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      color: AppColors.orange,
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 12),
-        width: w,
-        child: TitleText(
-          text: 'commander',
-          color: AppColors.white,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-*/
-  //++++++++++++++++++++++++++
 }

@@ -17,6 +17,8 @@ import 'package:provider/provider.dart';
 //import 'package:jariapp/providers/location.local.dart';
 import 'package:jariapp/providers/location.api.dart';
 
+import 'package:geolocator/geolocator.dart';
+
 class LocationPage extends StatefulWidget {
   @override
   _LocationPageState createState() => _LocationPageState();
@@ -39,7 +41,16 @@ class _LocationPageState extends State<LocationPage> {
   Future<List<LocalityArea>> _futureFetchingLocalities;
 
   LocationProvider _locationProvider;
+
+  //Position position;
   //++++++++++++++++++
+
+  // final Geolocator _geolocator = Geolocator();
+  // For storing the current position
+  Position _currentPosition;
+
+  //++++++++++++++++++
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +65,26 @@ class _LocationPageState extends State<LocationPage> {
     //...............................................
     /*++++++---- GET LIST of STATE from LOCAL JSON  +++++++*/
     _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
+    //+++++++++++++++ GET POSITION ++++++++++++++
+    // _getCurrentLocation();
+  }
+
+  // getPosition() async {
+  //   return position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  // }
+
+  // Method for retrieving the current location
+  _getCurrentLocation() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      // print('CURRENT POS: $_currentPosition');
+      setState(() {
+        _currentPosition = position;
+        // Store the position in the variable
+        print('CURRENT POS: $_currentPosition');
+      });
+    });
   }
 
   @override
@@ -61,6 +92,7 @@ class _LocationPageState extends State<LocationPage> {
     //++++
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
+
     //+++++
     return Scaffold(
       appBar: AppBar(
@@ -89,6 +121,18 @@ class _LocationPageState extends State<LocationPage> {
               margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Text(
                 'Informations relatives à votre adresse de livraison',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Text(
+                'POSITIONS :::: ${_currentPosition?.latitude} / ${_currentPosition?.longitude} ',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
@@ -461,6 +505,8 @@ class _LocationPageState extends State<LocationPage> {
                                           onChanged: (String id) {
                                             print('NEW LOCALITY NAME ===  $id');
 
+                                            _getCurrentLocation();
+
                                             //......SET STATE ID ..........
                                             _locationProvider
                                                 .setCurrentLocalityID(id);
@@ -585,7 +631,7 @@ class _LocationPageState extends State<LocationPage> {
                     width: 16.0,
                   ),
                   TitleText(
-                    text: 'Coonfirmer',
+                    text: 'Confirmer la commande',
                     color: AppColors.gold,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
