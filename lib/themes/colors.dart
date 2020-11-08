@@ -63,7 +63,7 @@ abstract class AppColors {
   static Color get lightblue => const Color(0xFF008FD7);
 
   static Color get darkblue2 => const Color(0xFF263a44);
-  static Color get darkblue4 => const Color(0xFF164179);
+  static Color get darkblue4 => const Color(0xFF001489);
   static Color get darkblue3 => const Color(0xFF072449);
 
   static Color get lightblue2 => const Color(0xFF48a1af);
@@ -71,10 +71,11 @@ abstract class AppColors {
   static Color get lightblue4 => const Color(0xFF4695FF);
   static Color get akablueLight => const Color(0xFF1DDDEB);
   static Color get greenLight => const Color(0xFF8DB243);
+  static Color get goldDark => const Color(0xFFF68D2E);
   static Color get gold => const Color(0xFFFFBE27);
 
-  static Color get pinck => const Color(0xFFee5253);
-  static Color get red => const Color(0xFFee5253);
+  static Color get pinck => const Color(0xFFCA1157);
+  static Color get red => const Color(0xFFE93E49);
 
   //++++++
 

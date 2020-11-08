@@ -11,6 +11,7 @@ import 'package:jariapp/utils/jari_icons_v2.dart';
 
 import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
+import 'package:jariapp/root/routes.dart';
 // import 'package:jariapp/utils/_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,6 +62,12 @@ class _HomePageState extends State<HomePage> {
   // }
 
   //+++++
+
+  Function refreshData() {
+    //_futureFetchingCat = _categoryProvider.fetchCategoriesAPI();
+
+    Navigator.popAndPushNamed(context, 'home');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                 top: -22,
                 child: Container(
                   width: w,
-                  height: h / 2,
+                  height: (h / 2) - h / 10,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
@@ -164,9 +171,9 @@ class _HomePageState extends State<HomePage> {
                       // color: Colors.red.withOpacity(0.2),
                       //-----
                       // padding: const EdgeInsets.only(top: 24.0),
-                      height: h / 4,
+                      height: (h / 4),
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
+                        padding: const EdgeInsets.only(top: 30.0, left: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     'Bienvenue',
                                     style: TextStyle(
-                                      color: AppColors.darkblue,
+                                      color: AppColors.white.withOpacity(0.75),
                                       fontWeight: FontWeight.w400,
                                       fontSize: 36,
                                     ),
@@ -191,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                       TextSpan(
                                         text: 'sur ',
                                         style: TextStyle(
-                                          color: AppColors.darkblue,
+                                          color: AppColors.white,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 36,
                                         ),
@@ -200,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                                         text: 'Jarry!',
                                         style: TextStyle(
                                           // fontFamily: 'Bariol',
-                                          color: AppColors.lightblue,
+                                          color: AppColors.white,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 36,
                                         ),
@@ -257,7 +264,8 @@ class _HomePageState extends State<HomePage> {
                             break;
                           case ConnectionState.done:
                             if (snapShot.hasError) {
-                              return error(snapShot.error.toString());
+                              return error2(
+                                  snapShot.error.toString(), refreshData);
                             } else {
                               if (!snapShot.hasData) {
                                 // return error('Acune catégorie n\'est disponible !');

@@ -9,8 +9,10 @@ Widget error(String error, [IconData icons]) {
   return Container(
     padding: const EdgeInsets.all(20.0),
     child: Center(
-        child: Card(
-      color: AppColors.darkgray,
+        child: Container(
+      decoration: BoxDecoration(
+          color: AppColors.darkblue4,
+          borderRadius: BorderRadiusDirectional.circular(16.0)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
@@ -20,6 +22,42 @@ Widget error(String error, [IconData icons]) {
             color: Colors.white,
             fontSize: 18,
           ),
+        ),
+      ),
+    )),
+  );
+}
+
+Widget error2(String error, Function func) {
+  print('error::: $error');
+  return Container(
+    padding: const EdgeInsets.all(20.0),
+    child: Center(
+        child: Container(
+      decoration: BoxDecoration(
+          color: AppColors.darkblue4,
+          borderRadius: BorderRadiusDirectional.circular(16.0)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              error,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+                icon: Icon(
+                  Icons.refresh_rounded,
+                  color: AppColors.white,
+                  size: 32,
+                ),
+                onPressed: func)
+          ],
         ),
       ),
     )),

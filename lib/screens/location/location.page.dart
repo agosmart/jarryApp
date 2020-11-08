@@ -113,458 +113,471 @@ class _LocationPageState extends State<LocationPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.topCenter,
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Text(
-                'Informations relatives à votre adresse de livraison',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 24,
+        //++++++++++++++++++++++++++++++
+        child: SingleChildScrollView(
+          //++++++++
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.topCenter,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'Informations relatives à votre adresse de livraison',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              alignment: Alignment.topCenter,
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Text(
-                'POSITIONS :::: ${_currentPosition?.latitude} / ${_currentPosition?.longitude} ',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 24,
+              Container(
+                alignment: Alignment.topCenter,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'POSITIONS :::: ${_currentPosition?.latitude} / ${_currentPosition?.longitude} ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
 
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-            //................. STATE................................
+              //................. STATE................................
 
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              color: AppColors.darkblue4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: FutureBuilder(
-                      //----------------------------------
-                      future: _futureFetchingStates,
-                      //----------------------------------
-                      //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<StateArea>> snapShot) {
-                        switch (snapShot.connectionState) {
-                          case ConnectionState.none:
-                            // return Text('nothing happend !!!');
-                            return error('No connexion made!');
-                            break;
-                          case ConnectionState.waiting:
-                          case ConnectionState.active:
-                            //return Center();
-                            return loading(AppColors.akablueLight);
-                            break;
-                          case ConnectionState.done:
-                            //-----
-                            if (snapShot.hasError) {
-                              return error(snapShot.error.toString());
-                            } else {
-                              if (!snapShot.hasData) {
-                                //----Build Erreur
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                color: AppColors.darkblue4,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: FutureBuilder(
+                        //----------------------------------
+                        future: _futureFetchingStates,
+                        //----------------------------------
+                        //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<StateArea>> snapShot) {
+                          switch (snapShot.connectionState) {
+                            case ConnectionState.none:
+                              // return Text('nothing happend !!!');
+                              return error('No connexion made!');
+                              break;
+                            case ConnectionState.waiting:
+                            case ConnectionState.active:
+                              //return Center();
+                              return loading(AppColors.akablueLight);
+                              break;
+                            case ConnectionState.done:
+                              //-----
+                              if (snapShot.hasError) {
+                                return error(snapShot.error.toString());
+                              } else {
+                                if (!snapShot.hasData) {
+                                  //----Build Erreur
 
-                                return Center(
-                                  child: Text("hasn't data"),
-                                );
-                              }
+                                  return Center(
+                                    child: Text("hasn't data"),
+                                  );
+                                }
 
-                              statesList = [...snapShot.data];
-                              // print('statesList:::: $statesList');
-                              //----Build DropdownMenu
-                              return DropdownButtonHideUnderline(
-                                child: ButtonTheme(
-                                  alignedDropdown: true,
-                                  child: DropdownButton<String>(
-                                    //................
-                                    value: _myStateId,
-                                    // ??  _locationProvider.getcurrentStateID,
-                                    // value: _locationProvider.getcurrentStateArea,
-                                    //.................
+                                statesList = [...snapShot.data];
+                                // print('statesList:::: $statesList');
+                                //----Build DropdownMenu
+                                return DropdownButtonHideUnderline(
+                                  child: ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButton<String>(
+                                      //................
+                                      value: _myStateId,
+                                      // ??  _locationProvider.getcurrentStateID,
+                                      // value: _locationProvider.getcurrentStateArea,
+                                      //.................
 
-                                    iconSize: 30,
-                                    dropdownColor: AppColors.darkblue4,
-                                    iconEnabledColor: AppColors.white,
-                                    icon: (null),
-                                    style: TextStyle(
-                                      color: AppColors.white,
-                                      fontSize: 18,
-                                    ),
-                                    hint: Text('Séléctionner votre Wilaya',
-                                        style:
-                                            TextStyle(color: AppColors.white)),
-                                    onChanged: (String id) {
-                                      print('NEW STATE NAME ===  $id');
+                                      iconSize: 30,
+                                      dropdownColor: AppColors.darkblue4,
+                                      iconEnabledColor: AppColors.white,
+                                      icon: (null),
+                                      //isDense: true,
+                                      style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 18,
+                                      ),
+                                      hint: Text('Séléctionner votre Wilaya',
+                                          style: TextStyle(
+                                              color: AppColors.white)),
+                                      onChanged: (String id) {
+                                        print('NEW STATE NAME ===  $id');
 
-                                      //......SET STATE ID ..........
-                                      _locationProvider.setCurrentStateID(id);
-                                      //......SET STATE NAME ..........
-                                      _locationProvider.setCurrentStateName(id);
-                                      //......................*/
-                                      setState(() {
-                                        _myStateId = id;
-                                        _myCityId = null;
+                                        //......SET STATE ID ..........
+                                        _locationProvider.setCurrentStateID(id);
+                                        //......SET STATE NAME ..........
+                                        _locationProvider
+                                            .setCurrentStateName(id);
+                                        //......................*/
+                                        setState(() {
+                                          _myStateId = id;
+                                          _myCityId = null;
 
-                                        citiesList = [];
-                                        _myLocalityId = null;
+                                          citiesList = [];
+                                          _myLocalityId = null;
 
-                                        //++++ HIDE BTN SUBMIT +++++
-                                        localitiesList = [];
+                                          //++++ HIDE BTN SUBMIT +++++
+                                          localitiesList = [];
 
-                                        // _getCitiesList();
-                                        print('_myStateId : $_myStateId');
-                                      });
-                                      //......... GET LIST of CITIES from API ..........
+                                          // _getCitiesList();
+                                          print('_myStateId : $_myStateId');
+                                        });
+                                        //......... GET LIST of CITIES from API ..........
 
-                                      _futureFetchingCities = _locationProvider
-                                          .fetchCitiesAreaAPI();
-                                      //..................................
-                                    },
-                                    /*
-                                    items: [
-                                          {"id": 1, "wilayaName": "Adrar"},
-                                          {"id": 2, "wilayaName": "Chlef "},
-                                          {"id": 3, "wilayaName": "Laghouat"}
-                                        ].map(
-                                          (item) {
+                                        _futureFetchingCities =
+                                            _locationProvider
+                                                .fetchCitiesAreaAPI();
+                                        //..................................
+                                      },
+                                      /*
+                                      items: [
+                                            {"id": 1, "wilayaName": "Adrar"},
+                                            {"id": 2, "wilayaName": "Chlef "},
+                                            {"id": 3, "wilayaName": "Laghouat"}
+                                          ].map(
+                                            (item) {
+                                              return DropdownMenuItem(
+                                                child:
+                                                    Text(item['wilayaName'] ?? ''),
+                                                value: item['id'].toString() ?? '',
+                                              );
+                                            },
+                                          ).toList() ??
+                                          [],
+                                        */
+
+                                      items: statesList?.map((StateArea item) {
                                             return DropdownMenuItem(
-                                              child:
-                                                  Text(item['wilayaName'] ?? ''),
-                                              value: item['id'].toString() ?? '',
-                                            );
-                                          },
-                                        ).toList() ??
-                                        [],
-                                      */
-
-                                    items: statesList?.map((StateArea item) {
-                                          return DropdownMenuItem(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                //......
-                                                CircleAvatar(
-                                                  backgroundColor: AppColors
-                                                      .black
-                                                      .withAlpha(35),
-                                                  child: Text(
-                                                    item.id
-                                                        .toString()
-                                                        .padRight(2),
-                                                    style: TextStyle(
-                                                        color: AppColors.white,
-                                                        fontSize: 18),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  //......
+                                                  CircleAvatar(
+                                                    backgroundColor: AppColors
+                                                        .black
+                                                        .withAlpha(50),
+                                                    child: Text(
+                                                      item.id
+                                                          .toString()
+                                                          .padRight(2),
+                                                      style: TextStyle(
+                                                          color:
+                                                              AppColors.white,
+                                                          fontSize: 18),
+                                                    ),
                                                   ),
-                                                ),
-                                                //......
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10.0),
-                                                  child: Text(item.stateName ??
-                                                      'Wilaya'),
-                                                ),
-                                              ],
+                                                  //......
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: Text(
+                                                        item.stateName ??
+                                                            'Wilaya'),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              //
+                                              value: item.id.toString(),
+                                            );
+                                          })?.toList() ??
+                                          [],
+                                    ),
+                                  ),
+                                );
+                                //++++++++++ End DROPDOWn MENU
+                              }
+                          }
+                          return error('Data messing occured!');
+                        },
+                      ),
+
+                      //.........................................
+                    ),
+
+                    //.......................
+                  ],
+                ),
+              ),
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              SizedBox(
+                height: 30,
+              ),
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              //..................  CITY ................................
+              statesList.length <= 0
+                  ? Center()
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      color: AppColors.pinck,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: FutureBuilder(
+                              //----------------------------------
+                              future: _futureFetchingCities,
+                              //----------------------------------
+                              //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<CityArea>> snapShot) {
+                                switch (snapShot.connectionState) {
+                                  case ConnectionState.none:
+                                    // return Text('nothing happend !!!');
+                                    return error('No connexion made!');
+                                    break;
+                                  case ConnectionState.waiting:
+                                  case ConnectionState.active:
+                                    //return Center();
+                                    return loading(AppColors.akablueLight);
+                                    break;
+                                  case ConnectionState.done:
+                                    //-----
+                                    if (snapShot.hasError) {
+                                      return error(snapShot.error.toString());
+                                    } else {
+                                      if (!snapShot.hasData) {
+                                        //----Build Erreur
+                                        return Center(
+                                          child: Text("hasn't data"),
+                                        );
+                                      }
+                                      citiesList = [...snapShot.data];
+                                      // print('statesList:::: $statesList');
+
+                                      //----Build DropdownMenu
+                                      return DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: DropdownButton<String>(
+                                            //................
+                                            value: _myCityId,
+                                            //  ?? _locationProvider.getcurrentCityID,
+                                            // value: _locationProvider.getcurrentStateArea,
+                                            //.................
+
+                                            iconSize: 30,
+                                            dropdownColor: AppColors.pinck,
+                                            iconEnabledColor: AppColors.white,
+                                            icon: (null),
+                                            //  isDense: true,
+                                            style: TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 18,
                                             ),
 
-                                            //
-                                            value: item.id.toString(),
-                                          );
-                                        })?.toList() ??
-                                        [],
-                                  ),
-                                ),
-                              );
-                              //++++++++++ End DROPDOWn MENU
-                            }
-                        }
-                        return error('Data messing occured!');
-                      },
+                                            hint: Text(
+                                              'Séléctionner votre Daîra',
+                                              style: TextStyle(
+                                                  color: AppColors.white),
+                                            ),
+                                            onChanged: (String id) {
+                                              print('NEW CITY NAME ===  $id');
+
+                                              //......SET STATE ID ..........
+                                              _locationProvider
+                                                  .setCurrentCityID(id);
+                                              //......SET STATE NAME ..........
+                                              _locationProvider
+                                                  .setCurrentCityName(id);
+                                              //......................*/
+                                              setState(() {
+                                                _myCityId = id;
+                                                _myLocalityId = null;
+
+                                                //++++ HIDE BTN SUBMIT +++++
+                                                localitiesList = [];
+                                                // _myStateId = null;
+                                                print('_myCityId : $_myCityId');
+                                              });
+
+                                              //........... GET LIST of LOCALITIES from API .....
+
+                                              _futureFetchingLocalities =
+                                                  _locationProvider
+                                                      .fetchLocalitiesAreaAPI();
+                                              //..................................
+                                            },
+
+                                            items: citiesList
+                                                    ?.map((CityArea item) {
+                                                  return DropdownMenuItem(
+                                                    child: Text(item.cityName ??
+                                                        'Empty Daira Name'),
+                                                    value: item.id.toString(),
+                                                  );
+                                                })?.toList() ??
+                                                [],
+                                          ),
+                                        ),
+                                      );
+
+                                      //++++++++++ End DROPDOWn MENU
+                                    }
+                                }
+                                return error('Data messing occured!');
+                              },
+                            ),
+                          )
+                        ],
+                      ),
                     ),
 
-                    //.........................................
-                  ),
-
-                  //.......................
-                ],
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              SizedBox(
+                height: 30,
               ),
-            ),
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            SizedBox(
-              height: 30,
-            ),
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            //..................  CITY ................................
-            statesList.length <= 0
-                ? Center()
-                : Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    color: AppColors.red,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: FutureBuilder(
-                            //----------------------------------
-                            future: _futureFetchingCities,
-                            //----------------------------------
-                            //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<CityArea>> snapShot) {
-                              switch (snapShot.connectionState) {
-                                case ConnectionState.none:
-                                  // return Text('nothing happend !!!');
-                                  return error('No connexion made!');
-                                  break;
-                                case ConnectionState.waiting:
-                                case ConnectionState.active:
-                                  //return Center();
-                                  return loading(AppColors.akablueLight);
-                                  break;
-                                case ConnectionState.done:
-                                  //-----
-                                  if (snapShot.hasError) {
-                                    return error(snapShot.error.toString());
-                                  } else {
-                                    if (!snapShot.hasData) {
-                                      //----Build Erreur
-                                      return Center(
-                                        child: Text("hasn't data"),
-                                      );
-                                    }
-                                    citiesList = [...snapShot.data];
-                                    // print('statesList:::: $statesList');
+              //++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              //................ LOCALITY ............................
+              citiesList.length <= 0
+                  ? Center()
+                  : Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      color: AppColors.lightGrey,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: FutureBuilder(
+                              //----------------------------------
+                              future: _futureFetchingLocalities,
+                              //----------------------------------
+                              //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<List<LocalityArea>> snapShot) {
+                                switch (snapShot.connectionState) {
+                                  case ConnectionState.none:
+                                    // return Text('nothing happend !!!');
+                                    return error('No connexion made!');
+                                    break;
+                                  case ConnectionState.waiting:
+                                  case ConnectionState.active:
+                                    //return Center();
+                                    return loading(AppColors.akablueLight);
+                                    break;
+                                  case ConnectionState.done:
+                                    //-----
+                                    if (snapShot.hasError) {
+                                      return error(snapShot.error.toString());
+                                    } else {
+                                      if (!snapShot.hasData) {
+                                        //----Build Erreur
+                                        return Center(
+                                          child: Text("hasn't data"),
+                                        );
+                                      }
+                                      localitiesList = [...snapShot.data];
+                                      // print('statesList:::: $statesList');
 
-                                    //----Build DropdownMenu
-                                    return DropdownButtonHideUnderline(
-                                      child: ButtonTheme(
-                                        alignedDropdown: true,
-                                        child: DropdownButton<String>(
-                                          //................
-                                          value: _myCityId,
-                                          //  ?? _locationProvider.getcurrentCityID,
-                                          // value: _locationProvider.getcurrentStateArea,
-                                          //.................
+                                      //----Build DropdownMenu
+                                      return DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: DropdownButton<String>(
+                                            //................
+                                            value: _myLocalityId,
+                                            // ??  _locationProvider.getcurrentLocalityID,
+                                            // value: _locationProvider.getcurrentStateArea,
+                                            //.................
+                                            // iconSize: 30,
+                                            // icon: (null),
+                                            // style: TextStyle(
+                                            //   color: Colors.black54,
+                                            //   fontSize: 16,
+                                            // ),
 
-                                          iconSize: 30,
-                                          dropdownColor: AppColors.red,
-                                          iconEnabledColor: AppColors.white,
-                                          icon: (null),
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 18,
-                                          ),
+                                            iconSize: 30,
+                                            dropdownColor: AppColors.lightGrey,
+                                            iconEnabledColor:
+                                                AppColors.icongray,
+                                            icon: (null),
+                                            //   isDense: true,
 
-                                          hint: Text(
-                                            'Séléctionner votre Daîra',
                                             style: TextStyle(
-                                                color: AppColors.white),
-                                          ),
-                                          onChanged: (String id) {
-                                            print('NEW CITY NAME ===  $id');
-
-                                            //......SET STATE ID ..........
-                                            _locationProvider
-                                                .setCurrentCityID(id);
-                                            //......SET STATE NAME ..........
-                                            _locationProvider
-                                                .setCurrentCityName(id);
-                                            //......................*/
-                                            setState(() {
-                                              _myCityId = id;
-                                              _myLocalityId = null;
-
-                                              //++++ HIDE BTN SUBMIT +++++
-                                              localitiesList = [];
-                                              // _myStateId = null;
-                                              print('_myCityId : $_myCityId');
-                                            });
-
-                                            //........... GET LIST of LOCALITIES from API .....
-
-                                            _futureFetchingLocalities =
-                                                _locationProvider
-                                                    .fetchLocalitiesAreaAPI();
-                                            //..................................
-                                          },
-
-                                          items: citiesList
-                                                  ?.map((CityArea item) {
-                                                return DropdownMenuItem(
-                                                  child: Text(item.cityName ??
-                                                      'Empty Daira Name'),
-                                                  value: item.id.toString(),
-                                                );
-                                              })?.toList() ??
-                                              [],
-                                        ),
-                                      ),
-                                    );
-
-                                    //++++++++++ End DROPDOWn MENU
-                                  }
-                              }
-                              return error('Data messing occured!');
-                            },
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            SizedBox(
-              height: 30,
-            ),
-            //++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            //................ LOCALITY ............................
-            citiesList.length <= 0
-                ? Center()
-                : Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    color: AppColors.lightGrey,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: FutureBuilder(
-                            //----------------------------------
-                            future: _futureFetchingLocalities,
-                            //----------------------------------
-                            //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<LocalityArea>> snapShot) {
-                              switch (snapShot.connectionState) {
-                                case ConnectionState.none:
-                                  // return Text('nothing happend !!!');
-                                  return error('No connexion made!');
-                                  break;
-                                case ConnectionState.waiting:
-                                case ConnectionState.active:
-                                  //return Center();
-                                  return loading(AppColors.akablueLight);
-                                  break;
-                                case ConnectionState.done:
-                                  //-----
-                                  if (snapShot.hasError) {
-                                    return error(snapShot.error.toString());
-                                  } else {
-                                    if (!snapShot.hasData) {
-                                      //----Build Erreur
-                                      return Center(
-                                        child: Text("hasn't data"),
-                                      );
-                                    }
-                                    localitiesList = [...snapShot.data];
-                                    // print('statesList:::: $statesList');
-
-                                    //----Build DropdownMenu
-                                    return DropdownButtonHideUnderline(
-                                      child: ButtonTheme(
-                                        alignedDropdown: true,
-                                        child: DropdownButton<String>(
-                                          //................
-                                          value: _myLocalityId,
-                                          // ??  _locationProvider.getcurrentLocalityID,
-                                          // value: _locationProvider.getcurrentStateArea,
-                                          //.................
-                                          // iconSize: 30,
-                                          // icon: (null),
-                                          // style: TextStyle(
-                                          //   color: Colors.black54,
-                                          //   fontSize: 16,
-                                          // ),
-
-                                          iconSize: 30,
-                                          dropdownColor: AppColors.lightGrey,
-                                          iconEnabledColor: AppColors.icongray,
-                                          icon: (null),
-                                          style: TextStyle(
-                                            color: AppColors.black,
-                                            fontSize: 16,
-                                          ),
-                                          hint: Text(
-                                            'Séléctionner votre Commune',
-                                            style: TextStyle(
-                                                color: AppColors.black),
-                                          ),
-                                          onChanged: (String id) {
-                                            print('NEW LOCALITY NAME ===  $id');
-
-                                            _getCurrentLocation();
-
-                                            //......SET STATE ID ..........
-                                            _locationProvider
-                                                .setCurrentLocalityID(id);
-                                            //......SET STATE NAME ..........
-                                            _locationProvider
-                                                .setCurrentLocalityName(id);
-                                            //......................*/
-                                            setState(() {
-                                              _myLocalityId = id;
-                                              // _myCityId = null;
-                                              // _myStateId = null;
+                                              color: AppColors.black,
+                                              fontSize: 16,
+                                            ),
+                                            hint: Text(
+                                              'Séléctionner votre Commune',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: AppColors.black,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            onChanged: (String id) {
                                               print(
-                                                  '_myLocalityId : $_myLocalityId');
-                                            });
+                                                  'NEW LOCALITY NAME ===  $id');
 
-                                            // //........... CALL LOCALITY API .....
+                                              //......SET STATE ID ..........
+                                              _locationProvider
+                                                  .setCurrentLocalityID(id);
+                                              //......SET STATE NAME ..........
+                                              _locationProvider
+                                                  .setCurrentLocalityName(id);
+                                              //......................*/
+                                              setState(() {
+                                                _myLocalityId = id;
+                                                // _myCityId = null;
+                                                // _myStateId = null;
+                                                print(
+                                                    '_myLocalityId : $_myLocalityId');
+                                              });
 
-                                            // _futureFetchingLocalities =
-                                            //     _locationProvider
-                                            //         .fetchLocalitiesAreaAPI();
+                                              _getCurrentLocation();
+                                            },
 
-                                            // //..................................
-                                          },
-
-                                          items: localitiesList
-                                                  ?.map((LocalityArea item) {
-                                                return DropdownMenuItem(
-                                                  child: Text(
-                                                      item.localityName ??
-                                                          'Empty Commune Name'),
-                                                  value: item.id.toString(),
-                                                );
-                                              })?.toList() ??
-                                              [],
+                                            items: localitiesList
+                                                    ?.map((LocalityArea item) {
+                                                  return DropdownMenuItem(
+                                                    child: Text(item
+                                                            .localityName ??
+                                                        'Empty Commune Name'),
+                                                    value: item.id.toString(),
+                                                  );
+                                                })?.toList() ??
+                                                [],
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
 
-                                    //++++++++++ End DROPDOWn MENU
-                                  }
-                              }
-                              return error('Data messing occured!');
-                            },
-                          ),
-                        )
-                      ],
+                                      //++++++++++ End DROPDOWn MENU
+                                    }
+                                }
+                                return error('Data messing occured!');
+                              },
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-            //.........................
+              //.........................
 
-            localitiesList.length <= 0
-                ? Center()
-                : _locationProvider.getcurrentLocalityName != null
-                    ? _submitButtonOrder(context)
-                    : Center(child: Text('choisir une commune')),
+              localitiesList.length <= 0
+                  ? Center()
+                  : _locationProvider.getcurrentLocalityName != null
+                      ? _submitButtonOrder(context)
+                      : Center(child: Text('choisir une commune')),
 
-            //++++++++++++++++ END ++++++++++++++++
-          ],
+              //++++++++++++++++ END ++++++++++++++++
+            ],
+          ),
         ),
       ),
     );
@@ -573,6 +586,7 @@ class _LocationPageState extends State<LocationPage> {
   //+++++++++++++++++ SUBMIT BUTTON +++++++++++++++++++++++
 
   Widget _submitButtonOrder(BuildContext context) {
+//"Veuillez activer la localisation de l'appareil pour continuer"
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
     return CustomFadeTranslateAnimation(
       begin: 100,

@@ -6,6 +6,7 @@ import 'package:jariapp/models/category.dart';
 import 'package:jariapp/utils/constantes.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:jariapp/utils/helpers.dart';
 
 import 'exeptions/exeptions.dart';
 
@@ -125,7 +126,10 @@ class CategoryProvider extends ChangeNotifier {
         //..
       }
     } catch (e) {
-      throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+      // throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
+      //return  Future.error(['Erreur de serveur. Veuillez réessayer plus tard']);
+      return Future.error(
+          'Veuillez vérifier votre connexion réseau et réessayer');
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/location.api.dart';
 import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/root/routes.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
 
 import 'package:flutter/services.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Jarry App',
+          onGenerateRoute: Routes.materialRoutes,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
