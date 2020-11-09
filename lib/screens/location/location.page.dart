@@ -45,6 +45,8 @@ class _LocationPageState extends State<LocationPage> {
   LocationProvider _locationProvider;
   MapProvider _mapProvider;
 
+  bool _dropdownButtonState = false;
+
   //++++++++++++++++++
   // For storing the current position
   Position _currentPosition;
@@ -65,9 +67,11 @@ class _LocationPageState extends State<LocationPage> {
     // _futureFetchingStates = _locationProvider.fetchStatesAreaAPI();
     //...............................................
     /*++++++---- GET LIST of STATE from LOCAL JSON  +++++++*/
-    _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
+    //  _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
     //+++++++++++++++ GET POSITION ++++++++++++++
+
     _getCurrentLocationClient();
+    _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
   }
 
   // getPosition() async {
@@ -80,18 +84,42 @@ class _LocationPageState extends State<LocationPage> {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       // print('CURRENT POS: $_currentPosition');
-      _currentPosition = position;
+      if (mounted) {
+        _currentPosition = position;
+      }
       print('CURRENT POS: $_currentPosition');
-      //-------- STORE LNT/LGT Client values --------------------
-      _mapProvider.setLatitudeClient(_currentPosition.latitude);
-      _mapProvider.setLongitudeClient(_currentPosition.longitude);
 
-      // setState(() {
-      //   _currentPosition = position;
-      //   print('CURRENT POS: $_currentPosition');
-      // });
+      final _lat = _mapProvider?.latitudeClient;
+      final _lon = _mapProvider?.longitudeClient;
+
+      await _isLocationEnabled();
+
+      if (_dropdownButtonState) {
+        if (_lat == null || _lon == null) {
+          _mapProvider.setLatitudeClient(_currentPosition.latitude);
+          _mapProvider.setLongitudeClient(_currentPosition.longitude);
+        }
+      }
+      //++++++++++++++++++++++++++++++
     });
   }
+
+  _isLocationEnabled() {
+    print('CURRENT POS + _hideDropdownButton : $_currentPosition');
+    //------------------------CHeck position ----------------------------
+    _dropdownButtonState = (_currentPosition?.latitude != null ||
+            _currentPosition?.longitude != null)
+        ? true
+        : false;
+  }
+
+  Function refreshData() {
+    //_futureFetchingCat = _categoryProvider.fetchCategoriesAPI();
+
+    Navigator.popAndPushNamed(context, '/locationPage');
+  }
+
+  //===================================
 
   @override
   Widget build(BuildContext context) {
@@ -209,60 +237,83 @@ class _LocationPageState extends State<LocationPage> {
                                 }
 
                                 statesList = [...snapShot.data];
-                                // print('statesList:::: $statesList');
-                                //----Build DropdownMenu
-                                return DropdownButtonHideUnderline(
-                                  child: ButtonTheme(
-                                    alignedDropdown: true,
-                                    child: DropdownButton<String>(
-                                      //................
-                                      value: _myStateId,
-                                      // ??  _locationProvider.getcurrentStateID,
-                                      // value: _locationProvider.getcurrentStateArea,
-                                      //.................
+                                //++++++++++++++++++++++++++++++++++++++
 
-                                      iconSize: 30,
-                                      dropdownColor: AppColors.darkblue4,
-                                      iconEnabledColor: AppColors.white,
-                                      icon: (null),
-                                      //isDense: true,
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 18,
-                                      ),
-                                      hint: Text('Séléctionner votre Wilaya',
-                                          style: TextStyle(
-                                              color: AppColors.white)),
-                                      onChanged: (String id) {
-                                        print('NEW STATE NAME ===  $id');
+                                // _getCurrentLocationClient();
+                                // Container(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     // color: AppColors.red,
+                                //     child: TitleText(
+                                //       text:
+                                //           "Veuillez activer la localisation de l'appareil pour continuer",
+                                //       color: AppColors.white,
+                                //       fontSize: 16,
+                                //       textAlign: TextAlign.center,
+                                //     ),
+                                //   )
+                                return !_dropdownButtonState
+                                    ? error2(
+                                        "Veuillez activer la localisation de l'appareil pour continuer",
+                                        refreshData,
+                                      )
+                                    //+++++++++++++++++++++++++++++++++++++++
+                                    // print('statesList:::: $statesList');
+                                    //----Build DropdownMenu
+                                    : DropdownButtonHideUnderline(
+                                        child: ButtonTheme(
+                                          alignedDropdown: true,
+                                          child: DropdownButton<String>(
+                                            //................
+                                            value: _myStateId,
+                                            // ??  _locationProvider.getcurrentStateID,
+                                            // value: _locationProvider.getcurrentStateArea,
+                                            //.................
 
-                                        //......SET STATE ID ..........
-                                        _locationProvider.setCurrentStateID(id);
-                                        //......SET STATE NAME ..........
-                                        _locationProvider
-                                            .setCurrentStateName(id);
-                                        //......................*/
-                                        setState(() {
-                                          _myStateId = id;
-                                          _myCityId = null;
+                                            iconSize: 30,
+                                            dropdownColor: AppColors.darkblue4,
+                                            iconEnabledColor: AppColors.white,
+                                            icon: (null),
+                                            //isDense: true,
+                                            style: TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 18,
+                                            ),
+                                            hint: Text(
+                                                'Séléctionner votre Wilaya',
+                                                style: TextStyle(
+                                                    color: AppColors.white)),
+                                            onChanged: (String id) {
+                                              print('NEW STATE NAME ===  $id');
 
-                                          citiesList = [];
-                                          _myLocalityId = null;
+                                              //......SET STATE ID ..........
+                                              _locationProvider
+                                                  .setCurrentStateID(id);
+                                              //......SET STATE NAME ..........
+                                              _locationProvider
+                                                  .setCurrentStateName(id);
+                                              //......................*/
+                                              setState(() {
+                                                _myStateId = id;
+                                                _myCityId = null;
 
-                                          //++++ HIDE BTN SUBMIT +++++
-                                          localitiesList = [];
+                                                citiesList = [];
+                                                _myLocalityId = null;
 
-                                          // _getCitiesList();
-                                          print('_myStateId : $_myStateId');
-                                        });
-                                        //......... GET LIST of CITIES from API ..........
+                                                //++++ HIDE BTN SUBMIT +++++
+                                                localitiesList = [];
 
-                                        _futureFetchingCities =
-                                            _locationProvider
-                                                .fetchCitiesAreaAPI();
-                                        //..................................
-                                      },
-                                      /*
+                                                // _getCitiesList();
+                                                print(
+                                                    '_myStateId : $_myStateId');
+                                              });
+                                              //......... GET LIST of CITIES from API ..........
+
+                                              _futureFetchingCities =
+                                                  _locationProvider
+                                                      .fetchCitiesAreaAPI();
+                                              //..................................
+                                            },
+                                            /*
                                       items: [
                                             {"id": 1, "wilayaName": "Adrar"},
                                             {"id": 2, "wilayaName": "Chlef "},
@@ -279,47 +330,51 @@ class _LocationPageState extends State<LocationPage> {
                                           [],
                                         */
 
-                                      items: statesList?.map((StateArea item) {
-                                            return DropdownMenuItem(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  //......
-                                                  CircleAvatar(
-                                                    backgroundColor: AppColors
-                                                        .black
-                                                        .withAlpha(50),
-                                                    child: Text(
-                                                      item.id
-                                                          .toString()
-                                                          .padRight(2),
-                                                      style: TextStyle(
-                                                          color:
-                                                              AppColors.white,
-                                                          fontSize: 18),
+                                            items: statesList
+                                                    ?.map((StateArea item) {
+                                                  return DropdownMenuItem(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        //......
+                                                        CircleAvatar(
+                                                          backgroundColor:
+                                                              AppColors.black
+                                                                  .withAlpha(
+                                                                      50),
+                                                          child: Text(
+                                                            item.id
+                                                                .toString()
+                                                                .padRight(2),
+                                                            style: TextStyle(
+                                                                color: AppColors
+                                                                    .white,
+                                                                fontSize: 18),
+                                                          ),
+                                                        ),
+                                                        //......
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10.0),
+                                                          child: Text(
+                                                              item.stateName ??
+                                                                  'Wilaya'),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ),
-                                                  //......
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: Text(
-                                                        item.stateName ??
-                                                            'Wilaya'),
-                                                  ),
-                                                ],
-                                              ),
 
-                                              //
-                                              value: item.id.toString(),
-                                            );
-                                          })?.toList() ??
-                                          [],
-                                    ),
-                                  ),
-                                );
+                                                    //
+                                                    value: item.id.toString(),
+                                                  );
+                                                })?.toList() ??
+                                                [],
+                                          ),
+                                        ),
+                                      );
                                 //++++++++++ End DROPDOWn MENU
                               }
                           }
@@ -586,7 +641,9 @@ class _LocationPageState extends State<LocationPage> {
                         ],
                       ),
                     ),
-              //.........................
+              //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+              //........... MESSAGE ERROR LOCALISATION ..............
 
               localitiesList.length <= 0
                   ? Center()
@@ -606,7 +663,7 @@ class _LocationPageState extends State<LocationPage> {
 
   Widget _submitButtonGetDelivers(BuildContext context) {
 //"Veuillez activer la localisation de l'appareil pour continuer"
-    _getCurrentLocationClient();
+    //_getCurrentLocationClient();
     print('MOHAMED:::::::::::: $_currentPosition');
 
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::

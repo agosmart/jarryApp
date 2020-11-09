@@ -122,9 +122,10 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateProductCart(int id, int qty, double priceTotal) {
+  updateProductCart(int id, int qty, double priceUnit, double priceTotal) {
     CartItem item = _cartItems.firstWhere((e) => e.productId == id);
     item.qty = qty;
+    item.priceUnit = priceUnit;
     item.priceTotal = priceTotal;
     notifyListeners();
   }

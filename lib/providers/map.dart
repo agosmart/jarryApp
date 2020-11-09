@@ -10,15 +10,45 @@ import 'package:http/http.dart' as http;
 import 'package:jariapp/models/product..dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
 import 'package:jariapp/utils/constantes.dart';
-import 'package:jariapp/providers/products.dart';
 
+/*
+class OrderItem {
+  String productId;
+  String quantity;
+  String unitPrice;
+  OrderItem({this.productId, this.quantity, this.unitPrice});
+
+  OrderItem.fromJson(Map<String, dynamic> jsonObject) {
+    this.productId = jsonObject['productId'];
+    this.quantity = jsonObject['qty'];
+    this.unitPrice = jsonObject['priceUnit'];
+  }
+}
+
+//....................................
+class Body {
+  String latitude;
+  String longitude;
+  List<OrderItem> order;
+  Body({this.latitude, this.longitude, this.order});
+
+  Body.fromJson(Map<String, dynamic> jsonObject) {
+    this.latitude = jsonObject['latitude'];
+    this.longitude = jsonObject['longitude'];
+
+    order = [];
+    var items = jsonDecode(jsonObject['order']);
+    for (var item in items) {
+      this.order.add(OrderItem.fromJson(item));
+    }
+  }
+}
+*/
 class MapProvider extends ChangeNotifier {
   //......
 
   final String localityId;
   MapProvider({this.localityId});
-
-  List<CartItem> _cartItems = ProductsProvider().getCartItems;
 
   //.......
   final List<Deliver> _deliversList = [];
@@ -103,11 +133,12 @@ class MapProvider extends ChangeNotifier {
 
   //+++++++++++++++++++ GET DELIVERS LIST FROM API +++++++++++++++++++++++++++
 
-  Future<List<Deliver>> fetchDeliversDatasAPI({String localityId}) async {
+  Future<List<Deliver>> fetchDeliversDatasAPI(
+      {String localityId, List<CartItem> cartItems}) async {
     //---
 
-    print('latitudeClient FROM API Map :: $latitudeClient ');
-    print('_cartItems FROM API Map :: $_cartItems ');
+    print('Positions FROM API Map :: $latitudeClient / $longitudeClient');
+    print('_cartItems FROM API Map :: ${jsonEncode(cartItems)} ');
     print("++++++++ ENTER LIST DELIVERS / localityId :$localityId ++++++++++ ");
     //----------------------------------------------------------------
     // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
@@ -119,43 +150,27 @@ class MapProvider extends ChangeNotifier {
     // final localityId = getcurrentLocalityID;
     //++++++++++++++++++++++++++++++++++++++
 
-    //-----------------------------------------------------
-    // final json = const JsonCodec();
-    // var order = [
-    //   {"productId": "25", "quantity": "15", "unitPrice": "20"},
-    //   {"productId": "26", "quantity": "8", "unitPrice": "35"},
-    //   {"productId": "31", "quantity": "9", "unitPrice": "135"}
-    // ];
-
-    // print(queryParameters);
-    //final body = jsonEncode(queryParameters);
-
-    //+++++++++++++++++++++++
-    //localityId =575
-    /*
-    final uri = Uri.http(
-      'danone.cooffa.shop',
-      '/api/v1/clients/livreurs/$localityId',
-      queryParameters,
-    );
-     var jsonData = json.decode(response.body);
-
-      print('---- slot: $jsonData');
-  
-    final headerData = {
-      // 'Content-Type': 'application/json;charset=UTF-8',
-      // 'Charset': 'utf-8'
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      // HttpHeaders.contentTypeHeader: 'application/json'
-    };
-    */
     String baseURL = BASEURL + '/livreurs/$localityId';
     //.....
     final headers = {
+      'Accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
     };
     //.....
+
+    final body = {
+      'latitude': latitudeClient.toString(),
+      'longitude': longitudeClient.toString(),
+      'order': cartItems.map((CartItem item) {
+        return {
+          "productId": item.productId.toString(),
+          "quantity": item.qty.toString(),
+          "unitPrice": item.priceUnit.toString()
+        };
+      }).toList()
+    };
+
+    print('BODY :::::: ==>>>>>${jsonEncode(body)}');
     //  final body = Map<String,String>{
     //   latitude: "123",
     //   longitude: "987",
@@ -165,22 +180,13 @@ class MapProvider extends ChangeNotifier {
     //     {"productId": "31", "quantity": "9", "unitPrice": "135"}
     //   ]
     // };
-
     //....
     try {
       //var response = await http.get(baseURL, headers: headers);
       final http.Response response = await http.post(
         baseURL,
         headers: headers,
-        body: jsonEncode(<String, dynamic>{
-          'latitude': "123",
-          'longitude': "987",
-          'order': [
-            {"productId": "25", "quantity": "15", "unitPrice": "20"},
-            {"productId": "26", "quantity": "8", "unitPrice": "35"},
-            {"productId": "31", "quantity": "9", "unitPrice": "135"}
-          ]
-        }),
+        body: jsonEncode(body),
       );
       //final jsonObject = jsonDecode(response.body);
 
@@ -238,7 +244,7 @@ class MapProvider extends ChangeNotifier {
         //..
       }
     } catch (e) {
-      print(e);
+      // print(e);
       throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
       //return Future.error('Erreur de connexion au serveur. veuillez réessayer');
       // StateArea result = StateArea(stateName: 'Erreur de connexion', id: 0);

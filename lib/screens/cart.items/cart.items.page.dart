@@ -493,6 +493,9 @@ class _CartItemsPageState extends State<CartItemsPage> {
 
   Widget _submitButtonOrder(BuildContext context) {
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
+
+    print('LENGTH == ${_cartlist.length} / _cartlist:::: $_cartlist');
+
     return CustomFadeTranslateAnimation(
       begin: 100,
       delay: 300,

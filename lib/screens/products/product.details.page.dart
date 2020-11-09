@@ -406,13 +406,17 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         //......................
                                         if (_isProductExist) {
                                           await _productsProvider
-                                              .updateProductCart(_productId,
-                                                  _qty, _pricetotal);
+                                              .updateProductCart(
+                                                  _productId,
+                                                  _qty,
+                                                  _priceUnit,
+                                                  _pricetotal);
                                         } else {
                                           _cart = CartItem(
                                               _productId,
                                               _productName,
                                               _qty,
+                                              _priceUnit,
                                               _pricetotal,
                                               _image);
                                           await _productsProvider

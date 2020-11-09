@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:jariapp/models/cart.item.dart';
 
 import 'package:jariapp/models/deliver.dart';
 import 'package:jariapp/providers/location.api.dart';
 
 import 'package:jariapp/providers/map.dart';
+import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/jari_icons_v2.dart';
@@ -29,11 +32,13 @@ class _MapPageState extends State<MapPage> {
   //+++++
   double h, w;
   List<Deliver> deliversList;
+  List<CartItem> _cartItems;
   String _localityID;
 
+  TextEditingController _phoneNumberController;
   //++++++++++++++++++
   // For storing the current position
-  Position _currentPosition;
+  //Position _currentPosition;
 
   //++++++++++++++++++
 
@@ -41,7 +46,9 @@ class _MapPageState extends State<MapPage> {
   //++++
 
   Future<List<Deliver>> _futureFetchingDelivers;
+  //------- PROVIDERS ---------
   MapProvider _mapProvider;
+  ProductsProvider _productsProvider;
   LocationProvider _localityProvider;
 
   // initMarker(client) {
@@ -69,19 +76,26 @@ class _MapPageState extends State<MapPage> {
     super.initState();
     //......
 
+    _phoneNumberController = TextEditingController();
     deliversList = [];
 
-    _mapProvider = Provider.of<MapProvider>(context, listen: false);
-
+    //.............GET PROVIDER PRODUCTS   .................................
+    _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     //.............GET PROVIDER LOCATION   .................................
     _localityProvider = Provider.of<LocationProvider>(context, listen: false);
-    //......................................................................
+    //.............GET PROVIDER MAP   .................................
+    _mapProvider = Provider.of<MapProvider>(context, listen: false);
+
     //.............GET CURRENT LOCALITY ID .................................
 
     _localityID = _localityProvider.getcurrentLocalityID;
+    _cartItems = _productsProvider.getCartItems;
+    //......................................................................
     print('MAP => _localityID ::: $_localityID');
-    _futureFetchingDelivers =
-        _mapProvider.fetchDeliversDatasAPI(localityId: _localityID);
+    print('ORDER => _productsProvider ::: $_cartItems');
+
+    _futureFetchingDelivers = _mapProvider.fetchDeliversDatasAPI(
+        localityId: _localityID, cartItems: _cartItems);
 
     //+++++++++++++++++++++
     //_getCurrentLocation();
@@ -102,14 +116,17 @@ class _MapPageState extends State<MapPage> {
     // );
   }
 
-  final phoneNumber = TextEditingController();
-
-  getValues() {
-    print(phoneNumber.text);
+  void dispose() {
+    _phoneNumberController.dispose();
+    super.dispose();
   }
+
+  // getPhoneValues() {
+  //   print(_phoneNumberController.text);
+  // }
   //...........................................
   // Method for retrieving the current location
-
+/*
   _getCurrentLocation() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
@@ -121,7 +138,7 @@ class _MapPageState extends State<MapPage> {
     });
 
     //print('moh:::${_currentPosition.altitude}');
-  }
+  }*/
   //...........................................
 
   @override
@@ -131,221 +148,216 @@ class _MapPageState extends State<MapPage> {
     h = MediaQuery.of(context).size.height;
 
     //+++++
-    return SafeArea(
-      maintainBottomViewPadding: true,
-      child: Scaffold(
-        appBar: AppBar(
-          brightness: Brightness.light,
+    return Scaffold(
+      appBar: AppBar(
+        brightness: Brightness.light,
 
-          // leading: null,
-          iconTheme: IconThemeData(color: AppColors.icongray),
-          backgroundColor: CustomAppBar.backgroundColor,
-          automaticallyImplyLeading: true,
-          centerTitle: CustomAppBar.centerTitle,
+        // leading: null,
+        iconTheme: IconThemeData(color: AppColors.icongray),
+        backgroundColor: CustomAppBar.backgroundColor,
+        automaticallyImplyLeading: true,
+        centerTitle: CustomAppBar.centerTitle,
 
-          elevation: CustomAppBar.elevation,
-          toolbarHeight: CustomAppBar.toolbarHeight,
-          title: CustomAppBar.logoHeader(),
-          // actions: <Widget>[CustomAppBar.builsActionIcons()],
-          //  actions: <Widget>[CustomAppBar.builsActionIconsClear()],
-          // toolbarHeight: 80.0,
-        ),
-        body:
-            //.....
+        elevation: CustomAppBar.elevation,
+        toolbarHeight: CustomAppBar.toolbarHeight,
+        title: CustomAppBar.logoHeader(),
+        // actions: <Widget>[CustomAppBar.builsActionIcons()],
+        //  actions: <Widget>[CustomAppBar.builsActionIconsClear()],
+        // toolbarHeight: 80.0,
+      ),
+      body:
+          //.....
 
-            FutureBuilder(
-          //----------------------------------
-          future: _futureFetchingDelivers,
-          //----------------------------------
-          //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Deliver>> snapShot) {
-            switch (snapShot.connectionState) {
-              case ConnectionState.none:
-                // return Text('nothing happend !!!');
-                return error('No connexion made!');
-                break;
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                //return Center();
-                return loading(AppColors.akablueLight);
-                break;
-              case ConnectionState.done:
-                //-----
-                if (snapShot.hasError) {
-                  return error(snapShot.error.toString());
-                } else {
-                  if (!snapShot.hasData) {
-                    //----Build Erreur
+          FutureBuilder(
+        //----------------------------------
+        future: _futureFetchingDelivers,
+        //----------------------------------
+        //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+        builder: (BuildContext context, AsyncSnapshot<List<Deliver>> snapShot) {
+          switch (snapShot.connectionState) {
+            case ConnectionState.none:
+              // return Text('nothing happend !!!');
+              return error('No connexion made!');
+              break;
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+              //return Center();
+              return loading(AppColors.akablueLight);
+              break;
+            case ConnectionState.done:
+              //-----
+              if (snapShot.hasError) {
+                return error(snapShot.error.toString());
+              } else {
+                if (!snapShot.hasData) {
+                  //----Build Erreur
 
-                    return Center(
-                      child: Text("hasn't data"),
-                    );
-                  }
-
-                  deliversList = [...snapShot.data];
-
-                  if (deliversList.length > 0) {
-                    //...... POSITION CAMERA INITIAL ....
-                    positionInit = LatLng(
-                      deliversList[0].latitude,
-                      deliversList[0].longitude,
-                    );
-                    //...........
-
-                    deliversList.map((deliver) {
-                      int id = deliver.deliverId;
-                      String lastName = deliver.lastName;
-                      String firstName = deliver.firstName;
-                      String fullName = '$lastName $firstName';
-                      double lat = deliver.latitude;
-                      double lnt = deliver.longitude;
-                      String phone_1 = deliver?.phone1 ?? '';
-                      String phone_2 = deliver?.phone2 ?? '';
-
-                      allMarkers.add(
-                        Marker(
-                          markerId: MarkerId('myMarker-$id'),
-                          draggable: true,
-                          // infoWindow:
-                          //     InfoWindow(title: 'tInformation livreur $id '),
-                          //............
-                          onTap: () {
-                            //++++++++++++++++++++++++
-                            print('Marker Tapped');
-
-                            showDeliverInfoOrder(
-                                id: id,
-                                fullName: fullName,
-                                phone_1: phone_1,
-                                phone_2: phone_2);
-
-                            //++++++++++++++++++++++++
-                          },
-                          position: LatLng(lat, lnt),
-                        ),
-                      );
-                    }).toList();
-
-                    /* allMarkers.add(
-                      Marker(
-                        markerId: MarkerId('myMarker'),
-                        draggable: true,
-                        onTap: () {
-                          print('Marker Tapped');
-                        },
-                        position: LatLng(40.7128, -74.0060),
-                      ),
-                    );*/
-                  }
-
-                  // deliversList = [];
-
-                  //+++++
-                  return deliversList.length <= 0
-                      ? Container(
-                          //......................................
-                          color: AppColors.white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FadeInImage(
-                                placeholder: AssetImage(
-                                  'assets/images/sopping-box-empty.jpg',
-                                ),
-                                fit: BoxFit.cover,
-                                // placeholder: null,
-                                image: AssetImage(
-                                  'assets/images/sopping-box-empty.jpg',
-                                ),
-                              ),
-                              //++++++++ MESSAGE ++++
-                              Padding(
-                                padding: const EdgeInsets.all(24),
-                                child: TitleText(
-                                  color: AppColors.darkgrey,
-                                  fontSize: 24.0,
-                                  uppercase: false,
-                                  fontWeight: FontWeight.w400,
-                                  textAlign: TextAlign.center,
-                                  text:
-                                      'Désolé! Aucun livreur n\'active dans votre région.',
-                                ),
-                              ),
-                              //++++++++ EMPTY SPACE ++++
-                              SizedBox(
-                                height: h / 4,
-                              )
-                            ],
-                          ),
-                        )
-                      : Stack(
-                          //......................................
-                          children: <Widget>[
-                            //......
-                            Container(
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              child: GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                    target:
-                                        positionInit, // LatLng(40.7128, -74.0060),
-                                    zoom: 14.0),
-                                markers: Set.from(allMarkers),
-                                //+++++++++++++++++++++++++++++
-                                onMapCreated: mapCreated,
-                                //+++++++++++++++++++++++++++++
-                              ),
-                            ),
-
-                            Positioned(
-                              bottom: 20,
-                              left: 20,
-                              // alignment: Alignment.bottomRight,
-                              child: InkWell(
-                                onTap: movetoNewYork,
-                                splashColor: AppColors.akablueLight,
-                                child: Container(
-                                  height: 48.0,
-                                  width: 48.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24.0),
-                                      color: AppColors.darkblue4),
-                                  child:
-                                      Icon(Icons.refresh, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            //..........................................
-
-                            //......
-
-                            Positioned(
-                              top: 20,
-                              left: 0,
-                              child: Container(
-                                width: w,
-                                height: 42.0,
-                                color: AppColors.white,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'POSITIONS :::: ${_currentPosition?.latitude} / ${_currentPosition?.longitude} ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                  //+++++
+                  return Center(
+                    child: Text("hasn't data"),
+                  );
                 }
-            }
-            return error('Data messing occured!');
-          },
-        ),
+
+                deliversList = [...snapShot.data];
+
+                if (deliversList.length > 0) {
+                  //...... POSITION CAMERA INITIAL ....
+                  positionInit = LatLng(
+                    deliversList[0].latitude,
+                    deliversList[0].longitude,
+                  );
+                  //...........
+
+                  deliversList.map((deliver) {
+                    int id = deliver.deliverId;
+                    String lastName = deliver.lastName;
+                    String firstName = deliver.firstName;
+                    String fullName = '$lastName $firstName';
+                    double lat = deliver.latitude;
+                    double lnt = deliver.longitude;
+                    String phone_1 = deliver?.phone1 ?? '';
+                    String phone_2 = deliver?.phone2 ?? '';
+
+                    allMarkers.add(
+                      Marker(
+                        markerId: MarkerId('myMarker-$id'),
+                        draggable: true,
+                        // infoWindow:
+                        //     InfoWindow(title: 'tInformation livreur $id '),
+                        //............
+                        onTap: () {
+                          //++++++++++++++++++++++++
+                          print('Marker Tapped');
+
+                          showDeliverInfoOrder(
+                              id: id,
+                              fullName: fullName,
+                              phone_1: phone_1,
+                              phone_2: phone_2);
+
+                          //++++++++++++++++++++++++
+                        },
+                        position: LatLng(lat, lnt),
+                      ),
+                    );
+                  }).toList();
+
+                  /* allMarkers.add(
+                    Marker(
+                      markerId: MarkerId('myMarker'),
+                      draggable: true,
+                      onTap: () {
+                        print('Marker Tapped');
+                      },
+                      position: LatLng(40.7128, -74.0060),
+                    ),
+                  );*/
+                }
+
+                // deliversList = [];
+
+                //+++++
+                return deliversList.length <= 0
+                    ? Container(
+                        //......................................
+                        color: AppColors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FadeInImage(
+                              placeholder: AssetImage(
+                                'assets/images/sopping-box-empty.jpg',
+                              ),
+                              fit: BoxFit.cover,
+                              // placeholder: null,
+                              image: AssetImage(
+                                'assets/images/sopping-box-empty.jpg',
+                              ),
+                            ),
+                            //++++++++ MESSAGE ++++
+                            Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: TitleText(
+                                color: AppColors.darkgrey,
+                                fontSize: 24.0,
+                                uppercase: false,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.center,
+                                text:
+                                    'Désolé! Aucun livreur n\'active dans votre région.',
+                              ),
+                            ),
+                            //++++++++ EMPTY SPACE ++++
+                            SizedBox(
+                              height: h / 4,
+                            )
+                          ],
+                        ),
+                      )
+                    : Stack(
+                        //......................................
+                        children: <Widget>[
+                          //......
+                          Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: GoogleMap(
+                              initialCameraPosition: CameraPosition(
+                                  target:
+                                      positionInit, // LatLng(40.7128, -74.0060),
+                                  zoom: 14.0),
+                              markers: Set.from(allMarkers),
+                              //+++++++++++++++++++++++++++++
+                              onMapCreated: mapCreated,
+                              //+++++++++++++++++++++++++++++
+                            ),
+                          ),
+
+                          Positioned(
+                            bottom: 20,
+                            left: 20,
+                            // alignment: Alignment.bottomRight,
+                            child: InkWell(
+                              onTap: movetoNewYork,
+                              splashColor: AppColors.akablueLight,
+                              child: Container(
+                                height: 48.0,
+                                width: 48.0,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                    color: AppColors.darkblue4),
+                                child: Icon(Icons.refresh, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          //..........................................
+
+                          //......
+
+                          Positioned(
+                            top: 20,
+                            left: 0,
+                            child: Container(
+                              width: w,
+                              height: 42.0,
+                              color: AppColors.white,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'POSITIONS :::: ${_mapProvider?.latitudeClient} / ${_mapProvider?.longitudeClient} ',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                //+++++
+              }
+          }
+          return error('Data messing occured!');
+        },
       ),
     );
   }
@@ -367,84 +379,116 @@ class _MapPageState extends State<MapPage> {
     //. . . . .
     print('SHOW DIALOGUE INFOS');
     //. . . . .
-    Widget infoDeliver = Container(
+
+    final _formKey = GlobalKey<FormState>();
+    String phoneNumber = '';
+
+    Widget infoDeliverForm = Container(
       color: Colors.white,
       // height: h / 2,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            color: AppColors.darkblue4,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //. . . . .
-                Icon(
-                  JariIcons.user_check,
-                  color: AppColors.gold,
-                ),
-                //. . . . .
-                SizedBox(width: 18.0),
-                //. . . . .
-                TitleText(
-                  color: AppColors.white,
-                  fontSize: 18.0,
-                  uppercase: false,
-                  fontWeight: FontWeight.w400,
-                  textAlign: TextAlign.center,
-                  text: 'Informations livreur ',
-                ),
-                //. . . . .
-                SizedBox(width: 16.0),
-                //. . . . .
-                Container(
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.black.withOpacity(0.5),
-                    child: TitleText(
-                      color: AppColors.white,
-                      fontSize: 16.0,
-                      uppercase: false,
-                      fontWeight: FontWeight.w400,
-                      textAlign: TextAlign.center,
-                      text: '$id',
+      //- - - - - - - - - - - - - - - -  START FORM - - - - - - - - - - - -
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              color: AppColors.darkblue4,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //. . . . .
+                  Icon(
+                    JariIcons.user_check,
+                    color: AppColors.gold,
+                  ),
+                  //. . . . .
+                  SizedBox(width: 18.0),
+                  //. . . . .
+                  TitleText(
+                    color: AppColors.white,
+                    fontSize: 18.0,
+                    uppercase: true,
+                    fontWeight: FontWeight.w400,
+                    textAlign: TextAlign.center,
+                    text: 'Informations livreur ',
+                  ),
+                  //. . . . .
+                  SizedBox(width: 16.0),
+                  //. . . . .
+                  Container(
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.white.withOpacity(0.15),
+                      child: TitleText(
+                        color: AppColors.white,
+                        fontSize: 16.0,
+                        uppercase: false,
+                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                        text: '$id',
+                      ),
                     ),
                   ),
-                ),
-                //. . . . .
+                  //. . . . .
+                ],
+              ),
+            ),
+            //. . . . . . . . . . . . .
+            SizedBox(height: 21.0),
+            //. . . . . . . . . . . . . .  . .
+            TextFormField(
+              controller: _phoneNumberController,
+              autocorrect: false,
+              autofocus: true,
+              keyboardType: TextInputType.phone,
+              //+++++++++++++++++++++++++++
+              onChanged: (String value) {
+                // if (value.isEmpty) return " Champ vide";
+                // if (value.length > 10 || value.length < 10)
+                //   return "Numéro de téléphone invalide";
+
+                phoneNumber = value;
+              },
+
+              validator: (value) {
+                if (value.isEmpty || value.length > 10 || value.length < 10) {
+                  return 'veuillez entrer un numéro de téléphone valide';
+                }
+                return null;
+              },
+              //+++++++++++++++++++++++++++
+              inputFormatters: [
+                // FilteringTextInputFormatter.deny(RegExp(r'[0-6]')),
+                // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                // FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                //FilteringTextInputFormatter.deny(RegExp('[abFeG]')),
+                FilteringTextInputFormatter.digitsOnly,
               ],
-            ),
-          ),
-
-          //. . . . . . . . . . . . .
-          SizedBox(height: 21.0),
-          //. . . . . . . . . . . . . .  . .
-          TextField(
-            controller: phoneNumber,
-            autocorrect: false,
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-              hintText: 'Saisissez votre numéro de Téléphone',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0),
-                borderSide: BorderSide(
-                  color: AppColors.darkblue4,
+              style: TextStyle(color: AppColors.darkblue4, fontSize: 32.0),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: AppColors.icongray,
+                  ),
                 ),
-              ),
-              labelText: 'Votre numéro de téléphone',
-              labelStyle: TextStyle(color: AppColors.darkblue3, fontSize: 21),
-              hintStyle: TextStyle(
-                fontSize: 21,
+                hintText: 'Saisissez votre numéro de Téléphone',
+                hintStyle: TextStyle(fontSize: 18, color: AppColors.icongray),
+                errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: AppColors.pinck, width: 2.0)),
+                labelText: 'Votre numéro de téléphone',
+                labelStyle: TextStyle(color: AppColors.darkblue3, fontSize: 18),
               ),
             ),
-          ),
 
-          //. . . . . . . . . . . . .
-          SizedBox(height: 21.0),
-          //. . . . . . . . . . . . . .
-          infoList(fullName, phone_1, phone_2),
-
-          //. . . . . . . . . . . . . . .
-        ],
+            //. . . . . . . . . . . . .
+            SizedBox(height: 21.0),
+            //. . . . . . . . . . . . . .
+            infoList(fullName, phone_1, phone_2),
+            //. . . . . . . . . . . . . . .
+          ],
+        ),
+        //- - - - - - - - - - - - - - - -  END FORM - - - - - - - - - - - - - -
       ),
     );
 
@@ -456,8 +500,9 @@ class _MapPageState extends State<MapPage> {
       useSafeArea: false,
       builder: (context) => AlertDialog(
         insetPadding: EdgeInsets.all(8),
-        title: infoDeliver, //Text('Êtes-vous sûr de vouloir quitter ?'),
-        //-------
+        //-------------------------------------
+        title: infoDeliverForm, //Text('Êtes-vous sûr de vouloir quitter ?'),
+        //-----------------------------------
         actions: <Widget>[
           Container(
             alignment: Alignment.center,
@@ -471,11 +516,14 @@ class _MapPageState extends State<MapPage> {
                 ),
                 child: Text(
                   'Annuler',
-                  style: TextStyle(fontSize: 21),
+                  style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop(true);
+                  _formKey.currentState.reset();
+                  //_phoneNumberController.text = '';
+                  Navigator.of(context).pop();
                   // Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                  //.....................................
                 }),
           ),
           //........
@@ -492,16 +540,31 @@ class _MapPageState extends State<MapPage> {
               ),
               child: Text(
                 'Envoyer',
-                style: TextStyle(fontSize: 21),
+                style: TextStyle(fontSize: 18),
               ),
               onPressed: () {
                 //----------------------------------
-                final latClient = _currentPosition.latitude;
-                final lntClient = _currentPosition.longitude;
+                // final latClient = _currentPosition?.latitude;
+                // final lntClient = _currentPosition?.longitude;
+
+                if (_formKey.currentState.validate()) {
+                  print('phoneNumber === $phoneNumber');
+                }
+                //.....................................
+
+                // getPhoneValues();
 
                 //--------------------------------------
-                print('CURRENT POS MAP: $latClient / $lntClient');
-                return Navigator.of(context).pop();
+                // print( 'CURRENT POS MAP: $latClient / $lntClient / phoneNum $phoneNum');
+
+                /*
+                if (!phoneNum.isEmpty && phoneNum.length > 0) {
+                  _phoneNumberController.clear();
+                  //Navigator.pushReplacementNamed(context, '/orderPage');
+                } else {
+                  _phoneNumberController.clear();
+                  print('Le numéro de téléphone est requis');
+                }*/
               },
             ),
           ),

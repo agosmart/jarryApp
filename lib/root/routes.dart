@@ -4,6 +4,7 @@ import 'package:jariapp/screens/home/home.page.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
 import 'package:jariapp/screens/location/location.page.dart';
 import 'package:jariapp/screens/map/map.page.dart';
+import 'package:jariapp/screens/order/order.page.dart';
 import 'package:jariapp/screens/products/product.details.page.dart';
 import 'package:jariapp/screens/products/products.page.dart';
 import 'package:jariapp/screens/terms.condistions/cgv.dart';
@@ -57,6 +58,12 @@ abstract class Routes {
           builder: (context) => MapPage(),
         );
       //------------------------------
+      case "/orderPage":
+        return MaterialPageRoute(
+          builder: (context) => OrderPage(),
+        );
+      //------------------------------
+
       default:
         return MaterialPageRoute(
           builder: (context) => HomePage(),
