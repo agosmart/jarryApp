@@ -128,7 +128,7 @@ class LocationProvider extends ChangeNotifier {
 
             notifyListeners();
 
-            print('_statesList ==== ${jsonEncode(_statesList)}');
+            // print('_statesList ==== ${jsonEncode(_statesList)}');
             // _usersOfGroup =  List.from(jsonObject['data']).map((e) => e.UserGroupData.fromJson());
             // print('ITEM !!!!!! ${_statesList.length}');
             print("+++++++  DISPLAY CARD INFO CATEGORIES  +++++++++++ ");

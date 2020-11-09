@@ -162,6 +162,10 @@ class CustomAppBar {
                     ),
                     onPressed: () {
                       //-------------------
+
+                      Navigator.pushNamed(context, '/cartItemsPage');
+
+                      /*
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -169,7 +173,7 @@ class CustomAppBar {
                           builder: (BuildContext context) => CartItemsPage(),
                           //--------------------------------------------------
                         ),
-                      );
+                      );*/
                       //------------------
                     },
                     // Icons.shopping_basket,

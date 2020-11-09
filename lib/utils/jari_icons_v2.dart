@@ -109,8 +109,10 @@ class JariIcons {
       IconData(0xe82a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData file_text =
       IconData(0xe82b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData path_1355 =
+  static const IconData phone =
       IconData(0xe82c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  // static const IconData path_1355 =
+  //     IconData(0xe82c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData map_pin =
       IconData(0xe82d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData plus_circle =

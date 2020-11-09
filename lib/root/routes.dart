@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jariapp/screens/cart.items/cart.items.page.dart';
 import 'package:jariapp/screens/home/home.page.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
+import 'package:jariapp/screens/location/location.page.dart';
 import 'package:jariapp/screens/map/map.page.dart';
+import 'package:jariapp/screens/products/product.details.page.dart';
+import 'package:jariapp/screens/products/products.page.dart';
+import 'package:jariapp/screens/terms.condistions/cgv.dart';
 
 abstract class Routes {
   static MaterialPageRoute materialRoutes(
@@ -19,9 +24,35 @@ abstract class Routes {
         return MaterialPageRoute(
           builder: (context) => LandingPage(),
         );
+      //-- Product Page
+      case "/productpage":
+        return MaterialPageRoute(
+          builder: (context) => ProductsPage(),
+        );
 
+      //-- Product Details Page
+      case "/productDetailsPage":
+        return MaterialPageRoute(
+          builder: (context) => ProductDetailsPage(),
+        );
+      //-- Product cart Items Page
+      case "/cartItemsPage":
+        return MaterialPageRoute(
+          builder: (context) => CartItemsPage(),
+        );
+      //--- Conditions Page
+      case "/cgvPage":
+        return MaterialPageRoute(
+          builder: (context) => CGVPage(),
+          fullscreenDialog: true,
+        );
+      //--- Location Page
+      case "/locationPage":
+        return MaterialPageRoute(
+          builder: (context) => LocationPage(),
+        );
       //--- Map Page
-      case "/map":
+      case "/mapPage":
         return MaterialPageRoute(
           builder: (context) => MapPage(),
         );

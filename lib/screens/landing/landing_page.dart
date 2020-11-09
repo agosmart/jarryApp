@@ -45,14 +45,20 @@ class _LandingPageState extends State<LandingPage>
     // TODO: implement initState
     super.initState();
 
-    scaleController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 800))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          Navigator.push(context,
-              PageTransition(type: PageTransitionType.fade, child: HomePage()));
-        }
-      });
+    scaleController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 800))
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: HomePage(),
+                  settings: RouteSettings(name: "/home"),
+                ),
+              );
+            }
+          });
 
     scaleAnimation =
         Tween<double>(begin: 1.0, end: 20.0).animate(scaleController);

@@ -257,7 +257,9 @@ class _ProductsPageState extends State<ProductsPage> {
                                             .setCurrentProduct(_currentProd);
                                         //+.+.+.+.+.+.+.+.+.+.++.+.+.+.+.+.+.+.+.+.+.+.+
 
-                                        Navigator.push(
+                                          Navigator.pushNamed(context, '/productDetailsPage');
+
+                                      /*  Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             //-------------------------------------------------
@@ -268,7 +270,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
                                             //--------------------------------------------------
                                           ),
-                                        );
+                                        );*/
                                       },
                                       //++++++++++++++++++++++++++++
                                       trailing: Icon(

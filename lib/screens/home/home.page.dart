@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   Function refreshData() {
     //_futureFetchingCat = _categoryProvider.fetchCategoriesAPI();
 
-    Navigator.popAndPushNamed(context, 'home');
+    Navigator.popAndPushNamed(context, '/home');
   }
 
   @override
@@ -440,6 +440,8 @@ class _HomePageState extends State<HomePage> {
           _categoryProvider.setCurrentCatIcon(_icon);
 
           //-------------------------------
+          Navigator.pushNamed(context, '/productpage');
+          /*
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -448,6 +450,7 @@ class _HomePageState extends State<HomePage> {
               //--------------------------------------------------
             ),
           );
+          */
         },
         child: Card(
           shape:

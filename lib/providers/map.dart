@@ -3,11 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/deliver.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:jariapp/models/product..dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
 import 'package:jariapp/utils/constantes.dart';
+import 'package:jariapp/providers/products.dart';
 
 class MapProvider extends ChangeNotifier {
   //......
@@ -15,8 +18,25 @@ class MapProvider extends ChangeNotifier {
   final String localityId;
   MapProvider({this.localityId});
 
+  List<CartItem> _cartItems = ProductsProvider().getCartItems;
+
   //.......
   final List<Deliver> _deliversList = [];
+
+  double _latClient;
+  double _lntClient;
+
+  double get latitudeClient => _latClient;
+  double get longitudeClient => _lntClient;
+  setLatitudeClient(value) {
+    _latClient = value;
+    notifyListeners();
+  }
+
+  setLongitudeClient(value) {
+    _lntClient = value;
+    notifyListeners();
+  }
 
 //+++++++++++++++++++ GET DELIVERS LIST  FROM LOCAL +++++++++++++++++++++++++++
   Future<List<Deliver>> fetchDeliversDatasLocal() async {
@@ -86,6 +106,8 @@ class MapProvider extends ChangeNotifier {
   Future<List<Deliver>> fetchDeliversDatasAPI({String localityId}) async {
     //---
 
+    print('latitudeClient FROM API Map :: $latitudeClient ');
+    print('_cartItems FROM API Map :: $_cartItems ');
     print("++++++++ ENTER LIST DELIVERS / localityId :$localityId ++++++++++ ");
     //----------------------------------------------------------------
     // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();

@@ -47,7 +47,11 @@ class _CartItemsPageState extends State<CartItemsPage> {
   void _openConditionsPage(context) {
     print('READ MORE....');
 
-    Navigator.push(
+    //-------------------------------------------------
+    Navigator.pushNamed(context, '/cgvPage');
+    //-------------------------------------------------
+
+    /*Navigator.push(
       context,
       MaterialPageRoute(
         //-------------------------------------------------
@@ -58,7 +62,7 @@ class _CartItemsPageState extends State<CartItemsPage> {
 
         //--------------------------------------------------
       ),
-    );
+    );*/
   }
 
   ///
@@ -506,8 +510,10 @@ class _CartItemsPageState extends State<CartItemsPage> {
               //*+++++++++++++++...................++++++++++++++
               onPressed: checkBoxValue
                   ? () {
-                      //..
-                      Navigator.push(
+                      //..........locationPage...............
+                      Navigator.pushNamed(context, '/locationPage');
+                      //........................
+                      /* Navigator.push(
                         context,
                         MaterialPageRoute(
                           //-------------------------------------------------
@@ -517,7 +523,7 @@ class _CartItemsPageState extends State<CartItemsPage> {
                           //  fullscreenDialog: true,
                           //--------------------------------------------------
                         ),
-                      );
+                      );*/
                       //..
                     }
                   : null,

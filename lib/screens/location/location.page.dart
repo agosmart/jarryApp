@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:jariapp/models/location.dart';
+import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/screens/map/map.page.dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
 
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/helpers.dart';
+import 'package:jariapp/utils/jari_icons_v2.dart';
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/title.text.dart';
@@ -41,11 +43,9 @@ class _LocationPageState extends State<LocationPage> {
   Future<List<LocalityArea>> _futureFetchingLocalities;
 
   LocationProvider _locationProvider;
+  MapProvider _mapProvider;
 
-  //Position position;
   //++++++++++++++++++
-
-  // final Geolocator _geolocator = Geolocator();
   // For storing the current position
   Position _currentPosition;
 
@@ -59,6 +59,7 @@ class _LocationPageState extends State<LocationPage> {
     localitiesList = [];
     //============================================
     _locationProvider = Provider.of<LocationProvider>(context, listen: false);
+    _mapProvider = Provider.of<MapProvider>(context, listen: false);
     //============================================
     /*++++++---- GET LIST of STATE from API +++++++*/
     // _futureFetchingStates = _locationProvider.fetchStatesAreaAPI();
@@ -66,7 +67,7 @@ class _LocationPageState extends State<LocationPage> {
     /*++++++---- GET LIST of STATE from LOCAL JSON  +++++++*/
     _futureFetchingStates = _locationProvider.fetchStatesAreaLocal();
     //+++++++++++++++ GET POSITION ++++++++++++++
-    // _getCurrentLocation();
+    _getCurrentLocationClient();
   }
 
   // getPosition() async {
@@ -75,15 +76,20 @@ class _LocationPageState extends State<LocationPage> {
   // }
 
   // Method for retrieving the current location
-  _getCurrentLocation() async {
+  _getCurrentLocationClient() async {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       // print('CURRENT POS: $_currentPosition');
-      setState(() {
-        _currentPosition = position;
-        // Store the position in the variable
-        print('CURRENT POS: $_currentPosition');
-      });
+      _currentPosition = position;
+      print('CURRENT POS: $_currentPosition');
+      //-------- STORE LNT/LGT Client values --------------------
+      _mapProvider.setLatitudeClient(_currentPosition.latitude);
+      _mapProvider.setLongitudeClient(_currentPosition.longitude);
+
+      // setState(() {
+      //   _currentPosition = position;
+      //   print('CURRENT POS: $_currentPosition');
+      // });
     });
   }
 
@@ -119,19 +125,33 @@ class _LocationPageState extends State<LocationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                alignment: Alignment.topCenter,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Text(
-                  'Informations relatives à votre adresse de livraison',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 24,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Icon(
+                    JariIcons.map_pin,
+                    color: AppColors.icongray,
+                    size: 32,
                   ),
-                ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.topCenter,
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      child: Text(
+                        'Informations relatives à votre adresse de livraison',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
+              /*
               Container(
                 alignment: Alignment.topCenter,
                 margin:
@@ -145,6 +165,7 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                 ),
               ),
+              */
 
               //++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -378,7 +399,7 @@ class _LocationPageState extends State<LocationPage> {
                                             //  isDense: true,
                                             style: TextStyle(
                                               color: AppColors.white,
-                                              fontSize: 18,
+                                              fontSize: 16,
                                             ),
 
                                             hint: Text(
@@ -539,8 +560,6 @@ class _LocationPageState extends State<LocationPage> {
                                                 print(
                                                     '_myLocalityId : $_myLocalityId');
                                               });
-
-                                              _getCurrentLocation();
                                             },
 
                                             items: localitiesList
@@ -572,7 +591,7 @@ class _LocationPageState extends State<LocationPage> {
               localitiesList.length <= 0
                   ? Center()
                   : _locationProvider.getcurrentLocalityName != null
-                      ? _submitButtonOrder(context)
+                      ? _submitButtonGetDelivers(context)
                       : Center(child: Text('choisir une commune')),
 
               //++++++++++++++++ END ++++++++++++++++
@@ -585,8 +604,11 @@ class _LocationPageState extends State<LocationPage> {
 
   //+++++++++++++++++ SUBMIT BUTTON +++++++++++++++++++++++
 
-  Widget _submitButtonOrder(BuildContext context) {
+  Widget _submitButtonGetDelivers(BuildContext context) {
 //"Veuillez activer la localisation de l'appareil pour continuer"
+    _getCurrentLocationClient();
+    print('MOHAMED:::::::::::: $_currentPosition');
+
 //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
     return CustomFadeTranslateAnimation(
       begin: 100,
@@ -607,13 +629,17 @@ class _LocationPageState extends State<LocationPage> {
                 //*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
                 final localityName = _locationProvider.getcurrentLocalityName;
-                final localityID = _locationProvider.getcurrentLocalityID;
+                // final localityID = _locationProvider.getcurrentLocalityID;
 
                 //*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 print('localityName >>>>>> $localityName');
                 //..
-                // return null;
+                //-------------------------------------------------
 
+                Navigator.pushNamed(context, '/mapPage');
+
+                //-------------------------------------------------
+                /*
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -626,6 +652,7 @@ class _LocationPageState extends State<LocationPage> {
                     //--------------------------------------------------
                   ),
                 );
+                */
                 //..
               },
               //*+++++++++++++++...................++++++++++++++

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:jariapp/models/deliver.dart';
 import 'package:jariapp/providers/location.api.dart';
 
@@ -14,6 +14,9 @@ import 'package:jariapp/utils/helpers.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
 import 'package:jariapp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({Key key}) : super(key: key);
@@ -27,7 +30,12 @@ class _MapPageState extends State<MapPage> {
   double h, w;
   List<Deliver> deliversList;
   String _localityID;
-  //............
+
+  //++++++++++++++++++
+  // For storing the current position
+  Position _currentPosition;
+
+  //++++++++++++++++++
 
   GoogleMapController mapController;
   //++++
@@ -75,6 +83,9 @@ class _MapPageState extends State<MapPage> {
     _futureFetchingDelivers =
         _mapProvider.fetchDeliversDatasAPI(localityId: _localityID);
 
+    //+++++++++++++++++++++
+    //_getCurrentLocation();
+    //+++++++++++++++++++++
     /*
     _futureFetchingDelivers = _mapProvider.fetchDeliversDatasLocal();
  */
@@ -96,8 +107,23 @@ class _MapPageState extends State<MapPage> {
   getValues() {
     print(phoneNumber.text);
   }
+  //...........................................
+  // Method for retrieving the current location
 
-  //............
+  _getCurrentLocation() async {
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      // print('CURRENT POS: $_currentPosition');
+      setState(() {
+        _currentPosition = position;
+        // Store the position in the variable
+      });
+    });
+
+    //print('moh:::${_currentPosition.altitude}');
+  }
+  //...........................................
+
   @override
   Widget build(BuildContext context) {
     //++++
@@ -181,8 +207,8 @@ class _MapPageState extends State<MapPage> {
                         Marker(
                           markerId: MarkerId('myMarker-$id'),
                           draggable: true,
-                          infoWindow:
-                              InfoWindow(title: 'tInformation livreur $id '),
+                          // infoWindow:
+                          //     InfoWindow(title: 'tInformation livreur $id '),
                           //............
                           onTap: () {
                             //++++++++++++++++++++++++
@@ -289,8 +315,29 @@ class _MapPageState extends State<MapPage> {
                                       Icon(Icons.refresh, color: Colors.white),
                                 ),
                               ),
-                            )
+                            ),
                             //..........................................
+
+                            //......
+
+                            Positioned(
+                              top: 20,
+                              left: 0,
+                              child: Container(
+                                width: w,
+                                height: 42.0,
+                                color: AppColors.white,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'POSITIONS :::: ${_currentPosition?.latitude} / ${_currentPosition?.longitude} ',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         );
                   //+++++
@@ -410,19 +457,54 @@ class _MapPageState extends State<MapPage> {
       builder: (context) => AlertDialog(
         insetPadding: EdgeInsets.all(8),
         title: infoDeliver, //Text('Êtes-vous sûr de vouloir quitter ?'),
+        //-------
         actions: <Widget>[
-          FlatButton(
-              child: Text(
-                'Annuler',
-                style: TextStyle(color: AppColors.darkblue3, fontSize: 21),
+          Container(
+            alignment: Alignment.center,
+            width: (w / 2) - 20,
+            // color: AppColors.black,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.pinck,
+                  onPrimary: Colors.white,
+                  onSurface: Colors.white,
+                ),
+                child: Text(
+                  'Annuler',
+                  style: TextStyle(fontSize: 21),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  // Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                }),
+          ),
+          //........
+
+          Container(
+            alignment: Alignment.center,
+            width: (w / 2) - 20,
+            //-----------
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: AppColors.darkblue4,
+                onPrimary: Colors.white,
+                onSurface: Colors.white,
               ),
-              onPressed: () => Navigator.of(context).pop()),
-          FlatButton(
               child: Text(
-                'Valider',
-                style: TextStyle(color: AppColors.darkblue3, fontSize: 21),
+                'Envoyer',
+                style: TextStyle(fontSize: 21),
               ),
-              onPressed: () => Navigator.of(context).pop(false)),
+              onPressed: () {
+                //----------------------------------
+                final latClient = _currentPosition.latitude;
+                final lntClient = _currentPosition.longitude;
+
+                //--------------------------------------
+                print('CURRENT POS MAP: $latClient / $lntClient');
+                return Navigator.of(context).pop();
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -433,53 +515,58 @@ class _MapPageState extends State<MapPage> {
   infoList(fullName, phone_1, phone_2) {
     return Container(
       // width: w,
-      height: 150,
+      //height: 150,
+      //height: double.minPositive,
 
       //+++++
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: Icon(Icons.supervised_user_circle),
-              title: TitleText(
-                color: AppColors.lightblue3,
-                fontSize: 18.0,
-                uppercase: false,
-                fontWeight: FontWeight.w400,
-                text: '$fullName',
-              ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(children: [
+                //....
+                Icon(JariIcons.user),
+                //....
+                TitleText(
+                  color: AppColors.lightblue3,
+                  fontSize: 18.0,
+                  uppercase: false,
+                  fontWeight: FontWeight.w400,
+                  text: '  $fullName',
+                )
+                //....
+              ]),
             ),
 
             //. . . . .
-            phone_1 == ''
-                ? Center()
-                : ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: Icon(Icons.call),
-                    title: TitleText(
-                      color: AppColors.lightblue3,
-                      fontSize: 18.0,
-                      uppercase: false,
-                      fontWeight: FontWeight.w400,
-                      text: '$phone_1',
-                    ),
-                  ),
 
-            //. . . . .
-            phone_2 == ''
-                ? Center()
-                : ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: Icon(Icons.call),
-                    title: TitleText(
-                      color: AppColors.lightblue3,
-                      fontSize: 18.0,
-                      uppercase: false,
-                      fontWeight: FontWeight.w400,
-                      text: '$phone_2',
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  phone_1 == '' || phone_1 == null
+                      ? Center()
+                      : Icon(JariIcons.phone),
+                  TitleText(
+                    color: AppColors.lightblue3,
+                    fontSize: 18.0,
+                    uppercase: false,
+                    fontWeight: FontWeight.w400,
+                    text: '  $phone_1',
                   ),
+                  phone_2 == '' || phone_2 == null
+                      ? Center()
+                      : TitleText(
+                          color: AppColors.lightblue3,
+                          fontSize: 18.0,
+                          uppercase: false,
+                          fontWeight: FontWeight.w400,
+                          text: '  |  $phone_2',
+                        ),
+                ],
+              ),
+            ),
 
             //. . . . .
 
