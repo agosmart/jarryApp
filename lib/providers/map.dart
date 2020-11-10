@@ -7,7 +7,7 @@ import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/deliver.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:jariapp/models/product..dart';
+import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
 import 'package:jariapp/utils/constantes.dart';
 
@@ -134,11 +134,11 @@ class MapProvider extends ChangeNotifier {
   //+++++++++++++++++++ GET DELIVERS LIST FROM API +++++++++++++++++++++++++++
 
   Future<List<Deliver>> fetchDeliversDatasAPI(
-      {String localityId, List<CartItem> cartItems}) async {
+      {String localityId, Map<String, dynamic> orderDetails}) async {
     //---
 
-    print('Positions FROM API Map :: $latitudeClient / $longitudeClient');
-    print('_cartItems FROM API Map :: ${jsonEncode(cartItems)} ');
+    // print('Positions FROM API Map :: $latitudeClient / $longitudeClient');
+    // print('_cartItems FROM API Map :: ${jsonEncode(orderDetails)} ');
     print("++++++++ ENTER LIST DELIVERS / localityId :$localityId ++++++++++ ");
     //----------------------------------------------------------------
     // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
@@ -158,7 +158,8 @@ class MapProvider extends ChangeNotifier {
     };
     //.....
 
-    final body = {
+    final body = orderDetails;
+    /* final body = {
       'latitude': latitudeClient.toString(),
       'longitude': longitudeClient.toString(),
       'order': cartItems.map((CartItem item) {
@@ -168,7 +169,7 @@ class MapProvider extends ChangeNotifier {
           "unitPrice": item.priceUnit.toString()
         };
       }).toList()
-    };
+    };*/
 
     print('BODY :::::: ==>>>>>${jsonEncode(body)}');
     //  final body = Map<String,String>{

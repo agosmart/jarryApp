@@ -3,8 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:jariapp/providers/products.dart';
 
 import 'package:jariapp/themes/colors.dart';
+import 'package:jariapp/utils/jari_icons_v2.dart';
 
-import 'package:jariapp/utils/jari_icons_v1.dart';
+ 
 import 'package:provider/provider.dart';
 
 // class CustomAppBarIcons {

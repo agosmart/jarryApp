@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/models/product..dart';
+import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/exeptions/exeptions.dart';
 import 'package:jariapp/utils/constantes.dart';
 
@@ -23,6 +23,7 @@ class ProductsProvider extends ChangeNotifier {
   List<CartItem> _cartItems = [];
   List<Product> _products = [];
   Product _currentProduct;
+  bool _isChecked;
 
   //int _numOfItems;
 
@@ -36,6 +37,11 @@ class ProductsProvider extends ChangeNotifier {
   }
   */
 //......
+  bool get isChecked => _isChecked ?? false;
+  setIsChecked(bool value) {
+    _isChecked = value;
+    notifyListeners();
+  }
 
   bool isProductExist(int id) {
     //if (_cartItems.length <= 0) return false;

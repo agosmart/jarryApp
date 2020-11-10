@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/models/product..dart';
-import 'package:jariapp/screens/products/product.details.page.dart';
+import 'package:jariapp/models/product.dart';
+
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -70,10 +70,8 @@ class _ProductsPageState extends State<ProductsPage> {
 
     //+++++
     return Scaffold(
-      // backgroundColor: Colors.grey[100],
-
+      //+++++
       backgroundColor: AppColors.canvaColor,
-
       //+++++
 
       appBar: AppBar(
@@ -257,9 +255,10 @@ class _ProductsPageState extends State<ProductsPage> {
                                             .setCurrentProduct(_currentProd);
                                         //+.+.+.+.+.+.+.+.+.+.++.+.+.+.+.+.+.+.+.+.+.+.+
 
-                                          Navigator.pushNamed(context, '/productDetailsPage');
+                                        Navigator.pushNamed(
+                                            context, '/productDetailsPage');
 
-                                      /*  Navigator.push(
+                                        /*  Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             //-------------------------------------------------

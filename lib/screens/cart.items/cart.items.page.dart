@@ -35,7 +35,7 @@ class _CartItemsPageState extends State<CartItemsPage> {
     // TODO: implement initState
     super.initState();
     _cartlist = [];
-    checkBoxValue = false;
+
     //++++
   }
 
@@ -75,6 +75,8 @@ class _CartItemsPageState extends State<CartItemsPage> {
     h = MediaQuery.of(context).size.height;
 
     _productsProvider = Provider.of<ProductsProvider>(context, listen: true);
+
+    checkBoxValue = _productsProvider.isChecked ?? false;
     _cartlist = [..._productsProvider.getCartItems];
 
     //++++
@@ -221,13 +223,29 @@ class _CartItemsPageState extends State<CartItemsPage> {
 
                   Row(
                     children: <Widget>[
-                      Checkbox(
-                          value: checkBoxValue,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              checkBoxValue = newValue;
-                            });
+                      //...........................
+                      Selector<ProductsProvider, bool>(
+                          //............
+                          selector: (context, _productsProvider) =>
+                              _productsProvider.isChecked,
+                          builder: (_, isChecked, child) {
+                            //......
+                            print('CHECKBOX STATE::::$isChecked');
+                            return Checkbox(
+                                value: isChecked,
+                                onChanged: (bool newValue) {
+                                  _productsProvider.setIsChecked(newValue);
+                                });
                           }),
+                      //...........................
+
+                      // Checkbox(
+                      //     value: checkBoxValue,
+                      //     onChanged: (bool newValue) {
+                      //       setState(() {
+                      //         checkBoxValue = newValue;
+                      //       });
+                      //     }),
                       Expanded(
                         child: Text(
                           "j'accepte les conditions générales de vente.",

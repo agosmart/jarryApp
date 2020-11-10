@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/location.api.dart';
 import 'package:jariapp/providers/map.dart';
+import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/root/routes.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
@@ -43,6 +44,10 @@ class MyApp extends StatelessWidget {
 
         ChangeNotifierProvider<MapProvider>(
           create: (_) => MapProvider(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider<OrderProvider>(
+          create: (_) => OrderProvider(),
           lazy: false,
         ),
 

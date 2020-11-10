@@ -9,6 +9,7 @@ import 'package:jariapp/models/deliver.dart';
 import 'package:jariapp/providers/location.api.dart';
 
 import 'package:jariapp/providers/map.dart';
+import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
 
@@ -34,6 +35,7 @@ class _MapPageState extends State<MapPage> {
   List<Deliver> deliversList;
   List<CartItem> _cartItems;
   String _localityID;
+  String _phoneNumber = '';
 
   TextEditingController _phoneNumberController;
   //++++++++++++++++++
@@ -50,6 +52,7 @@ class _MapPageState extends State<MapPage> {
   MapProvider _mapProvider;
   ProductsProvider _productsProvider;
   LocationProvider _localityProvider;
+  OrderProvider _orderProvider;
 
   // initMarker(client) {
   //   mapController.clearMarkers().then((val) {
@@ -70,6 +73,8 @@ class _MapPageState extends State<MapPage> {
   LatLng positionInit;
   GoogleMapController _controller;
 
+  Map<String, dynamic> _orderDetails;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -85,18 +90,38 @@ class _MapPageState extends State<MapPage> {
     _localityProvider = Provider.of<LocationProvider>(context, listen: false);
     //.............GET PROVIDER MAP   .................................
     _mapProvider = Provider.of<MapProvider>(context, listen: false);
+    //.............GET PROVIDER OREDER   .................................
+    _orderProvider = Provider.of<OrderProvider>(context, listen: false);
 
     //.............GET CURRENT LOCALITY ID .................................
 
     _localityID = _localityProvider.getcurrentLocalityID;
     _cartItems = _productsProvider.getCartItems;
     //......................................................................
-    print('MAP => _localityID ::: $_localityID');
+    /*print('MAP => _localityID ::: $_localityID');
     print('ORDER => _productsProvider ::: $_cartItems');
 
     _futureFetchingDelivers = _mapProvider.fetchDeliversDatasAPI(
-        localityId: _localityID, cartItems: _cartItems);
+        localityId: _localityID, cartItems: _cartItems);*/
 
+    //+++++++++++++++++ orderDetails ==  body +++++++++++++++++++++++
+
+    _orderDetails = {
+      'latitude': _mapProvider?.latitudeClient.toString(),
+      'longitude': _mapProvider?.longitudeClient.toString(),
+      'order': _cartItems.map((CartItem item) {
+        return {
+          "productId": item.productId.toString(),
+          "quantity": item.qty.toString(),
+          "unitPrice": item.priceUnit.toString()
+        };
+      }).toList()
+    };
+
+    //+++++++++++++++++ display Delivers +++++++++++++++++++++++
+    _futureFetchingDelivers = _mapProvider.fetchDeliversDatasAPI(
+        localityId: _localityID, orderDetails: _orderDetails);
+    //+++++++++++++++++++++++++++++++++++++++++
     //+++++++++++++++++++++
     //_getCurrentLocation();
     //+++++++++++++++++++++
@@ -376,12 +401,12 @@ class _MapPageState extends State<MapPage> {
 
   showDeliverInfoOrder(
       {int id, String fullName, String phone_1, String phone_2}) {
+    final _deliverID = id;
     //. . . . .
     print('SHOW DIALOGUE INFOS');
     //. . . . .
 
     final _formKey = GlobalKey<FormState>();
-    String phoneNumber = '';
 
     Widget infoDeliverForm = Container(
       color: Colors.white,
@@ -447,12 +472,12 @@ class _MapPageState extends State<MapPage> {
                 // if (value.length > 10 || value.length < 10)
                 //   return "Numéro de téléphone invalide";
 
-                phoneNumber = value;
+                _phoneNumber = value;
               },
 
               validator: (value) {
-                if (value.isEmpty || value.length > 10 || value.length < 10) {
-                  return 'veuillez entrer un numéro de téléphone valide';
+                if (value.isEmpty || value.length > 10 || value.length < 9) {
+                  return 'Veuillez entrer un numéro de téléphone valide';
                 }
                 return null;
               },
@@ -474,6 +499,7 @@ class _MapPageState extends State<MapPage> {
                 ),
                 hintText: 'Saisissez votre numéro de Téléphone',
                 hintStyle: TextStyle(fontSize: 18, color: AppColors.icongray),
+                errorStyle: TextStyle(color: AppColors.pinck, fontSize: 18),
                 errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.pinck, width: 2.0)),
                 labelText: 'Votre numéro de téléphone',
@@ -542,13 +568,58 @@ class _MapPageState extends State<MapPage> {
                 'Envoyer',
                 style: TextStyle(fontSize: 18),
               ),
-              onPressed: () {
+              onPressed: () async {
                 //----------------------------------
                 // final latClient = _currentPosition?.latitude;
                 // final lntClient = _currentPosition?.longitude;
 
                 if (_formKey.currentState.validate()) {
-                  print('phoneNumber === $phoneNumber');
+                  print('phoneNumber === $_phoneNumber');
+
+                  //..... Store Order details .........
+
+                  /*
+                  _orderDetails = {
+                    'latitude': _mapProvider?.latitudeClient.toString(),
+                    'longitude': _mapProvider?.longitudeClient.toString(),
+                    'order': _cartItems.map((CartItem item) {
+                      return {
+                        "productId": item.productId.toString(),
+                        "quantity": item.qty.toString(),
+                        "unitPrice": item.priceUnit.toString()
+                      };
+                    }).toList()
+                  };
+
+                   //--- data to join -------
+                  "clientMobile" : "0560222222",
+                  "livreurId" : "1",
+                  "stateOrder" : "2",
+                  "communeId" : "558",
+                  
+                  */
+
+                  //Map<String, dynamic> orderDetailsEnd;
+
+                  _orderDetails.remove('latitude');
+                  _orderDetails.remove('longitude');
+
+                  _orderDetails["clientMobile"] = _phoneNumber;
+                  _orderDetails["livreurId"] = _deliverID.toString();
+                  _orderDetails["stateOrder"] = "2";
+                  _orderDetails["communeId"] = _localityID;
+
+                  //++++++++++++++++++++++++
+
+                  await _orderProvider.setOrderDetailsEnd(_orderDetails);
+
+                  //++++++++++++++++++++++++
+
+                  _formKey.currentState.reset();
+
+                  Navigator.pushReplacementNamed(context, '/orderPage');
+
+                  //  Navigator.pushReplacementNamed(context, '/orderPage',arguments: {'clientPhoneNumber': phoneNumber});
                 }
                 //.....................................
 
