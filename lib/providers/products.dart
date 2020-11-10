@@ -36,6 +36,14 @@ class ProductsProvider extends ChangeNotifier {
     //notifyListeners();
   }
   */
+
+  bool _isCartItemsOrdred = false;
+  get isCartItemsOrdred => _isCartItemsOrdred;
+  setIsCartItemsOrdred(bool value) {
+    _isCartItemsOrdred = value;
+    notifyListeners();
+  }
+
 //......
   bool get isChecked => _isChecked ?? false;
   setIsChecked(bool value) {
@@ -125,6 +133,7 @@ class ProductsProvider extends ChangeNotifier {
 
   addProductToCart(CartItem cart) {
     _cartItems.add(cart);
+
     notifyListeners();
   }
 
@@ -147,6 +156,11 @@ class ProductsProvider extends ChangeNotifier {
 
   clearCartItems() {
     _cartItems.clear();
+
+    //*++++++++++ Reset ordred items to new Order +++++++++++++++
+    setIsCartItemsOrdred(false);
+    //+++++++++++++++++++++++++++++++++++++++++++
+
     print('_cartItems CLEARED:: ${_cartItems.length}');
     notifyListeners();
   }

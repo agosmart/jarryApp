@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
+import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/screens/terms.condistions/cgv.dart';
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/constantes.dart';
@@ -13,6 +14,7 @@ import 'package:jariapp/widgets/show.dialogue.dart';
 import 'package:jariapp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 import 'package:jariapp/screens/location/location.page.dart';
+import 'package:tuple/tuple.dart';
 
 class CartItemsPage extends StatefulWidget {
   //....
@@ -27,15 +29,17 @@ class _CartItemsPageState extends State<CartItemsPage> {
   List<CartItem> _cartlist;
   double h, w;
   ProductsProvider _productsProvider;
+  // OrderProvider _providerOrder;
   bool checkBoxValue;
+  bool isItemsOrdred;
   //++++++++++++++++++++++++++
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _cartlist = [];
 
+    // _providerOrder = Provider.of(context, listen: true);
     //++++
   }
 
@@ -221,71 +225,93 @@ class _CartItemsPageState extends State<CartItemsPage> {
                     height: 16.0,
                   ),
 
-                  Row(
-                    children: <Widget>[
-                      //...........................
-                      Selector<ProductsProvider, bool>(
-                          //............
-                          selector: (context, _productsProvider) =>
-                              _productsProvider.isChecked,
-                          builder: (_, isChecked, child) {
-                            //......
-                            print('CHECKBOX STATE::::$isChecked');
-                            return Checkbox(
-                                value: isChecked,
-                                onChanged: (bool newValue) {
-                                  _productsProvider.setIsChecked(newValue);
-                                });
-                          }),
-                      //...........................
+                  //*+++++++++ SELECTOR 2 VARS +++++++++++++++
+                  Selector<ProductsProvider, Tuple2<bool, bool>>(
+                      selector: (context, ProductsProvider productsProvider) =>
+                          Tuple2(productsProvider.isChecked,
+                              productsProvider.isCartItemsOrdred),
+                      builder: (_, data, __) {
+                        //+++++++++++++++++++++++++++++++++
+                        //*-1 - Check Box is Ttchecked Or No
+                        bool isChecked = data.item1;
+                        //*-2- Cart Items is ready Ordred or No
+                        bool isCartItemsOrdred = data.item2;
+                        //+++++++++++++++++++++++++++++++++++
+                        print(
+                            'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
+                        //+++++++++++++++++++++++++++++
+                        return isCartItemsOrdred
+                            //++++++++++++++++++++++++++
+                            ? Center(
+                                child: Text(
+                                    'isCartItemsOrdred >>>>>>  $isCartItemsOrdred'),
+                              )
+                            : Column(
+                                children: [
+                                  Row(
+                                    children: <Widget>[
+                                      //...........................
+                                      // Selector<ProductsProvider, bool>(
+                                      //     //............
+                                      //     selector: (context, _productsProvider) =>
+                                      //         _productsProvider.isChecked,
+                                      //     builder: (_, isChecked, child) {
+                                      //       //......
+                                      //       print('CHECKBOX STATE::::$isChecked');
+                                      //       return Checkbox(
+                                      //           value: isChecked,
+                                      //           onChanged: (bool newValue) {
+                                      //             _productsProvider.setIsChecked(newValue);
+                                      //           });
+                                      //     }),
+                                      //.............................
+                                      Checkbox(
+                                          value: isChecked, //isChecked,
+                                          onChanged: (bool newValue) {
+                                            _productsProvider
+                                                .setIsChecked(newValue);
+                                          }),
 
-                      // Checkbox(
-                      //     value: checkBoxValue,
-                      //     onChanged: (bool newValue) {
-                      //       setState(() {
-                      //         checkBoxValue = newValue;
-                      //       });
-                      //     }),
-                      Expanded(
-                        child: Text(
-                          "j'accepte les conditions générales de vente.",
-                          softWrap: true,
-                          style: TextStyle(
-                            color: AppColors.darkblue4,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
+                                      //...........................
+                                      Expanded(
+                                          child: BodyText(
+                                        text:
+                                            "J'accepte les conditions générales de vente.",
+                                        color: AppColors.darkblue4,
+                                        fontSize: 12,
+                                      )),
 
-                      //++++++++
+                                      //++++++++
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16),
-                        child: OutlineButton(
-                          onPressed: () {
-                            //+++++++++++++++++++++++++
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16, right: 16),
+                                        child: OutlineButton(
+                                            onPressed: () {
+                                              //+++++++++++++++++++++++++
+                                              _openConditionsPage(context);
+                                              //+++++++++++++++++++++++++
+                                            },
+                                            child: TitleText(
+                                              text: "Lire plus",
+                                              color: AppColors.pinck,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              uppercase: true,
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                  //+++++++++++++++++++++++++++++++++++
 
-                            _openConditionsPage(context);
+                                  _submitButtonOrder(context),
 
-                            //+++++++++++++++++++++++++
-                          },
-                          child: Text(
-                            "Lire Plus",
-                            style: TextStyle(
-                                color: AppColors.darkblue4,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-
-                  //+++++++++++++++++++++++++++++++++++
-
-                  //   _submitButton(context),
-                  _submitButtonOrder(context),
-                  // SizedBox(height: 30),
+                                  //+++++++++++++++++++++++++++++++++++
+                                ],
+                              );
+                        //+++++++++++++++++++++++++
+                      }),
+                  //*+++++++++++++++ END SELECTOR ++++++++++++++++++
                 ],
               ),
 

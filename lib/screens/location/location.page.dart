@@ -347,7 +347,8 @@ class _LocationPageState extends State<LocationPage> {
                                                           child: Text(
                                                             item.id
                                                                 .toString()
-                                                                .padRight(2),
+                                                                .padRight(
+                                                                    2, '0'),
                                                             style: TextStyle(
                                                                 color: AppColors
                                                                     .white,

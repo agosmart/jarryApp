@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             RaisedButton(
                 child: Text('Quitter'),
-                onPressed: () => Navigator.of(context).pop(true)),
+                onPressed: () => {Navigator.of(context).pop(true)}),
             RaisedButton(
                 child: Text('Annuler'),
                 onPressed: () => Navigator.of(context).pop(false)),

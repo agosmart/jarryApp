@@ -11,6 +11,7 @@ import 'package:jariapp/providers/location.api.dart';
 import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/screens/order/order.page.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/jari_icons_v2.dart';
@@ -410,11 +411,10 @@ class _MapPageState extends State<MapPage> {
 
     Widget infoDeliverForm = Container(
       color: Colors.white,
-      // height: h / 2,
-      //- - - - - - - - - - - - - - - -  START FORM - - - - - - - - - - - -
       child: Form(
         key: _formKey,
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               padding: const EdgeInsets.all(8.0),
@@ -428,11 +428,11 @@ class _MapPageState extends State<MapPage> {
                     color: AppColors.gold,
                   ),
                   //. . . . .
-                  SizedBox(width: 18.0),
+                  SizedBox(width: 16.0),
                   //. . . . .
                   TitleText(
                     color: AppColors.white,
-                    fontSize: 18.0,
+                    fontSize: 14.0,
                     uppercase: true,
                     fontWeight: FontWeight.w400,
                     textAlign: TextAlign.center,
@@ -441,12 +441,12 @@ class _MapPageState extends State<MapPage> {
                   //. . . . .
                   SizedBox(width: 16.0),
                   //. . . . .
-                  Container(
+                  Expanded(
                     child: CircleAvatar(
                       backgroundColor: AppColors.white.withOpacity(0.15),
                       child: TitleText(
                         color: AppColors.white,
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                         uppercase: false,
                         fontWeight: FontWeight.w400,
                         textAlign: TextAlign.center,
@@ -459,7 +459,7 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
             //. . . . . . . . . . . . .
-            SizedBox(height: 21.0),
+            SizedBox(height: 16.0),
             //. . . . . . . . . . . . . .  . .
             TextFormField(
               controller: _phoneNumberController,
@@ -489,7 +489,7 @@ class _MapPageState extends State<MapPage> {
                 //FilteringTextInputFormatter.deny(RegExp('[abFeG]')),
                 FilteringTextInputFormatter.digitsOnly,
               ],
-              style: TextStyle(color: AppColors.darkblue4, fontSize: 32.0),
+              style: TextStyle(color: AppColors.darkblue4, fontSize: 24.0),
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
@@ -499,16 +499,16 @@ class _MapPageState extends State<MapPage> {
                 ),
                 hintText: 'Saisissez votre numéro de Téléphone',
                 hintStyle: TextStyle(fontSize: 18, color: AppColors.icongray),
-                errorStyle: TextStyle(color: AppColors.pinck, fontSize: 18),
+                errorStyle: TextStyle(color: AppColors.pinck, fontSize: 13),
                 errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.pinck, width: 2.0)),
                 labelText: 'Votre numéro de téléphone',
-                labelStyle: TextStyle(color: AppColors.darkblue3, fontSize: 18),
+                labelStyle: TextStyle(color: AppColors.darkblue4, fontSize: 18),
               ),
             ),
 
             //. . . . . . . . . . . . .
-            SizedBox(height: 21.0),
+            SizedBox(height: 16.0),
             //. . . . . . . . . . . . . .
             infoList(fullName, phone_1, phone_2),
             //. . . . . . . . . . . . . . .
@@ -525,10 +525,13 @@ class _MapPageState extends State<MapPage> {
       context: context,
       useSafeArea: false,
       builder: (context) => AlertDialog(
-        insetPadding: EdgeInsets.all(8),
+        insetPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         //-------------------------------------
         title: infoDeliverForm, //Text('Êtes-vous sûr de vouloir quitter ?'),
         //-----------------------------------
+        //backgroundColor: AppColors.lightGrey,
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        actionsPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         actions: <Widget>[
           Container(
             alignment: Alignment.center,
@@ -600,9 +603,10 @@ class _MapPageState extends State<MapPage> {
                   */
 
                   //Map<String, dynamic> orderDetailsEnd;
-
+                  /*
                   _orderDetails.remove('latitude');
                   _orderDetails.remove('longitude');
+                  */
 
                   _orderDetails["clientMobile"] = _phoneNumber;
                   _orderDetails["livreurId"] = _deliverID.toString();
@@ -617,9 +621,19 @@ class _MapPageState extends State<MapPage> {
 
                   _formKey.currentState.reset();
 
-                  Navigator.pushReplacementNamed(context, '/orderPage');
+                  //  Navigator.pushReplacementNamed(context, '/orderPage');
 
-                  //  Navigator.pushReplacementNamed(context, '/orderPage',arguments: {'clientPhoneNumber': phoneNumber});
+                  /*
+                  Navigator.pushReplacementNamed(context, '/orderPage',
+                      arguments: '021252525');
+                      */
+
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          OrderPage(clientPhone: _phoneNumber),
+                    ),
+                  );
                 }
                 //.....................................
 
@@ -655,6 +669,7 @@ class _MapPageState extends State<MapPage> {
       //+++++
       child: SingleChildScrollView(
         child: Column(
+          // mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -664,7 +679,7 @@ class _MapPageState extends State<MapPage> {
                 //....
                 TitleText(
                   color: AppColors.lightblue3,
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                   uppercase: false,
                   fontWeight: FontWeight.w400,
                   text: '  $fullName',
@@ -684,7 +699,7 @@ class _MapPageState extends State<MapPage> {
                       : Icon(JariIcons.phone),
                   TitleText(
                     color: AppColors.lightblue3,
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                     uppercase: false,
                     fontWeight: FontWeight.w400,
                     text: '  $phone_1',
@@ -693,7 +708,7 @@ class _MapPageState extends State<MapPage> {
                       ? Center()
                       : TitleText(
                           color: AppColors.lightblue3,
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                           uppercase: false,
                           fontWeight: FontWeight.w400,
                           text: '  |  $phone_2',

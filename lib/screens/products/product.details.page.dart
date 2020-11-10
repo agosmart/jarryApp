@@ -219,8 +219,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         alignment: Alignment.bottomCenter,
                         child: CustomFadeTranslateAnimation(
                           begin: -50.0,
-                          delay: 1000,
-                          duration: 1200,
+                          delay: 800,
+                          duration: 1000,
                           // begin: -50,
                           // delay: 2,
                           // duration: 2,
@@ -293,7 +293,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       child: CustomFadeTranslateAnimation(
                         begin: 50,
                         delay: 300,
-                        duration: 1300,
+                        duration: 1000,
                         widthContent: w,
                         heightContent: h / 2,
                         childContent: Center(
@@ -370,8 +370,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     // color: Colors.yellow.withOpacity(0.5),
                     child: CustomFadeTranslateAnimation(
                       begin: 50,
-                      delay: 600,
-                      duration: 1200,
+                      delay: 400,
+                      duration: 1000,
                       widthContent: w,
                       heightContent: (h * 1 / 7),
                       childContent: Center(

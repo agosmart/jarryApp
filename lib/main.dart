@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 //++++++++++++et Change Status Bar Background Color ++++++++++
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xFFE9EDF5).withAlpha(50),
+      statusBarColor: Color(0xFF94A4C0).withAlpha(75),
     ));
 //+++++++++++++++++++++++++++++++
     return MultiProvider(
