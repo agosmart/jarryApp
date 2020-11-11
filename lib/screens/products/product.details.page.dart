@@ -64,9 +64,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     //.......... INIT Products / category Provider ...............
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
-    _currentProd = _productsProvider.currentProduct;
+    _currentProd = _productsProvider.currentProduct ?? null;
     //*************************************
-    _productId = _currentProd.productId;
+    _productId = _currentProd.productId ?? 1;
     _productName = _currentProd.productName;
     _priceUnit = _currentProd.unitPrice;
     _image = _currentProd.image;
