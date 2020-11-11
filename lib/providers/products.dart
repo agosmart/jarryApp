@@ -52,16 +52,26 @@ class ProductsProvider extends ChangeNotifier {
   }
 
   bool isProductExist(int id) {
-    //if (_cartItems.length <= 0) return false;
+    if (_cartItems.length <= 0) return false;
 
+    //_cartItems.contains(element)
+    // final item =
+    //     _cartItems?.firstWhere((CartItem e) => e?.productId == id) ?? null;
+
+    var item =
+        _cartItems.firstWhere((e) => e.productId == id, orElse: () => null);
+    return item == null ? false : true;
+
+    // var result = _cartItems.indexOf(  _cartItems?.firstWhere((CartItem e) => e?.productId == id))>= 0  , orElse: () => false;
+
+    // var result = list.firstWhere((element) => element.contains('green') ,orElse: () => 'No matching color found');
+
+/*
     try {
-      return _cartItems.indexOf(
-                  _cartItems?.firstWhere((CartItem e) => e?.productId == id)) >=
-              0 ??
-          false;
+      return _cartItems.indexOf(  _cartItems?.firstWhere((CartItem e) => e?.productId == id)) >=  0 ?? false;
     } catch (e) {
       return false;
-    }
+    }*/
 
     /* var item =
         _cartItems.indexOf(_cartItems?.firstWhere((CartItem e) => e?.productId == id));
@@ -129,6 +139,13 @@ class ProductsProvider extends ChangeNotifier {
   setCurrentProduct(Product value) {
     _currentProduct = value;
     notifyListeners();
+  }
+
+  Product getProductById(int id) {
+    final product = _products.firstWhere((Product item) => item.productId == id,
+        orElse: () => null);
+   // print('getting product by id = $id ----> $product');
+    return product ?? null;
   }
 
   addProductToCart(CartItem cart) {

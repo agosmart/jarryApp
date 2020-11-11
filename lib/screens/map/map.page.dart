@@ -300,22 +300,25 @@ class _MapPageState extends State<MapPage> {
                               ),
                             ),
                             //++++++++ MESSAGE ++++
-                            Padding(
-                              padding: const EdgeInsets.all(24),
-                              child: TitleText(
-                                color: AppColors.darkgrey,
-                                fontSize: 24.0,
-                                uppercase: false,
-                                fontWeight: FontWeight.w400,
-                                textAlign: TextAlign.center,
-                                text:
-                                    'Désolé! Aucun livreur n\'active dans votre région.',
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(24),
+                                child: TitleText(
+                                    color: AppColors.darkgrey,
+                                    fontSize: 18.0,
+                                    uppercase: false,
+                                    fontWeight: FontWeight.w400,
+                                    textAlign: TextAlign.center,
+                                    text:
+                                        "Nous sommes désolés,  Aucun livreur n'est disponible dans votre région. Merci de réessayer ultérieurement."
+                                    //   'Désolé! Aucun livreur n\'active dans votre région.',
+                                    ),
                               ),
                             ),
                             //++++++++ EMPTY SPACE ++++
-                            SizedBox(
-                              height: h / 4,
-                            )
+                            // SizedBox(
+                            //   height: h / 4,
+                            // )
                           ],
                         ),
                       )
@@ -551,7 +554,7 @@ class _MapPageState extends State<MapPage> {
                   _formKey.currentState.reset();
                   //_phoneNumberController.text = '';
                   Navigator.of(context).pop();
-                  // Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+                  // Navigator.of(context).popUntil(ModalRoute.withName('/homePage'));
                   //.....................................
                 }),
           ),

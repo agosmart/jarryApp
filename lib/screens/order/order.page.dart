@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/screens/home/home.page.dart';
@@ -134,8 +135,37 @@ class _OrderPageState extends State<OrderPage> {
                           snapShot?.data['code'].toString();
 
                       //*---------- Update Cartitems Order  to True -----
-                      if (statusCode == "201")
-                        _productsProvider.setIsCartItemsOrdred(true);
+                      if (statusCode == "201") {
+                        //---------------------------------
+                        /* ++++++++ Resove isssue : setState() or markNeedsBuild called during build ++++++
+                        You can face this error if:
+                        1 - you are showing snack bar or alert dialog before the
+                         completion of build method and in many other cases. so in such situation use below call back function.
+
+                         2- Calling setState method before build method complete process of building widgets.
+                         3- Calling changeNotifier before build method complete process of building widgets,
+                            because the framework is already in the process of building widgets. 
+                            OR:  This exception is allowed because the framework builds parent widgets before children,
+                            which means a dirty descendant will always be built
+
+                        SOLUTION: 
+                        - use ( WidgetsBinding ) :
+                                    WidgetsBinding.instance.addPostFrameCallback((_){ 
+                                            // Add Your Code here.
+                                    });
+                        - Or use (SchedulerBinding)
+                                    SchedulerBinding.instance.addPostFrameCallback((_){ 
+                                            // Add Your Code here.
+                                    });
+                        */
+
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          _productsProvider.setIsCartItemsOrdred(true);
+                        });
+
+                        //-----------------------------------
+                      }
+
                       //*+++++++++++++++++++++++++++++++++++++++++++++++++
 
                       /*

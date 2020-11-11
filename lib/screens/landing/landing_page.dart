@@ -54,7 +54,7 @@ class _LandingPageState extends State<LandingPage>
                 PageTransition(
                   type: PageTransitionType.fade,
                   child: HomePage(),
-                  settings: RouteSettings(name: "/home"),
+                  settings: RouteSettings(name: "/homePage"),
                 ),
               );
             }

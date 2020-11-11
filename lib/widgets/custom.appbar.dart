@@ -8,6 +8,7 @@ import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/jari_icons_v2.dart';
 
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class CustomAppBar {
   //+++++++++++++++++++++.
@@ -139,11 +140,25 @@ class CustomAppBar {
 
     // return [list];
 
+    /*
     return Selector<ProductsProvider, int>(
         selector: (context, _productsProvider) =>
             _productsProvider.getItemCount,
         builder: (context, getItemCount, child) {
           print('TOTAL PRICE ::::$getItemCount');
+    */
+    return Selector<ProductsProvider, Tuple2<int, bool>>(
+        selector: (context, ProductsProvider productsProvider) => Tuple2(
+            productsProvider.getItemCount, productsProvider.isCartItemsOrdred),
+        builder: (context, data, __) {
+          //+++++++++++++++++++++++++++++++++
+          //*-1 - Get number of items in CartItems
+          int getItemCount = data.item1;
+          //*-2- Cart Items is ready Ordred or No
+          bool isCartItemsOrdred = data.item2;
+          //+++++++++++++++++++++++++++++++++++
+          print('TOTAL PRICE ::::$getItemCount');
+          print(' CartItems Ordred  ::::$isCartItemsOrdred ');
 
           //----------
           return Stack(
@@ -191,7 +206,13 @@ class CustomAppBar {
                         width: 24,
                         height: 24,
                         decoration: BoxDecoration(
-                            color: AppColors.pinck,
+                            //++++++++++++++++++++++++++++++++
+
+                            color: isCartItemsOrdred
+                                ? AppColors.goldDark
+                                : AppColors.pinck,
+
+                            //++++++++++++++++++++++++++++++
                             borderRadius: BorderRadius.circular(24)),
                         child: Text(
                           '$getItemCount',

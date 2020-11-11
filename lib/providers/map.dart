@@ -213,7 +213,8 @@ class MapProvider extends ChangeNotifier {
         case 200:
           //...
           if (responseJson['data'].length == 0) {
-            throw ResourceNotFound('wilayas');
+            return Future.value([]);
+            //throw ResourceNotFound('wilayas');
             //...
           } else {
             for (var item in responseJson['data']) {

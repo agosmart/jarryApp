@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
+import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/order.dart';
+import 'package:jariapp/screens/products/products.page.dart';
 import 'package:jariapp/screens/terms.condistions/cgv.dart';
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/constantes.dart';
@@ -94,9 +96,28 @@ class _CartItemsPageState extends State<CartItemsPage> {
       appBar: AppBar(
         brightness: Brightness.light,
 
-        // leading: null,
         iconTheme: IconThemeData(color: AppColors.icongray),
         backgroundColor: CustomAppBar.backgroundColor,
+        /*  leading: IconButton(
+            icon: Icon(
+              Icons.list_alt_outlined,
+              color: AppColors.icongray,
+              size: 32,
+            ),
+            onPressed: () {
+              //++++++++++++++++++++++++++
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => ProductsPage()),
+                ModalRoute.withName('/productsPage'),
+              );
+
+              //++++++++++++++++++++++++++
+            }),
+
+            */
+        leading: null,
         automaticallyImplyLeading: true,
         centerTitle: CustomAppBar.centerTitle,
 
@@ -173,149 +194,166 @@ class _CartItemsPageState extends State<CartItemsPage> {
                   ],
                 ),
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  //............
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: _cartlist.length,
-                        itemBuilder: (context, index) {
-                          //=========
-                          final item = _cartlist[index];
-                          //=========
-                          return _buildItemTile(context, index, item);
-                        }),
-                  ),
-                  //...........
-                  Divider(
-                      thickness: 6,
-                      height: 6,
-                      color: AppColors.icongray.withOpacity(0.25)),
-                  //...........
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 16.0),
-                    child: _price(),
-                  ),
+            : Selector<ProductsProvider, Tuple2<bool, bool>>(
+                selector: (context, ProductsProvider productsProvider) =>
+                    Tuple2(productsProvider.isChecked,
+                        productsProvider.isCartItemsOrdred),
+                builder: (_, data, __) {
                   //+++++++++++++++++++++++++++++++++
+                  //*-1 - Check Box is Ttchecked Or No
+                  bool isChecked = data.item1;
+                  //*-2- Cart Items is ready Ordred or No
+                  bool isCartItemsOrdred = data.item2;
+                  //+++++++++++++++++++++++++++++++++++
+                  print(
+                      'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
+                  //+++++++++++++++++++++++++++++
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      //...........
+                      isCartItemsOrdred
+                          ? Center(
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                width: w,
+                                decoration: BoxDecoration(
+                                  color: AppColors.pinck,
+                                ),
+                                child: BodyText(
+                                  text:
+                                      'Vider votre panier pour créer une nouvelle commande',
+                                  color: AppColors.white,
+                                  fontSize: 12,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : Center(),
+                      //............
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: _cartlist.length,
+                            itemBuilder: (context, index) {
+                              //=========
+                              final item = _cartlist[index];
+                              //=========
+                              return _buildItemTile(
+                                  context, index, item, isCartItemsOrdred);
+                            }),
+                      ),
+                      //...........
+                      Divider(
+                          thickness: 6,
+                          height: 6,
+                          color: AppColors.icongray.withOpacity(0.25)),
+                      //...........
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 16.0),
+                        child: _price(),
+                      ),
+                      //+++++++++++++++++++++++++++++++++
 
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     print('read');
-                  //   },
-                  //   child: TitleText(
-                  //     color: AppColors.icongray,
-                  //     fontSize: 16.0,
-                  //     uppercase: false,
-                  //     fontWeight: FontWeight.w400,
-                  //     textAlign: TextAlign.left,
-                  //     text:
-                  //         'Je reconnais avoir pris connaissance des conditions générales de vente et les accepte. ',
-                  //   ),
-                  // ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     print('read');
+                      //   },
+                      //   child: TitleText(
+                      //     color: AppColors.icongray,
+                      //     fontSize: 16.0,
+                      //     uppercase: false,
+                      //     fontWeight: FontWeight.w400,
+                      //     textAlign: TextAlign.left,
+                      //     text:
+                      //         'Je reconnais avoir pris connaissance des conditions générales de vente et les accepte. ',
+                      //   ),
+                      // ),
 
-                  //...........
-                  Divider(
-                      thickness: 2,
-                      height: 2,
-                      color: AppColors.icongray.withOpacity(0.25)),
-                  //...........
-                  SizedBox(
-                    height: 16.0,
-                  ),
+                      //...........
+                      Divider(
+                          thickness: 2,
+                          height: 2,
+                          color: AppColors.icongray.withOpacity(0.25)),
+                      //...........
+                      SizedBox(
+                        height: 16.0,
+                      ),
 
-                  //*+++++++++ SELECTOR 2 VARS +++++++++++++++
-                  Selector<ProductsProvider, Tuple2<bool, bool>>(
-                      selector: (context, ProductsProvider productsProvider) =>
-                          Tuple2(productsProvider.isChecked,
-                              productsProvider.isCartItemsOrdred),
-                      builder: (_, data, __) {
-                        //+++++++++++++++++++++++++++++++++
-                        //*-1 - Check Box is Ttchecked Or No
-                        bool isChecked = data.item1;
-                        //*-2- Cart Items is ready Ordred or No
-                        bool isCartItemsOrdred = data.item2;
-                        //+++++++++++++++++++++++++++++++++++
-                        print(
-                            'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
-                        //+++++++++++++++++++++++++++++
-                        return isCartItemsOrdred
-                            //++++++++++++++++++++++++++
-                            ? Center(
-                                child: Text(
-                                    'isCartItemsOrdred >>>>>>  $isCartItemsOrdred'),
-                              )
-                            : Column(
-                                children: [
-                                  Row(
-                                    children: <Widget>[
-                                      //...........................
-                                      // Selector<ProductsProvider, bool>(
-                                      //     //............
-                                      //     selector: (context, _productsProvider) =>
-                                      //         _productsProvider.isChecked,
-                                      //     builder: (_, isChecked, child) {
-                                      //       //......
-                                      //       print('CHECKBOX STATE::::$isChecked');
-                                      //       return Checkbox(
-                                      //           value: isChecked,
-                                      //           onChanged: (bool newValue) {
-                                      //             _productsProvider.setIsChecked(newValue);
-                                      //           });
-                                      //     }),
-                                      //.............................
-                                      Checkbox(
-                                          value: isChecked, //isChecked,
-                                          onChanged: (bool newValue) {
-                                            _productsProvider
-                                                .setIsChecked(newValue);
-                                          }),
+                      //*+++++++++ SELECTOR 2 VARS +++++++++++++++
+                      isCartItemsOrdred
+                          //++++++++++++++++++++++++++
+                          ? Center()
+                          : Column(
+                              children: [
+                                Row(
+                                  children: <Widget>[
+                                    //...........................
+                                    // Selector<ProductsProvider, bool>(
+                                    //     //............
+                                    //     selector: (context, _productsProvider) =>
+                                    //         _productsProvider.isChecked,
+                                    //     builder: (_, isChecked, child) {
+                                    //       //......
+                                    //       print('CHECKBOX STATE::::$isChecked');
+                                    //       return Checkbox(
+                                    //           value: isChecked,
+                                    //           onChanged: (bool newValue) {
+                                    //             _productsProvider.setIsChecked(newValue);
+                                    //           });
+                                    //     }),
+                                    //.............................
+                                    Checkbox(
+                                        value: isChecked, //isChecked,
+                                        onChanged: (bool newValue) {
+                                          _productsProvider
+                                              .setIsChecked(newValue);
+                                        }),
 
-                                      //...........................
-                                      Expanded(
-                                          child: BodyText(
-                                        text:
-                                            "J'accepte les conditions générales de vente.",
-                                        color: AppColors.darkblue4,
-                                        fontSize: 12,
-                                      )),
+                                    //...........................
+                                    Expanded(
+                                        child: BodyText(
+                                      text:
+                                          "J'accepte les conditions générales de vente.",
+                                      color: AppColors.darkblue4,
+                                      fontSize: 12,
+                                    )),
 
-                                      //++++++++
+                                    //++++++++
 
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16, right: 16),
-                                        child: OutlineButton(
-                                            onPressed: () {
-                                              //+++++++++++++++++++++++++
-                                              _openConditionsPage(context);
-                                              //+++++++++++++++++++++++++
-                                            },
-                                            child: TitleText(
-                                              text: "Lire plus",
-                                              color: AppColors.pinck,
-                                              fontSize: 14,
-                                              letterSpacing: 0.5,
-                                              uppercase: true,
-                                            )),
-                                      )
-                                    ],
-                                  ),
-                                  //+++++++++++++++++++++++++++++++++++
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 16, right: 16),
+                                      child: OutlineButton(
+                                          onPressed: () {
+                                            //+++++++++++++++++++++++++
+                                            _openConditionsPage(context);
+                                            //+++++++++++++++++++++++++
+                                          },
+                                          child: TitleText(
+                                            text: "Lire plus",
+                                            color: AppColors.pinck,
+                                            fontSize: 14,
+                                            letterSpacing: 0.5,
+                                            uppercase: true,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                                //+++++++++++++++++++++++++++++++++++
 
-                                  _submitButtonOrder(context),
+                                _submitButtonOrder(context),
 
-                                  //+++++++++++++++++++++++++++++++++++
-                                ],
-                              );
-                        //+++++++++++++++++++++++++
-                      }),
-                  //*+++++++++++++++ END SELECTOR ++++++++++++++++++
-                ],
-              ),
+                                //+++++++++++++++++++++++++++++++++++
+                              ],
+                            ),
+                      //+++++++++++++++++++++++++
+                    ],
+                  );
 
-        //..........
+                  //..........
+                }),
+        //*+++++++++++++++ END SELECTOR ++++++++++++++++++
 
         //++++++++++++++++++++++++++++
       ),
@@ -324,10 +362,15 @@ class _CartItemsPageState extends State<CartItemsPage> {
     );
   }
 
-  Widget _buildItemTile(BuildContext context, int index, CartItem item) {
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  Widget _buildItemTile(
+      BuildContext context, int index, CartItem item, bool isCartItemsOrdred) {
     //...
     int prodId = item.productId;
     //...
+    final Product _currentProdById = _productsProvider.getProductById(prodId);
+    //....
 
     //... START  Dismissible ..........
     return Dismissible(
@@ -375,8 +418,29 @@ class _CartItemsPageState extends State<CartItemsPage> {
       child: Column(
         children: [
           ListTile(
-            //dense: true,
-            onTap: () {},
+            onTap: isCartItemsOrdred
+                ? () {}
+                : () {
+                    print('_currentProdById ::::: $_currentProdById');
+                    //+.+.+.+.+.+ SET CURRENT PRODUCT .+.+.+.+.+.+.+
+                    _productsProvider.setCurrentProduct(_currentProdById);
+                    //+.+.+.+.+.+.+.+.+.+.++.+.+.+.+.+.+.+.+.+.+.+.+
+
+                    Navigator.pushNamed(context, '/productDetailsPage');
+
+                    /*  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            //-------------------------------------------------
+                                            builder: (BuildContext context) {
+                                              return ProductDetailsPage();
+                                            },
+                                            fullscreenDialog: true,
+
+                                            //--------------------------------------------------
+                                          ),
+                                        );*/
+                  },
             //........................
             isThreeLine: false,
             //........................

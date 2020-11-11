@@ -5,7 +5,9 @@ import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
 import 'package:jariapp/themes/colors.dart';
+
 import 'package:jariapp/utils/constantes.dart';
+import 'package:jariapp/utils/jari_icons_v2.dart';
 
 import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:jariapp/widgets/custom.appbar.dart';
@@ -78,11 +80,18 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
     numOfItemsMin = _currentProd.minimumOrder;
 
-    if (_productsProvider.isProductExist(_productId) != false) {
+    if (_productsProvider?.isProductExist(_productId) == true) {
       numOfItems = _productsProvider.getNumOfItems(_productId);
     } else {
       numOfItems = numOfItemsMin;
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -389,9 +398,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                         //?__1 - non : Add product
                                         //?__2 -oui : Update product
                                         //......................
+
                                         setState(() {
                                           _isProgress = true;
                                         });
+                                        // if (mounted) { }
+
                                         final _qty = numOfItems;
                                         final _pricetotal = _qty * _priceUnit;
                                         bool _isProductExist = _productsProvider
@@ -399,9 +411,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
                                         await Future.delayed(
                                             Duration(milliseconds: 1000), () {
-                                          setState(() {
-                                            _isProgress = false;
-                                          });
+                                          if (mounted) {
+                                            setState(() {
+                                              _isProgress = false;
+                                            });
+                                          }
                                         });
                                         //......................
                                         if (_isProductExist) {
@@ -444,14 +458,15 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            Icons.check,
+                                            JariIcons.shopping_box,
+                                            // Icons.check,
                                             color: AppColors.white,
                                           ),
                                           SizedBox(
                                             width: 16.0,
                                           ),
                                           TitleText(
-                                            text: 'Confirmer',
+                                            text: 'Ajouter au panier',
                                             color: AppColors.gold,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16,

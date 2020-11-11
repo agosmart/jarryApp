@@ -264,7 +264,8 @@ class _LocationPageState extends State<LocationPage> {
                                           alignedDropdown: true,
                                           child: DropdownButton<String>(
                                             //................
-                                            value: _myStateId,
+                                            value: _myStateId ?? null,
+
                                             // ??  _locationProvider.getcurrentStateID,
                                             // value: _locationProvider.getcurrentStateArea,
                                             //.................
@@ -443,7 +444,7 @@ class _LocationPageState extends State<LocationPage> {
                                           alignedDropdown: true,
                                           child: DropdownButton<String>(
                                             //................
-                                            value: _myCityId,
+                                            value: _myCityId ?? null,
                                             //  ?? _locationProvider.getcurrentCityID,
                                             // value: _locationProvider.getcurrentStateArea,
                                             //.................
@@ -568,7 +569,7 @@ class _LocationPageState extends State<LocationPage> {
                                           alignedDropdown: true,
                                           child: DropdownButton<String>(
                                             //................
-                                            value: _myLocalityId,
+                                            value: _myLocalityId ?? null,
                                             // ??  _locationProvider.getcurrentLocalityID,
                                             // value: _locationProvider.getcurrentStateArea,
                                             //.................

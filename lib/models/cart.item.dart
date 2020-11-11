@@ -1,6 +1,5 @@
-import 'package:jariapp/models/product.dart';
-
 class CartItem {
+  //++++
   int productId;
   String productName;
   int qty;

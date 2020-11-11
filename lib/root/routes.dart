@@ -16,7 +16,7 @@ abstract class Routes {
     switch (settings.name) {
 
       //-- Home Page
-      case "/home":
+      case "/homePage":
         return MaterialPageRoute(
           builder: (context) => HomePage(),
         );
@@ -26,7 +26,7 @@ abstract class Routes {
           builder: (context) => LandingPage(),
         );
       //-- Product Page
-      case "/productpage":
+      case "/productsPage":
         return MaterialPageRoute(
           builder: (context) => ProductsPage(),
         );
