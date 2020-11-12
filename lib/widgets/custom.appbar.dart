@@ -178,17 +178,16 @@ class CustomAppBar {
                     onPressed: () {
                       //-------------------
 
-                      Navigator.pushNamed(context, '/cartItemsPage');
+                      /*  Navigator.pushReplacementNamed(context, '/cartItemsPage');*/
 
-                      /*
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          //-------------------------------------------------
-                          builder: (BuildContext context) => CartItemsPage(),
-                          //--------------------------------------------------
-                        ),
-                      );*/
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            //-------------------------------------------------
+                            builder: (BuildContext context) => CartItemsPage(),
+                            //--------------------------------------------------
+                          ),
+                          ModalRoute.withName('/homePage'));
                       //------------------
                     },
                     // Icons.shopping_basket,

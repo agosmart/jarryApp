@@ -44,7 +44,7 @@ abstract class AppColors {
   static const Color icongray_1 = const Color(0xFF9299A5);
 
   static const Color orange = Color(0xffE65829);
-
+  static const Color darkOrange = Color(0xFFCA3300);
   static Color get transparent => Colors.transparent;
   // static Color get black => const Color(0xFF222222);
   static Color get black => const Color(0xff20262C);

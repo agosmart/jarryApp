@@ -48,6 +48,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   CategoryProvider _categoryProvider;
 
   bool _isProgress;
+  bool _isCartItemsOrdred;
+  String _transactionNumber;
 
   //............ _controller for InteractiveViewer .................
 
@@ -65,6 +67,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
     _productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     _currentProd = _productsProvider.currentProduct ?? null;
+    _isCartItemsOrdred = _productsProvider?.isCartItemsOrdred ?? false;
+    _transactionNumber = _productsProvider?.transactionNumber ?? '0000000000';
     //*************************************
     _productId = _currentProd.productId ?? 1;
     _productName = _currentProd.productName;
@@ -100,6 +104,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     w = MediaQuery.of(context).size.width;
     h = MediaQuery.of(context).size.height;
     _catColor = _categoryProvider.currentCatColor;
+
     //............
 
     // numOfItems = _currentProd?.minimumOrder;
@@ -238,7 +243,48 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           childContent: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 4.0, vertical: 20.0),
-                            child: _buildCartCounter(),
+                            //++++++++++++++++++++
+                            child: _isCartItemsOrdred
+                                //+++++++++++++++++++
+                                ? Center(
+                                    child: Container(
+                                      // padding: const EdgeInsets.all(8),
+                                      width: w,
+                                      // decoration: BoxDecoration(
+                                      //   color: AppColors.pinck,
+                                      // ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          //......
+                                          TitleText(
+                                            text: 'Commande en cours',
+                                            color: AppColors.white,
+                                            fontSize: 16,
+                                            letterSpacing: 0.8,
+                                          ),
+                                          //.....
+
+                                          TitleText(
+                                            //0000012526
+                                            text: 'N°: $_transactionNumber',
+                                            color: AppColors.white,
+                                            fontSize: 18,
+                                          ),
+
+                                          BodyText(
+                                            text:
+                                                'Vider votre panier pour créer une nouvelle commande',
+                                            color: AppColors.white,
+                                            fontSize: 12,
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : _buildCartCounter(),
                           ),
                         ),
                       ),
@@ -305,61 +351,124 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         duration: 1000,
                         widthContent: w,
                         heightContent: h / 2,
-                        childContent: Center(
-                          child: Align(
-                            alignment: Alignment(0.75, 0.75),
-                            // widthFactor: 3,
-                            // heightFactor: 2,
-                            child: Container(
-                              width: 110.0,
-                              height: 110.0,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      // Color(0xFF0090DF),
-                                      // Color(0xFF0090DF).withOpacity(0.4),
-                                      //...........................
-                                      _catColor,
-                                      _catColor.withOpacity(0.6),
-                                      //...........................
-                                    ],
-                                  ),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.white,
-                                    width: 6.0,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 6.0,
-                                      spreadRadius: 3.0,
-                                      color: _catColor.withOpacity(0.2),
-                                    ),
-                                  ]),
-                              child: Center(
-                                child: RichText(
-                                  text: TextSpan(children: [
-                                    TextSpan(
-                                        text:
-                                            '${_priceUnit.toStringAsFixed(2)}',
-                                        style: TextStyle(
-                                          color: AppColors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                    TextSpan(
-                                      text: ' DA',
-                                      style: TextStyle(
-                                        color: AppColors.white,
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w400,
+                        childContent: Container(
+                          // color: Colors.red,
+                          child: Stack(
+                            children: [
+                              //=============
+                              Align(
+                                alignment: Alignment(0.75, 0.75),
+                                // widthFactor: 3,
+                                // heightFactor: 2,
+                                child: Container(
+                                  width: 110.0,
+                                  height: 110.0,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          // Color(0xFF0090DF),
+                                          // Color(0xFF0090DF).withOpacity(0.4),
+                                          //...........................
+                                          _catColor,
+                                          _catColor.withOpacity(0.6),
+                                          //...........................
+                                        ],
                                       ),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: AppColors.white,
+                                        width: 6.0,
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 6.0,
+                                          spreadRadius: 3.0,
+                                          color: _catColor.withOpacity(0.2),
+                                        ),
+                                      ]),
+                                  child: Center(
+                                    child: RichText(
+                                      text: TextSpan(children: [
+                                        TextSpan(
+                                            text:
+                                                '${_priceUnit.toStringAsFixed(2)}',
+                                            style: TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                        TextSpan(
+                                          text: ' DA',
+                                          style: TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ]),
                                     ),
-                                  ]),
+                                  ),
                                 ),
                               ),
-                            ),
+                              //=============
+
+                              Selector<ProductsProvider, bool>(
+                                  selector: (context, _productsProvider) =>
+                                      _productsProvider
+                                          .isProductExist(_productId),
+                                  builder: (context, isProductExist, child) {
+                                    print(
+                                        'PRODUCT IS EXIST ::::$isProductExist');
+                                    //--------------------
+                                    return !isProductExist
+                                        ? Center()
+                                        : Align(
+                                            alignment: Alignment(0.8, 0.3),
+                                            child: Container(
+                                              width: 42.0,
+                                              height: 42.0,
+                                              decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      AppColors.orange,
+                                                      AppColors.darkOrange
+                                                      //...........................
+                                                      // _catColor,
+                                                      // _catColor.withOpacity(1),
+                                                      //...........................
+                                                    ],
+                                                  ),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: AppColors.darkOrange,
+                                                    width: 3.0,
+                                                  ),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 6.0,
+                                                      spreadRadius: 3.0,
+                                                      color: _catColor
+                                                          .withOpacity(0.2),
+                                                    ),
+                                                  ]),
+                                              child: Icon(
+                                                JariIcons.shopping_box,
+                                                color: AppColors.white,
+                                                size: 24,
+                                              ),
+                                            ),
+                                          );
+                                    // child: Text(
+                                    //   '$isProductExist',
+                                    //   style: TextStyle(
+                                    //       color: AppColors.black, fontSize: 48),
+                                    // ),
+                                  })
+
+                              //============================
+                            ],
                           ),
+                          //-------------------------
                         ),
                       ),
                     ),
@@ -391,55 +500,66 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               height: 60,
                               child: RaisedButton(
                                 //*+++++++++++++++...................++++++++++++++
-                                onPressed: _isProgress
-                                    ? () {}
-                                    : () async {
-                                        //?TODO : is product exist
-                                        //?__1 - non : Add product
-                                        //?__2 -oui : Update product
-                                        //......................
+                                disabledColor:
+                                    AppColors.darkblue4.withOpacity(0.35),
+                                disabledTextColor: AppColors.white,
+                                //+++++++++++++++++
+                                textColor: AppColors.gold,
+                                onPressed: _isCartItemsOrdred
+                                    ? null
+                                    : _isProgress
+                                        ? () {}
+                                        : () async {
+                                            //?TODO : is product exist
+                                            //?__1 - non : Add product
+                                            //?__2 -oui : Update product
+                                            //......................
 
-                                        setState(() {
-                                          _isProgress = true;
-                                        });
-                                        // if (mounted) { }
-
-                                        final _qty = numOfItems;
-                                        final _pricetotal = _qty * _priceUnit;
-                                        bool _isProductExist = _productsProvider
-                                            .isProductExist(_productId);
-
-                                        await Future.delayed(
-                                            Duration(milliseconds: 1000), () {
-                                          if (mounted) {
                                             setState(() {
-                                              _isProgress = false;
+                                              _isProgress = true;
                                             });
-                                          }
-                                        });
-                                        //......................
-                                        if (_isProductExist) {
-                                          await _productsProvider
-                                              .updateProductCart(
+                                            // if (mounted) { }
+
+                                            final _qty = numOfItems;
+                                            final _pricetotal =
+                                                _qty * _priceUnit;
+                                            bool _isProductExist =
+                                                _productsProvider
+                                                    .isProductExist(_productId);
+
+                                            await Future.delayed(
+                                                Duration(milliseconds: 1000),
+                                                () {
+                                              if (mounted) {
+                                                setState(() {
+                                                  _isProgress = false;
+                                                });
+                                              }
+                                            });
+                                            //......................
+                                            if (_isProductExist) {
+                                              await _productsProvider
+                                                  .updateProductCart(
+                                                      _productId,
+                                                      _qty,
+                                                      _priceUnit,
+                                                      _pricetotal);
+                                            } else {
+                                              _cart = CartItem(
                                                   _productId,
+                                                  _productName,
                                                   _qty,
                                                   _priceUnit,
-                                                  _pricetotal);
-                                        } else {
-                                          _cart = CartItem(
-                                              _productId,
-                                              _productName,
-                                              _qty,
-                                              _priceUnit,
-                                              _pricetotal,
-                                              _image);
-                                          await _productsProvider
-                                              .addProductToCart(_cart);
-                                        }
+                                                  _pricetotal,
+                                                  _image);
+                                              await _productsProvider
+                                                  .addProductToCart(_cart);
+                                            }
 
-                                        //..
-                                      },
+                                            //..
+                                          },
                                 //*+++++++++++++++...................++++++++++++++
+
                                 color: AppColors.darkblue4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24.0),
@@ -467,7 +587,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                           ),
                                           TitleText(
                                             text: 'Ajouter au panier',
-                                            color: AppColors.gold,
+                                            //++++++++++++++++++++
+                                            color: _isCartItemsOrdred
+                                                ? AppColors.white
+                                                : AppColors.gold,
+                                            //++++++++++++++++++++
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16,
                                             letterSpacing: 2.0,

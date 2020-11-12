@@ -28,6 +28,7 @@ class _OrderPageState extends State<OrderPage> {
   Future<dynamic> _futureFetching;
   String resultOrder;
   Map<String, String> routes;
+
   //+++++
   @override
   void initState() {
@@ -130,7 +131,7 @@ class _OrderPageState extends State<OrderPage> {
                       //++++++++\\\\++++++++
 
                       final String transactionID =
-                          snapShot?.data['id'].toString();
+                          snapShot?.data['id'].toString().padLeft(10, '0');
                       final String statusCode =
                           snapShot?.data['code'].toString();
 
@@ -160,7 +161,12 @@ class _OrderPageState extends State<OrderPage> {
                         */
 
                         SchedulerBinding.instance.addPostFrameCallback((_) {
+                          //--------------------
+
+                          //*++++ update order state / and store transaction Number ++++
                           _productsProvider.setIsCartItemsOrdred(true);
+                          //--
+                          _productsProvider.setTransactionNumber(transactionID);
                         });
 
                         //-----------------------------------

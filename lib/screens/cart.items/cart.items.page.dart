@@ -98,7 +98,8 @@ class _CartItemsPageState extends State<CartItemsPage> {
 
         iconTheme: IconThemeData(color: AppColors.icongray),
         backgroundColor: CustomAppBar.backgroundColor,
-        /*  leading: IconButton(
+        /*
+        leading: IconButton(
             icon: Icon(
               Icons.list_alt_outlined,
               color: AppColors.icongray,
@@ -115,10 +116,12 @@ class _CartItemsPageState extends State<CartItemsPage> {
 
               //++++++++++++++++++++++++++
             }),
+        automaticallyImplyLeading: true,
+        */
 
-            */
         leading: null,
         automaticallyImplyLeading: true,
+
         centerTitle: CustomAppBar.centerTitle,
 
         elevation: CustomAppBar.elevation,
@@ -194,16 +197,21 @@ class _CartItemsPageState extends State<CartItemsPage> {
                   ],
                 ),
               )
-            : Selector<ProductsProvider, Tuple2<bool, bool>>(
+            : Selector<ProductsProvider, Tuple3<bool, bool, String>>(
                 selector: (context, ProductsProvider productsProvider) =>
-                    Tuple2(productsProvider.isChecked,
-                        productsProvider.isCartItemsOrdred),
+                    Tuple3(
+                      productsProvider.isChecked,
+                      productsProvider.isCartItemsOrdred,
+                      productsProvider.transactionNumber,
+                    ),
                 builder: (_, data, __) {
                   //+++++++++++++++++++++++++++++++++
                   //*-1 - Check Box is Ttchecked Or No
                   bool isChecked = data.item1;
                   //*-2- Cart Items is ready Ordred or No
                   bool isCartItemsOrdred = data.item2;
+                  //*-3- Get Transaction Number
+                  String transactionNumber = data.item3;
                   //+++++++++++++++++++++++++++++++++++
                   print(
                       'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
@@ -220,12 +228,33 @@ class _CartItemsPageState extends State<CartItemsPage> {
                                 decoration: BoxDecoration(
                                   color: AppColors.pinck,
                                 ),
-                                child: BodyText(
-                                  text:
-                                      'Vider votre panier pour créer une nouvelle commande',
-                                  color: AppColors.white,
-                                  fontSize: 12,
-                                  textAlign: TextAlign.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    //......
+                                    TitleText(
+                                      text: 'Commande en cours',
+                                      color: AppColors.white,
+                                      fontSize: 16,
+                                      letterSpacing: 0.8,
+                                    ),
+                                    //.....
+
+                                    TitleText(
+                                      //0000012526
+                                      text: 'N°: $transactionNumber',
+                                      color: AppColors.white,
+                                      fontSize: 21,
+                                    ),
+
+                                    BodyText(
+                                      text:
+                                          'Vider votre panier pour créer une nouvelle commande',
+                                      color: AppColors.white,
+                                      fontSize: 12,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 ),
                               ),
                             )

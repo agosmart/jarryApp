@@ -25,6 +25,45 @@ class ProductsProvider extends ChangeNotifier {
   Product _currentProduct;
   bool _isChecked;
 
+  List<Product> _productsGlobale = [];
+  get productsGlobale => _productsGlobale;
+  setProductsGlobale(List<Product> items) {
+    // var item ;
+    // if (_productsGlobale.length <= 0)
+    //   item = null;
+    // };
+
+    //........
+    var item = _productsGlobale?.firstWhere(
+        (e) => e.productId == items.first.productId,
+        orElse: () => null);
+    //........
+
+    if (item == null) {
+      _productsGlobale.addAll(items);
+      print('_productsGlobale NEW ADD ::: ${_productsGlobale.length}');
+    } else {
+      print('_productsGlobale DONt ADD ::: ${_productsGlobale.length}');
+    }
+
+    /* if (!_productsGlobale.any((e) => e == items.first)) {
+      _productsGlobale.addAll(items);
+      print('_productsGlobale NEW ADD ::: ${_productsGlobale.length}');
+
+      notifyListeners();
+    } else {
+
+      print('_productsGlobale DONt ADD ::: ${_productsGlobale.length}');
+    }*/
+  }
+
+  Product getProductById(int id) {
+    final product = _productsGlobale
+        .firstWhere((Product item) => item.productId == id, orElse: () => null);
+    // print('getting product by id = $id ----> $product');
+    return product ?? null;
+  }
+
   //int _numOfItems;
 
   //......
@@ -37,6 +76,15 @@ class ProductsProvider extends ChangeNotifier {
   }
   */
 
+  //-- transaction Number
+  String _transactionNumber = '0000000000';
+  get transactionNumber => _transactionNumber;
+  setTransactionNumber(String number) {
+    _transactionNumber = number;
+    notifyListeners();
+  }
+
+//-- Order state (ordred / not Ordred)
   bool _isCartItemsOrdred = false;
   get isCartItemsOrdred => _isCartItemsOrdred;
   setIsCartItemsOrdred(bool value) {
@@ -141,13 +189,6 @@ class ProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Product getProductById(int id) {
-    final product = _products.firstWhere((Product item) => item.productId == id,
-        orElse: () => null);
-   // print('getting product by id = $id ----> $product');
-    return product ?? null;
-  }
-
   addProductToCart(CartItem cart) {
     _cartItems.add(cart);
 
@@ -187,73 +228,9 @@ class ProductsProvider extends ChangeNotifier {
   //   return Future.value(true);
   // }
 
-  //++++++++++++++++++++++++++++
-
-  Future<List<Product>> fetchProductsByCategoryLocal() async {
-    await Future.delayed(Duration(milliseconds: 1500));
-    //---
-    print("++++++++ ENTER LIST Categories ++++++++++ ");
-    //----------------------------------------------------------------
-    // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
-
-    //.......
-    _products.clear();
-    //........
-
-    // try {  } catch (e) {
-    //   throw Exception();
-    // }
-    // var response = await DefaultAssetBundle.of(context)
-    //     .loadString("assets/jsons/users_group.json");
-    var response =
-        await rootBundle.loadString('assets/jsons/produits_cat4.json');
-    var jsonObject = jsonDecode(response);
-
-    //........
-    switch (jsonObject['code']) {
-      case 200:
-        //...
-        if (jsonObject['data'].length == 0) {
-          throw ResourceNotFound('Produits');
-          //...
-        } else {
-          for (var item in jsonObject['data']) {
-            var product = Product.fromJson(item);
-            _products.add(product);
-          }
-
-          print('ITEM !!!!!! ${_products.length}');
-          print("+++++++  DISPLAY CARD INFO _products  +++++++++++ ");
-
-          return Future.value(_products);
-        }
-        //..
-        break;
-      case 404:
-        throw ResourceNotFound('Produits');
-        break;
-      case 111:
-        throw ConnectionRefused();
-        break;
-      case 301:
-      case 302:
-      case 303:
-        throw RedirectionFound();
-        break;
-      default:
-        print('List of users group is null :::::: ${jsonObject['data']}');
-        return null;
-
-        break;
-      //..
-    }
-  }
-
-  //++++++++++++++++++++++++++++++
-
   Future<List<Product>> fetchProductsByCategoryAPI({String categoryId}) async {
     //---
-    print("++++++++ ENTER PRODUCTS / productId :$categoryId ++++++++++ ");
+    print("++++++++ ENTER PRODUCTS / categoryId :$categoryId ++++++++++ ");
     //  http: //danone.cooffa.shop/api/v1/clients/familles
     String baseURL = BASEURL + '/products/famille/$categoryId';
 
@@ -283,6 +260,14 @@ class ProductsProvider extends ChangeNotifier {
             }
             //  print("+++++++  DISPLAY STATES LIST  +++++++++++ ");
             //  print('_statesList ==== ${jsonEncode(_statesList)}');
+
+            //+++++++++++++++++++++++++++
+            setProductsGlobale(_products);
+            //+++++++++++++++++++++++++++
+
+            print('productsGlobale !!!!!! ${productsGlobale.length}');
+            print("+++++++  DISPLAY INFO _products  +++++++++++ ");
+
             notifyListeners();
 
             return Future.value(_products);
@@ -311,6 +296,74 @@ class ProductsProvider extends ChangeNotifier {
       throw Exception(': Erreur de serveur. Veuillez réessayer plus tard');
     }
   }
+
+  //++++++++++++++++++++++++++++
+
+  Future<List<Product>> fetchProductsByCategoryLocal() async {
+    await Future.delayed(Duration(milliseconds: 1500));
+    //---
+    print("++++++++ ENTER LIST Categories ++++++++++ ");
+    //----------------------------------------------------------------
+    // if (ctx == null) ctx = ctx.dependOnInheritedWidgetOfExactType();
+
+    //.......
+    // _products.clear();
+    //........
+
+    // try {  } catch (e) {
+    //   throw Exception();
+    // }
+    // var response = await DefaultAssetBundle.of(context)
+    //     .loadString("assets/jsons/users_group.json");
+    var response =
+        await rootBundle.loadString('assets/jsons/produits_cat4.json');
+    var jsonObject = jsonDecode(response);
+
+    //........
+    switch (jsonObject['code']) {
+      case 200:
+        //...
+        if (jsonObject['data'].length == 0) {
+          throw ResourceNotFound('Produits');
+          //...
+        } else {
+          for (var item in jsonObject['data']) {
+            var product = Product.fromJson(item);
+            _products.add(product);
+          }
+
+          //+++++++++++++++++++++++++++
+          setProductsGlobale(_products);
+          //+++++++++++++++++++++++++++
+
+          print('productsGlobale !!!!!! ${productsGlobale.length}');
+          print("+++++++  DISPLAY INFO _products  +++++++++++ ");
+
+          return Future.value(_products);
+        }
+        //..
+        break;
+      case 404:
+        throw ResourceNotFound('Produits');
+        break;
+      case 111:
+        throw ConnectionRefused();
+        break;
+      case 301:
+      case 302:
+      case 303:
+        throw RedirectionFound();
+        break;
+      default:
+        print('List of users group is null :::::: ${jsonObject['data']}');
+        return null;
+
+        break;
+      //..
+    }
+  }
+
+  //++++++++++++++++++++++++++++++
   //++++++++++++++++++++++++++++++
 
 }

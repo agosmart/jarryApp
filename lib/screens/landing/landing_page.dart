@@ -49,7 +49,8 @@ class _LandingPageState extends State<LandingPage>
         AnimationController(vsync: this, duration: Duration(milliseconds: 800))
           ..addStatusListener((status) {
             if (status == AnimationStatus.completed) {
-              Navigator.push(
+              //--------------------------------
+              Navigator.pushReplacement(
                 context,
                 PageTransition(
                   type: PageTransitionType.fade,
@@ -57,6 +58,7 @@ class _LandingPageState extends State<LandingPage>
                   settings: RouteSettings(name: "/homePage"),
                 ),
               );
+              //--------------------------------
             }
           });
 
