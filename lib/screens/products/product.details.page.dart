@@ -342,7 +342,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               fadeInDuration:
                                   const Duration(milliseconds: 1700),
                               placeholder:
-                                  AssetImage('assets/images/logo-jari1.webp'),
+                                  AssetImage('assets/images/logo-jari2-1.webp'),
 
                               fit: BoxFit.contain,
                             ),

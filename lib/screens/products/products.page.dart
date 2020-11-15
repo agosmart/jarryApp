@@ -375,7 +375,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
                                             //backgroundImage:
                                             child: Image.network(
-                                              '${IMAGEURL + _productsList[index].image}',
+                                              '${IMAGETHUMB + _productsList[index].image}',
                                               //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
 
                                               errorBuilder:

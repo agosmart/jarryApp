@@ -29,7 +29,8 @@ class CustomAppBar {
  */
     return SizedBox(
       height: toolbarHeight,
-      child: Image.asset('assets/images/logo-jari-only.png'),
+      //  child: Image.asset('assets/images/logo-jari-only.png'),
+      child: Image.asset('assets/images/logo_danone.webp'),
     );
   }
 
