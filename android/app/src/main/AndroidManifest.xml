@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.jariapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.danone.jarryapp">
      <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -6,13 +6,14 @@
          FlutterApplication and put your custom class here. -->
 
      <!-- geolocator 6.1.5 -->
+     <uses-permission android:name="android.permission.INTERNET" />
      <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
      <!-- geolocation -->
 
-     <application android:name="io.flutter.app.FlutterApplication" android:label="jariapp" android:icon="@drawable/ic_launcher"> 
+     <application android:name="io.flutter.app.FlutterApplication" android:label="jarryApp" android:icon="@drawable/ic_launcher"> 
 
-          <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAJ2jma1d-UAUU8C5vB3OQFc3fafCivohI"/>
+          <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBMN_RlvAKNdRj0LPw3fQzSHtyiQct4VYc"/>
 
 
           <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
