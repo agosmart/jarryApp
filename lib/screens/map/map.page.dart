@@ -11,6 +11,7 @@ import 'package:jariapp/providers/location.api.dart';
 import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/screens/order/order.page.dart';
 import 'package:jariapp/themes/colors.dart';
 
@@ -32,7 +33,7 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   //+++++
-  double h, w;
+  double _width, _height;
   List<Deliver> deliversList;
   List<CartItem> _cartItems;
   String _localityID;
@@ -170,104 +171,113 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     //++++
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
+    // w = MediaQuery.of(context).size.width;
+    // h = MediaQuery.of(context).size.height;
 
     //+++++
-    return Scaffold(
-      appBar: AppBar(
-        brightness: Brightness.light,
+    return ResponsiveSafeArea(
+      //------
+      builder: (context, size) {
+        //++++++
+        _width = size.width;
+        _height = size.height;
+        //++++++
 
-        // leading: null,
-        iconTheme: IconThemeData(color: AppColors.icongray),
-        backgroundColor: CustomAppBar.backgroundColor,
-        automaticallyImplyLeading: true,
-        centerTitle: CustomAppBar.centerTitle,
+        return Scaffold(
+          appBar: AppBar(
+            brightness: Brightness.light,
 
-        elevation: CustomAppBar.elevation,
-        toolbarHeight: CustomAppBar.toolbarHeight,
-        title: CustomAppBar.logoHeader(),
-        // actions: <Widget>[CustomAppBar.builsActionIcons()],
-        //  actions: <Widget>[CustomAppBar.builsActionIconsClear()],
-        // toolbarHeight: 80.0,
-      ),
-      body:
-          //.....
+            // leading: null,
+            iconTheme: IconThemeData(color: AppColors.icongray),
+            backgroundColor: CustomAppBar.backgroundColor,
+            automaticallyImplyLeading: true,
+            centerTitle: CustomAppBar.centerTitle,
 
-          FutureBuilder(
-        //----------------------------------
-        future: _futureFetchingDelivers,
-        //----------------------------------
-        //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
-        builder: (BuildContext context, AsyncSnapshot<List<Deliver>> snapShot) {
-          switch (snapShot.connectionState) {
-            case ConnectionState.none:
-              // return Text('nothing happend !!!');
-              return error('No connexion made!');
-              break;
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              //return Center();
-              return loading(AppColors.akablueLight);
-              break;
-            case ConnectionState.done:
-              //-----
-              if (snapShot.hasError) {
-                return error(snapShot.error.toString());
-              } else {
-                if (!snapShot.hasData) {
-                  //----Build Erreur
+            elevation: CustomAppBar.elevation,
+            toolbarHeight: CustomAppBar.toolbarHeight,
+            title: CustomAppBar.logoHeader(),
+            // actions: <Widget>[CustomAppBar.builsActionIcons()],
+            //  actions: <Widget>[CustomAppBar.builsActionIconsClear()],
+            // toolbarHeight: 80.0,
+          ),
+          body:
+              //.....
 
-                  return Center(
-                    child: Text("hasn't data"),
-                  );
-                }
+              FutureBuilder(
+            //----------------------------------
+            future: _futureFetchingDelivers,
+            //----------------------------------
+            //_orderProvider.fetchtNotTraitedOrders(idUser: 1),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Deliver>> snapShot) {
+              switch (snapShot.connectionState) {
+                case ConnectionState.none:
+                  // return Text('nothing happend !!!');
+                  return error('No connexion made!');
+                  break;
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  //return Center();
+                  return loading(AppColors.akablueLight);
+                  break;
+                case ConnectionState.done:
+                  //-----
+                  if (snapShot.hasError) {
+                    return error(snapShot.error.toString());
+                  } else {
+                    if (!snapShot.hasData) {
+                      //----Build Erreur
 
-                deliversList = [...snapShot.data];
+                      return Center(
+                        child: Text("hasn't data"),
+                      );
+                    }
 
-                if (deliversList.length > 0) {
-                  //...... POSITION CAMERA INITIAL ....
-                  positionInit = LatLng(
-                    deliversList[0].latitude,
-                    deliversList[0].longitude,
-                  );
-                  //...........
+                    deliversList = [...snapShot.data];
 
-                  deliversList.map((deliver) {
-                    int id = deliver.deliverId;
-                    String lastName = deliver.lastName;
-                    String firstName = deliver.firstName;
-                    String fullName = '$lastName $firstName';
-                    double lat = deliver.latitude;
-                    double lnt = deliver.longitude;
-                    String phone_1 = deliver?.phone1 ?? '';
-                    String phone_2 = deliver?.phone2 ?? '';
+                    if (deliversList.length > 0) {
+                      //...... POSITION CAMERA INITIAL ....
+                      positionInit = LatLng(
+                        deliversList[0].latitude,
+                        deliversList[0].longitude,
+                      );
+                      //...........
 
-                    allMarkers.add(
-                      Marker(
-                        markerId: MarkerId('myMarker-$id'),
-                        draggable: true,
-                        // infoWindow:
-                        //     InfoWindow(title: 'tInformation livreur $id '),
-                        //............
-                        onTap: () {
-                          //++++++++++++++++++++++++
-                          print('Marker Tapped');
+                      deliversList.map((deliver) {
+                        int id = deliver.deliverId;
+                        String lastName = deliver.lastName;
+                        String firstName = deliver.firstName;
+                        String fullName = '$lastName $firstName';
+                        double lat = deliver.latitude;
+                        double lnt = deliver.longitude;
+                        String phone_1 = deliver?.phone1 ?? '';
+                        String phone_2 = deliver?.phone2 ?? '';
 
-                          showDeliverInfoOrder(
-                              id: id,
-                              fullName: fullName,
-                              phone_1: phone_1,
-                              phone_2: phone_2);
+                        allMarkers.add(
+                          Marker(
+                            markerId: MarkerId('myMarker-$id'),
+                            draggable: true,
+                            // infoWindow:
+                            //     InfoWindow(title: 'tInformation livreur $id '),
+                            //............
+                            onTap: () {
+                              //++++++++++++++++++++++++
+                              print('Marker Tapped');
 
-                          //++++++++++++++++++++++++
-                        },
-                        position: LatLng(lat, lnt),
-                      ),
-                    );
-                  }).toList();
+                              showDeliverInfoOrder(
+                                  id: id,
+                                  fullName: fullName,
+                                  phone_1: phone_1,
+                                  phone_2: phone_2);
 
-                  /* allMarkers.add(
+                              //++++++++++++++++++++++++
+                            },
+                            position: LatLng(lat, lnt),
+                          ),
+                        );
+                      }).toList();
+
+                      /* allMarkers.add(
                     Marker(
                       markerId: MarkerId('myMarker'),
                       draggable: true,
@@ -277,120 +287,127 @@ class _MapPageState extends State<MapPage> {
                       position: LatLng(40.7128, -74.0060),
                     ),
                   );*/
-                }
+                    }
 
-                // deliversList = [];
+                    // deliversList = [];
 
-                //+++++
-                return deliversList.length <= 0
-                    ? Container(
-                        //......................................
-                        color: AppColors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FadeInImage(
-                              placeholder: AssetImage(
-                                'assets/images/sopping-box-empty.jpg',
-                              ),
-                              fit: BoxFit.cover,
-                              // placeholder: null,
-                              image: AssetImage(
-                                'assets/images/sopping-box-empty.jpg',
-                              ),
+                    //+++++
+                    return deliversList.length <= 0
+                        ? Container(
+                            //......................................
+                            color: AppColors.white,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FadeInImage(
+                                  placeholder: AssetImage(
+                                    'assets/images/sopping-box-empty.jpg',
+                                  ),
+                                  fit: BoxFit.cover,
+                                  // placeholder: null,
+                                  image: AssetImage(
+                                    'assets/images/sopping-box-empty.jpg',
+                                  ),
+                                ),
+                                //++++++++ MESSAGE ++++
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(24),
+                                    child: TitleText(
+                                        color: AppColors.darkgrey,
+                                        fontSize: 18.0,
+                                        uppercase: false,
+                                        fontWeight: FontWeight.w400,
+                                        textAlign: TextAlign.center,
+                                        text:
+                                            "Nous sommes désolés,  Aucun livreur n'est disponible dans votre région. Merci de réessayer ultérieurement."
+                                        //   'Désolé! Aucun livreur n\'active dans votre région.',
+                                        ),
+                                  ),
+                                ),
+                                //++++++++ EMPTY SPACE ++++
+                                // SizedBox(
+                                //   height: h / 4,
+                                // )
+                              ],
                             ),
-                            //++++++++ MESSAGE ++++
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(24),
-                                child: TitleText(
-                                    color: AppColors.darkgrey,
-                                    fontSize: 18.0,
-                                    uppercase: false,
-                                    fontWeight: FontWeight.w400,
-                                    textAlign: TextAlign.center,
-                                    text:
-                                        "Nous sommes désolés,  Aucun livreur n'est disponible dans votre région. Merci de réessayer ultérieurement."
-                                    //   'Désolé! Aucun livreur n\'active dans votre région.',
-                                    ),
-                              ),
-                            ),
-                            //++++++++ EMPTY SPACE ++++
-                            // SizedBox(
-                            //   height: h / 4,
-                            // )
-                          ],
-                        ),
-                      )
-                    : Stack(
-                        //......................................
-                        children: <Widget>[
-                          //......
-                          Container(
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                  target:
-                                      positionInit, // LatLng(40.7128, -74.0060),
-                                  zoom: 14.0),
-                              markers: Set.from(allMarkers),
-                              //+++++++++++++++++++++++++++++
-                              onMapCreated: mapCreated,
-                              //+++++++++++++++++++++++++++++
-                            ),
-                          ),
-
-                          Positioned(
-                            bottom: 20,
-                            left: 20,
-                            // alignment: Alignment.bottomRight,
-                            child: InkWell(
-                              onTap: movetoNewYork,
-                              splashColor: AppColors.akablueLight,
-                              child: Container(
-                                height: 48.0,
-                                width: 48.0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24.0),
-                                    color: AppColors.darkblue4),
-                                child: Icon(Icons.refresh, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          //..........................................
-
-                          //......
-
-                          Positioned(
-                            top: 20,
-                            left: 0,
-                            child: Container(
-                              width: w,
-                              height: 42.0,
-                              color: AppColors.white,
-                              alignment: Alignment.center,
-                              child: Text(
-                                'POSITIONS :::: ${_mapProvider?.latitudeClient} / ${_mapProvider?.longitudeClient} ',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                          )
+                        : Stack(
+                            //......................................
+                            children: <Widget>[
+                              //......
+                              Container(
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
+                                child: GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                      target:
+                                          positionInit, // LatLng(40.7128, -74.0060),
+                                      zoom: 14.0),
+                                  markers: Set.from(allMarkers),
+                                  //+++++++++++++++++++++++++++++
+                                  onMapCreated: mapCreated,
+                                  //+++++++++++++++++++++++++++++
                                 ),
                               ),
-                            ),
-                          ),
-                        ],
-                      );
-                //+++++
+
+                              Positioned(
+                                bottom: 20,
+                                left: 20,
+                                // alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                  onTap: movetoNewYork,
+                                  splashColor: AppColors.akablueLight,
+                                  child: Container(
+                                    height: 48.0,
+                                    width: 48.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                        color: AppColors.darkblue4),
+                                    child: Icon(Icons.refresh,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              //..........................................
+
+                              //......
+
+                              Positioned(
+                                top: 20,
+                                left: 0,
+                                child: Container(
+                                  width: _width,
+                                  height: 42.0,
+                                  color: AppColors.white,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'POSITIONS :::: ${_mapProvider?.latitudeClient} / ${_mapProvider?.longitudeClient} ',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                    //+++++
+                  }
               }
-          }
-          return error('Data messing occured!');
-        },
-      ),
+              return error('Data messing occured!');
+            },
+          ),
+        );
+
+        //+++++++++++++++
+      },
     );
   }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   void mapCreated(controller) {
     setState(() {
       _controller = controller;
@@ -538,7 +555,7 @@ class _MapPageState extends State<MapPage> {
         actions: <Widget>[
           Container(
             alignment: Alignment.center,
-            width: (w / 2) - 20,
+            width: (_width / 2) - 20,
             // color: AppColors.black,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -562,7 +579,7 @@ class _MapPageState extends State<MapPage> {
 
           Container(
             alignment: Alignment.center,
-            width: (w / 2) - 20,
+            width: (_width / 2) - 20,
             //-----------
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(

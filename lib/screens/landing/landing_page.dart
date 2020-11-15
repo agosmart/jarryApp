@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/screens/home/home.page.dart';
 import 'package:jariapp/themes/colors.dart';
 
@@ -144,72 +145,83 @@ class _LandingPageState extends State<LandingPage>
   Widget build(BuildContext context) {
     //+++++++++++++++++++++++++++++++++++++++++
 
-    _width = MediaQuery.of(context).size.width;
-    _height = MediaQuery.of(context).size.height;
+    // _width = MediaQuery.of(context).size.width;
+    // _height = MediaQuery.of(context).size.height;
 
     //++++++++++++++++++++++++++++++++++++++++++++
-    return Scaffold(
-      body: Container(
-        //color: Colors.red,
-        child: Stack(
-          //alignment: Alignment.topLeft,
-          overflow: Overflow.visible,
-          fit: StackFit.expand,
-          children: <Widget>[
-            //++++
-            Container(
-              width: _width,
-              height: _height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/bg3x.webp',
+    return ResponsiveSafeArea(
+      //------
+      builder: (context, size) {
+        //++++++
+        _width = size.width;
+        _height = size.height;
+        //++++++
+
+        return Scaffold(
+          body: Container(
+            //color: Colors.red,
+            child: Stack(
+              //alignment: Alignment.topLeft,
+              overflow: Overflow.visible,
+              fit: StackFit.expand,
+              children: <Widget>[
+                //++++
+                Container(
+                  width: _width,
+                  height: _height,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/bg3x.webp',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  fit: BoxFit.cover,
                 ),
+                //+++
+                /*
+              Positioned(
+                top: -15.0,
+                left: -5.0,
+                child: animateLeafsMulti(),
               ),
-            ),
-            //+++
-            /*
-            Positioned(
-              top: -15.0,
-              left: -5.0,
-              child: animateLeafsMulti(),
-            ),
-            */
+              */
 
-            /*
-            //++++
-            Positioned(
-              bottom: 10.0,
-              right: 20.0,
-              child: animateLeafs(),
-            ),
-            */
-
-            //+++
-            Positioned(
-              top: 80.0,
-              width: _width,
-              child: Center(
-                child: animateLogo(),
+                /*
+              //++++
+              Positioned(
+                bottom: 10.0,
+                right: 20.0,
+                child: animateLeafs(),
               ),
-            ),
-            //+++
+              */
 
-            //+++++++++ BTN START +++++
-            Positioned(
-              top: _height / 2,
-              width: _width,
-              // width: _width,
-              child: Center(
-                  // child: buttonStartRippleAnimation(),
-                  child: buttonStartHome()),
+                //+++
+                Positioned(
+                  top: 80.0,
+                  width: _width,
+                  child: Center(
+                    child: animateLogo(),
+                  ),
+                ),
+                //+++
+
+                //+++++++++ BTN START +++++
+                Positioned(
+                  top: _height / 2,
+                  width: _width,
+                  // width: _width,
+                  child: Center(
+                      // child: buttonStartRippleAnimation(),
+                      child: buttonStartHome()),
+                ),
+                //+++
+              ],
             ),
-            //+++
-          ],
-        ),
-      ),
+          ),
+        );
+        //-----
+      },
     );
   }
 

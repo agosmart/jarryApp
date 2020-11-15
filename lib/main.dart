@@ -1,16 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/location.api.dart';
 import 'package:jariapp/providers/map.dart';
 import 'package:jariapp/providers/order.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/responsive/size_config.dart';
 import 'package:jariapp/root/routes.dart';
 import 'package:jariapp/screens/landing/landing_page.dart';
 
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
-//import 'package:jariapp/old/start_page_ripple.dart';
+
+//import 'package:device_preview/device_preview.dart';
 
 void main() {
 //----- Smooth Scrolling +++++++++
@@ -18,6 +21,14 @@ void main() {
   runApp(MyApp());
 }
 
+/*
+void main() => runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MyApp(), // Wrap your app
+      ),
+    );
+*/
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -57,18 +68,35 @@ class MyApp extends StatelessWidget {
         // ),
       ],
       builder: (context, child) {
-        return MaterialApp(
-          title: 'Jarry App',
-          onGenerateRoute: Routes.materialRoutes,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            fontFamily: 'Bariol',
-          ),
-          //home: StartPageRipple(),
-          home: LandingPage(),
-        );
+        //.........................
+        return LayoutBuilder(builder: (context, constraints) {
+          return OrientationBuilder(builder: (context, orientation) {
+            //..........
+            SizeConfig().init(constraints, orientation);
+            //++++++++++++++++++++++++++
+            return MaterialApp(
+              //++++++++++++++++++++
+              // locale: DevicePreview.locale(context), // Add the locale here
+              // builder: DevicePreview.appBuilder, // Add the builder here
+
+              //++++++++++++++++++++
+              title: 'Jarry App',
+              onGenerateRoute: Routes.materialRoutes,
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+                visualDensity: VisualDensity.adaptivePlatformDensity,
+                fontFamily: 'Bariol',
+              ),
+              //home: StartPageRipple(),
+              home: LandingPage(),
+            );
+
+            //++++++++++++++++++++++++++
+          });
+        });
+
+        //.........................
       },
       //+++++++++++++++++++++++++++++++
     );

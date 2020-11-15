@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/order.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/screens/products/products.page.dart';
 import 'package:jariapp/screens/terms.condistions/cgv.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -29,7 +30,7 @@ class CartItemsPage extends StatefulWidget {
 class _CartItemsPageState extends State<CartItemsPage> {
   //+++++++++++++++++++++++++
   List<CartItem> _cartlist;
-  double h, w;
+  double _width, _height;
   ProductsProvider _productsProvider;
   // OrderProvider _providerOrder;
   bool checkBoxValue;
@@ -77,28 +78,37 @@ class _CartItemsPageState extends State<CartItemsPage> {
   Widget build(BuildContext context) {
     //++++
 
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
+    // w = MediaQuery.of(context).size.width;
+    // h = MediaQuery.of(context).size.height;
 
     _productsProvider = Provider.of<ProductsProvider>(context, listen: true);
 
     checkBoxValue = _productsProvider.isChecked ?? false;
     _cartlist = [..._productsProvider.getCartItems];
+    //++++++++++++++++++++++++++++++++++++++++++++++
 
-    //++++
+    return ResponsiveSafeArea(
+      //------
+      builder: (context, size) {
+        //++++++
+        _width = size.width;
+        _height = size.height;
+        //++++++
 
-    return Scaffold(
-      // backgroundColor: Colors.grey[100],
+        //++++
 
-      // backgroundColor: AppColors.canvaColor,
+        return Scaffold(
+          // backgroundColor: Colors.grey[100],
 
-      //+++++ APP BAR ++++++++++++++++++++++++++++
-      appBar: AppBar(
-        brightness: Brightness.light,
+          // backgroundColor: AppColors.canvaColor,
 
-        iconTheme: IconThemeData(color: AppColors.icongray),
-        backgroundColor: CustomAppBar.backgroundColor,
-        /*
+          //+++++ APP BAR ++++++++++++++++++++++++++++
+          appBar: AppBar(
+            brightness: Brightness.light,
+
+            iconTheme: IconThemeData(color: AppColors.icongray),
+            backgroundColor: CustomAppBar.backgroundColor,
+            /*
         leading: IconButton(
             icon: Icon(
               Icons.list_alt_outlined,
@@ -119,277 +129,246 @@ class _CartItemsPageState extends State<CartItemsPage> {
         automaticallyImplyLeading: true,
         */
 
-        leading: null,
-        automaticallyImplyLeading: true,
+            leading: null,
+            automaticallyImplyLeading: true,
 
-        centerTitle: CustomAppBar.centerTitle,
+            centerTitle: CustomAppBar.centerTitle,
 
-        elevation: CustomAppBar.elevation,
-        toolbarHeight: CustomAppBar.toolbarHeight,
-        title: CustomAppBar.logoHeader(),
-        // actions: <Widget>[CustomAppBar.builsActionIcons()],
-        actions: <Widget>[CustomAppBar.builsActionIconsClear()],
-        // toolbarHeight: 80.0,
-      ),
-
-      //+++++ APP BAR ++++++++++++++++++++++++++++
-
-      body: SafeArea(
-        /*
-        //++++++++++++++++++++++++++++
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                _cartItems(),
-                Divider(
-                  thickness: 1,
-                  height: 70,
-                ),
-                _price(),
-                SizedBox(height: 30),
-                _submitButton(context),
-              ],
-            ),
+            elevation: CustomAppBar.elevation,
+            toolbarHeight: CustomAppBar.toolbarHeight,
+            title: CustomAppBar.logoHeader(),
+            // actions: <Widget>[CustomAppBar.builsActionIcons()],
+            actions: <Widget>[CustomAppBar.builsActionIconsClear()],
+            // toolbarHeight: 80.0,
           ),
-        ),
-        //++++++++++++++++++++++++++++
-      */
 
-        //     child: Selector<ProductsProvider, List<CartItem>>(
-        //         //............
-        //         selector: (context, _productsProvider) =>
-        //             _productsProvider.getCartItems,
-        //         builder: (_, currentCartItems, child) {
-        //           print('TOTAL ITEMS IN CART ::::$currentCartItems');
+          //+++++ APP BAR ++++++++++++++++++++++++++++
 
-        //           //final List<CartItem> _carruentCartItem = getCartItems;
-        //  }),
-        child: _cartlist.length <= 0
-            ? Container(
-                color: AppColors.white,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FadeInImage(
-                      placeholder: AssetImage(
-                        'assets/images/sopping-box-empty.jpg',
-                      ),
-                      fit: BoxFit.cover,
-                      // placeholder: null,
-                      image: AssetImage(
-                        'assets/images/sopping-box-empty.jpg',
-                      ),
-                    ),
-                    //++++++++ MESSAGE ++++
-                    TitleText(
-                      color: AppColors.darkgrey,
-                      fontSize: 24.0,
-                      uppercase: false,
-                      fontWeight: FontWeight.w400,
-                      text: 'Votre panier est vide !',
-                    ),
-                    //++++++++ EMPTY SPACE ++++
-                    SizedBox(
-                      height: h / 4,
-                    )
-                  ],
-                ),
-              )
-            : Selector<ProductsProvider, Tuple3<bool, bool, String>>(
-                selector: (context, ProductsProvider productsProvider) =>
-                    Tuple3(
-                      productsProvider.isChecked,
-                      productsProvider.isCartItemsOrdred,
-                      productsProvider.transactionNumber,
-                    ),
-                builder: (_, data, __) {
-                  //+++++++++++++++++++++++++++++++++
-                  //*-1 - Check Box is Ttchecked Or No
-                  bool isChecked = data.item1;
-                  //*-2- Cart Items is ready Ordred or No
-                  bool isCartItemsOrdred = data.item2;
-                  //*-3- Get Transaction Number
-                  String transactionNumber = data.item3;
-                  //+++++++++++++++++++++++++++++++++++
-                  print(
-                      'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
-                  //+++++++++++++++++++++++++++++
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+          body: _cartlist.length <= 0
+              ? Container(
+                  color: AppColors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //...........
-                      isCartItemsOrdred
-                          ? Center(
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                width: w,
-                                decoration: BoxDecoration(
-                                  color: AppColors.pinck,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    //......
-                                    TitleText(
-                                      text: 'Commande en cours',
-                                      color: AppColors.white,
-                                      fontSize: 16,
-                                      letterSpacing: 0.8,
-                                    ),
-                                    //.....
-
-                                    TitleText(
-                                      //0000012526
-                                      text: 'N°: $transactionNumber',
-                                      color: AppColors.white,
-                                      fontSize: 21,
-                                    ),
-
-                                    BodyText(
-                                      text:
-                                          'Vider votre panier pour créer une nouvelle commande',
-                                      color: AppColors.white,
-                                      fontSize: 12,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : Center(),
-                      //............
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount: _cartlist.length,
-                            itemBuilder: (context, index) {
-                              //=========
-                              final item = _cartlist[index];
-                              //=========
-                              return _buildItemTile(
-                                  context, index, item, isCartItemsOrdred);
-                            }),
+                      FadeInImage(
+                        placeholder: AssetImage(
+                          'assets/images/sopping-box-empty.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                        // placeholder: null,
+                        image: AssetImage(
+                          'assets/images/sopping-box-empty.jpg',
+                        ),
                       ),
-                      //...........
-                      Divider(
-                          thickness: 6,
-                          height: 6,
-                          color: AppColors.icongray.withOpacity(0.25)),
-                      //...........
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 16.0),
-                        child: _price(),
+                      //++++++++ MESSAGE ++++
+                      TitleText(
+                        color: AppColors.darkgrey,
+                        fontSize: 24.0,
+                        uppercase: false,
+                        fontWeight: FontWeight.w400,
+                        text: 'Votre panier est vide !',
                       ),
-                      //+++++++++++++++++++++++++++++++++
-
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     print('read');
-                      //   },
-                      //   child: TitleText(
-                      //     color: AppColors.icongray,
-                      //     fontSize: 16.0,
-                      //     uppercase: false,
-                      //     fontWeight: FontWeight.w400,
-                      //     textAlign: TextAlign.left,
-                      //     text:
-                      //         'Je reconnais avoir pris connaissance des conditions générales de vente et les accepte. ',
-                      //   ),
-                      // ),
-
-                      //...........
-                      Divider(
-                          thickness: 2,
-                          height: 2,
-                          color: AppColors.icongray.withOpacity(0.25)),
-                      //...........
+                      //++++++++ EMPTY SPACE ++++
                       SizedBox(
-                        height: 16.0,
-                      ),
-
-                      //*+++++++++ SELECTOR 2 VARS +++++++++++++++
-                      isCartItemsOrdred
-                          //++++++++++++++++++++++++++
-                          ? Center()
-                          : Column(
-                              children: [
-                                Row(
-                                  children: <Widget>[
-                                    //...........................
-                                    // Selector<ProductsProvider, bool>(
-                                    //     //............
-                                    //     selector: (context, _productsProvider) =>
-                                    //         _productsProvider.isChecked,
-                                    //     builder: (_, isChecked, child) {
-                                    //       //......
-                                    //       print('CHECKBOX STATE::::$isChecked');
-                                    //       return Checkbox(
-                                    //           value: isChecked,
-                                    //           onChanged: (bool newValue) {
-                                    //             _productsProvider.setIsChecked(newValue);
-                                    //           });
-                                    //     }),
-                                    //.............................
-                                    Checkbox(
-                                        value: isChecked, //isChecked,
-                                        onChanged: (bool newValue) {
-                                          _productsProvider
-                                              .setIsChecked(newValue);
-                                        }),
-
-                                    //...........................
-                                    Expanded(
-                                        child: BodyText(
-                                      text:
-                                          "J'accepte les conditions générales de vente.",
-                                      color: AppColors.darkblue4,
-                                      fontSize: 12,
-                                    )),
-
-                                    //++++++++
-
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 16, right: 16),
-                                      child: OutlineButton(
-                                          onPressed: () {
-                                            //+++++++++++++++++++++++++
-                                            _openConditionsPage(context);
-                                            //+++++++++++++++++++++++++
-                                          },
-                                          child: TitleText(
-                                            text: "Lire plus",
-                                            color: AppColors.pinck,
-                                            fontSize: 14,
-                                            letterSpacing: 0.5,
-                                            uppercase: true,
-                                          )),
-                                    )
-                                  ],
-                                ),
-                                //+++++++++++++++++++++++++++++++++++
-
-                                _submitButtonOrder(context),
-
-                                //+++++++++++++++++++++++++++++++++++
-                              ],
-                            ),
-                      //+++++++++++++++++++++++++
+                        height: _height / 4,
+                      )
                     ],
-                  );
+                  ),
+                )
+              : Selector<ProductsProvider, Tuple3<bool, bool, String>>(
+                  selector: (context, ProductsProvider productsProvider) =>
+                      Tuple3(
+                        productsProvider.isChecked,
+                        productsProvider.isCartItemsOrdred,
+                        productsProvider.transactionNumber,
+                      ),
+                  builder: (_, data, __) {
+                    //+++++++++++++++++++++++++++++++++
+                    //*-1 - Check Box is Ttchecked Or No
+                    bool isChecked = data.item1;
+                    //*-2- Cart Items is ready Ordred or No
+                    bool isCartItemsOrdred = data.item2;
+                    //*-3- Get Transaction Number
+                    String transactionNumber = data.item3;
+                    //+++++++++++++++++++++++++++++++++++
+                    print(
+                        'isChecked >>>>>>  $isChecked / isCartItemsOrdred >>>>>  $isCartItemsOrdred');
+                    //+++++++++++++++++++++++++++++
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        //...........
+                        isCartItemsOrdred
+                            ? Center(
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  width: _width,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.pinck,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      //......
+                                      TitleText(
+                                        text: 'Commande en cours',
+                                        color: AppColors.white,
+                                        fontSize: 16,
+                                        letterSpacing: 0.8,
+                                      ),
+                                      //.....
 
-                  //..........
-                }),
-        //*+++++++++++++++ END SELECTOR ++++++++++++++++++
+                                      TitleText(
+                                        //0000012526
+                                        text: 'N°: $transactionNumber',
+                                        color: AppColors.white,
+                                        fontSize: 21,
+                                      ),
 
-        //++++++++++++++++++++++++++++
-      ),
+                                      BodyText(
+                                        text:
+                                            'Vider votre panier pour créer une nouvelle commande',
+                                        color: AppColors.white,
+                                        fontSize: 12,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : Center(),
+                        //............
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount: _cartlist.length,
+                              itemBuilder: (context, index) {
+                                //=========
+                                final item = _cartlist[index];
+                                //=========
+                                return _buildItemTile(
+                                    context, index, item, isCartItemsOrdred);
+                              }),
+                        ),
+                        //...........
+                        Divider(
+                            thickness: 6,
+                            height: 6,
+                            color: AppColors.icongray.withOpacity(0.25)),
+                        //...........
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 16.0),
+                          child: _price(),
+                        ),
+                        //+++++++++++++++++++++++++++++++++
 
-      // padding: const EdgeInsets
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     print('read');
+                        //   },
+                        //   child: TitleText(
+                        //     color: AppColors.icongray,
+                        //     fontSize: 16.0,
+                        //     uppercase: false,
+                        //     fontWeight: FontWeight.w400,
+                        //     textAlign: TextAlign.left,
+                        //     text:
+                        //         'Je reconnais avoir pris connaissance des conditions générales de vente et les accepte. ',
+                        //   ),
+                        // ),
+
+                        //...........
+                        Divider(
+                            thickness: 2,
+                            height: 2,
+                            color: AppColors.icongray.withOpacity(0.25)),
+                        //...........
+                        SizedBox(
+                          height: 16.0,
+                        ),
+
+                        //*+++++++++ SELECTOR 2 VARS +++++++++++++++
+                        isCartItemsOrdred
+                            //++++++++++++++++++++++++++
+                            ? Center()
+                            : Column(
+                                children: [
+                                  Row(
+                                    children: <Widget>[
+                                      //...........................
+                                      // Selector<ProductsProvider, bool>(
+                                      //     //............
+                                      //     selector: (context, _productsProvider) =>
+                                      //         _productsProvider.isChecked,
+                                      //     builder: (_, isChecked, child) {
+                                      //       //......
+                                      //       print('CHECKBOX STATE::::$isChecked');
+                                      //       return Checkbox(
+                                      //           value: isChecked,
+                                      //           onChanged: (bool newValue) {
+                                      //             _productsProvider.setIsChecked(newValue);
+                                      //           });
+                                      //     }),
+                                      //.............................
+                                      Checkbox(
+                                          value: isChecked, //isChecked,
+                                          onChanged: (bool newValue) {
+                                            _productsProvider
+                                                .setIsChecked(newValue);
+                                          }),
+
+                                      //...........................
+                                      Expanded(
+                                          child: BodyText(
+                                        text:
+                                            "J'accepte les conditions générales de vente.",
+                                        color: AppColors.darkblue4,
+                                        fontSize: 12,
+                                      )),
+
+                                      //++++++++
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 16, right: 16),
+                                        child: OutlineButton(
+                                            onPressed: () {
+                                              //+++++++++++++++++++++++++
+                                              _openConditionsPage(context);
+                                              //+++++++++++++++++++++++++
+                                            },
+                                            child: TitleText(
+                                              text: "Lire plus",
+                                              color: AppColors.pinck,
+                                              fontSize: 14,
+                                              letterSpacing: 0.5,
+                                              uppercase: true,
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                  //+++++++++++++++++++++++++++++++++++
+
+                                  _submitButtonOrder(context),
+
+                                  //+++++++++++++++++++++++++++++++++++
+                                ],
+                              ),
+                        //+++++++++++++++++++++++++
+                      ],
+                    );
+
+                    //..........
+                  }),
+
+          // padding: const EdgeInsets
+        );
+
+        //++++
+      },
     );
   }
+//++++++++++++++++++++++
 
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -637,14 +616,14 @@ class _CartItemsPageState extends State<CartItemsPage> {
       begin: 100,
       delay: 300,
       duration: 900,
-      widthContent: w,
-      heightContent: h * 1 / 7,
+      widthContent: _width,
+      heightContent: _height * 1 / 7,
       childContent: Container(
         //color: Colors.red,
         child: Align(
           alignment: Alignment.center,
           child: Container(
-            width: w - (w / 10),
+            width: _width - (_width / 10),
             height: 60,
             child: RaisedButton(
               //*+++++++++++++++...................++++++++++++++

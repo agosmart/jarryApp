@@ -3,6 +3,7 @@ import 'package:jariapp/models/product.dart';
 
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/themes/colors.dart';
 import 'package:jariapp/utils/constantes.dart';
 
@@ -25,7 +26,7 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   //+++++
-  double h, w;
+  double _width, _height;
   Color _catColor;
   IconData _catIcon;
   String _catName;
@@ -59,8 +60,8 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     //++++
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
+    // w = MediaQuery.of(context).size.width;
+    // h = MediaQuery.of(context).size.height;
 
     _catColor = _categoryProvider.currentCatColor;
     _catIcon = _categoryProvider.currentCatIcon;
@@ -69,31 +70,36 @@ class _ProductsPageState extends State<ProductsPage> {
     print('_catName ${_catName.toString()}');
 
     //+++++
-    return Scaffold(
-      //+++++
-      backgroundColor: AppColors.canvaColor,
-      //+++++
+    return ResponsiveSafeArea(
+        //------
+        builder: (context, size) {
+      //++++++
+      _width = size.width;
+      _height = size.height;
+      //. . . . . . . . . . . . . . . .
+      return Scaffold(
+        //+++++
+        backgroundColor: AppColors.canvaColor,
+        //+++++
 
-      appBar: AppBar(
-        brightness: Brightness.light,
+        appBar: AppBar(
+          brightness: Brightness.light,
 
-        // leading: null,
-        iconTheme: IconThemeData(color: AppColors.icongray),
-        backgroundColor: CustomAppBar.backgroundColor,
-        automaticallyImplyLeading: true,
-        centerTitle: CustomAppBar.centerTitle,
+          // leading: null,
+          iconTheme: IconThemeData(color: AppColors.icongray),
+          backgroundColor: CustomAppBar.backgroundColor,
+          automaticallyImplyLeading: true,
+          centerTitle: CustomAppBar.centerTitle,
 
-        elevation: CustomAppBar.elevation,
-        toolbarHeight: CustomAppBar.toolbarHeight,
-        title: CustomAppBar.logoHeader(),
-        actions: <Widget>[CustomAppBar.builsActionIcons()],
-        // toolbarHeight: 80.0,
-      ),
+          elevation: CustomAppBar.elevation,
+          toolbarHeight: CustomAppBar.toolbarHeight,
+          title: CustomAppBar.logoHeader(),
+          actions: <Widget>[CustomAppBar.builsActionIcons()],
+          // toolbarHeight: 80.0,
+        ),
 
-      //-----------------
-      body: SafeArea(
-        //======
-        child: FutureBuilder(
+        //-----------------
+        body: FutureBuilder(
           future: _futureFetching,
           builder:
               (BuildContext context, AsyncSnapshot<List<Product>> snapShot) {
@@ -427,8 +433,9 @@ class _ProductsPageState extends State<ProductsPage> {
             //++++++
           },
         ),
-        //======
-      ),
-    );
+      );
+
+      //. . . . . . . . . . . . . . . .
+    });
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jariapp/models/category.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/screens/products/products.page.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/themes/colors.dart';
@@ -21,8 +22,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   //++++++
-  double w;
-  double h;
+  double _width;
+  double _height;
 
   static const List<IconData> iconsMenuList = [
     JariIcons.danone_ferme,
@@ -72,69 +73,76 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //++++++++++++++++++++++++++++++++++++++++
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
+    // w = MediaQuery.of(context).size.width;
+    // h = MediaQuery.of(context).size.height;
     //+++++++++++++++++++++++++++++++++++++++++
-    return WillPopScope(
-      onWillPop: () async => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Êtes-vous sûr de vouloir quitter ?'),
-          actions: <Widget>[
-            RaisedButton(
-                child: Text('Quitter'),
-                onPressed: () => {Navigator.of(context).pop(true)}),
-            RaisedButton(
-                child: Text('Annuler'),
-                onPressed: () => Navigator.of(context).pop(false)),
-          ],
+    return ResponsiveSafeArea(
+        //------
+        builder: (context, size) {
+      //++++++
+      _width = size.width;
+      _height = size.height;
+      //. . . . . . . . . . . . . . . .
+
+      return WillPopScope(
+        onWillPop: () async => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Êtes-vous sûr de vouloir quitter ?'),
+            actions: <Widget>[
+              RaisedButton(
+                  child: Text('Quitter'),
+                  onPressed: () => {Navigator.of(context).pop(true)}),
+              RaisedButton(
+                  child: Text('Annuler'),
+                  onPressed: () => Navigator.of(context).pop(false)),
+            ],
+          ),
         ),
-      ),
-      child: Scaffold(
-        // backgroundColor: Colors.grey[100],
+        child: Scaffold(
+          // backgroundColor: Colors.grey[100],
 
-        backgroundColor: AppColors.canvaColor,
+          backgroundColor: AppColors.canvaColor,
 
-        //appBar: CustomAppBar() as AppBar,
+          //appBar: CustomAppBar() as AppBar,
 
-        //+++++
+          //+++++
 
-        appBar: AppBar(
-          leading: null,
-          automaticallyImplyLeading: false,
-          brightness: Brightness.light,
+          appBar: AppBar(
+            leading: null,
+            automaticallyImplyLeading: false,
+            brightness: Brightness.light,
 
-          centerTitle: CustomAppBar.centerTitle,
-          backgroundColor: CustomAppBar.backgroundColor,
-          elevation: CustomAppBar.elevation,
-          toolbarHeight: CustomAppBar.toolbarHeight,
-          title: CustomAppBar.logoHeader(),
-          actions: <Widget>[CustomAppBar.builsActionIcons()],
-          // title: Image.asset(
-          //   'assets/images/logo-jari-only.png',
-          //   //fit: BoxFit.scaleDown,
-          //   height: 58.0,
-          // ),
-          // actions: <Widget>[
-          //   Padding(
-          //     padding: const EdgeInsets.only(right: 16.0),
-          //     child: IconButton(
-          //       icon: Icon(
-          //         JariIcons.shopping_cart,
-          //         size: 32.0,
-          //         color: AppColors.icongray,
-          //       ),
-          //       onPressed: () {},
+            centerTitle: CustomAppBar.centerTitle,
+            backgroundColor: CustomAppBar.backgroundColor,
+            elevation: CustomAppBar.elevation,
+            toolbarHeight: CustomAppBar.toolbarHeight,
+            title: CustomAppBar.logoHeader(),
+            actions: <Widget>[CustomAppBar.builsActionIcons()],
+            // title: Image.asset(
+            //   'assets/images/logo-jari-only.png',
+            //   //fit: BoxFit.scaleDown,
+            //   height: 58.0,
+            // ),
+            // actions: <Widget>[
+            //   Padding(
+            //     padding: const EdgeInsets.only(right: 16.0),
+            //     child: IconButton(
+            //       icon: Icon(
+            //         JariIcons.shopping_cart,
+            //         size: 32.0,
+            //         color: AppColors.icongray,
+            //       ),
+            //       onPressed: () {},
 
-          //       // Icons.shopping_basket,
-          //     ),
-          //   )
-          // ],
-        ),
+            //       // Icons.shopping_basket,
+            //     ),
+            //   )
+            // ],
+          ),
 
-        //-----------------
-        body: SafeArea(
-          child: Stack(
+          //-----------------
+          body: Stack(
             alignment: Alignment.topCenter,
             //fit: StackFit.expand,
             overflow: Overflow.visible,
@@ -143,8 +151,8 @@ class _HomePageState extends State<HomePage> {
               Positioned(
                 top: -22,
                 child: Container(
-                  width: w,
-                  height: (h / 2) - h / 10,
+                  width: _width,
+                  height: (_height / 2) - _height / 10,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
@@ -171,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                       // color: Colors.red.withOpacity(0.2),
                       //-----
                       // padding: const EdgeInsets.only(top: 24.0),
-                      height: (h / 4),
+                      height: (_height / 4),
                       child: Padding(
                         padding: const EdgeInsets.only(top: 30.0, left: 20),
                         child: Row(
@@ -190,7 +198,7 @@ class _HomePageState extends State<HomePage> {
                                     style: TextStyle(
                                       color: AppColors.white.withOpacity(0.75),
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 36,
+                                      fontSize: 32,
                                     ),
                                   ),
                                   RichText(
@@ -200,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                                         style: TextStyle(
                                           color: AppColors.white,
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 36,
+                                          fontSize: 32,
                                         ),
                                       ),
                                       TextSpan(
@@ -209,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                                           // fontFamily: 'Bariol',
                                           color: AppColors.white,
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 36,
+                                          fontSize: 32,
                                         ),
                                       ),
                                     ]),
@@ -301,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Container(
                                   // color: Colors.red.withOpacity(0.5),
-                                  height: (h * 3 / 4) - 40,
+                                  height: (_height * 3 / 4) - 40,
                                   padding: const EdgeInsets.only(
                                       top: 0,
                                       left: 20.0,
@@ -335,15 +343,16 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-      ),
-    );
+      );
+      //++++++ END WillPopScope
+    });
   }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   Widget buildError() {
     return Container(
-      height: (h * 3 / 4) - 60.0,
+      height: (_height * 3 / 4) - 60.0,
       padding: const EdgeInsets.only(
           top: 10.0, left: 20.0, right: 20.0, bottom: 80.0),
       child: Card(
@@ -397,7 +406,7 @@ class _HomePageState extends State<HomePage> {
       gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
+        crossAxisSpacing: 16,
       ),
       itemBuilder: (BuildContext context, int index) {
         //----------

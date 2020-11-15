@@ -4,6 +4,7 @@ import 'package:jariapp/models/cart.item.dart';
 import 'package:jariapp/models/product.dart';
 import 'package:jariapp/providers/category.dart';
 import 'package:jariapp/providers/products.dart';
+import 'package:jariapp/responsive/responsive_safe_area.dart';
 import 'package:jariapp/themes/colors.dart';
 
 import 'package:jariapp/utils/constantes.dart';
@@ -34,8 +35,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   //............
   int numOfItems;
   int numOfItemsMin;
-  double w;
-  double h;
+  double _width;
+  double _height;
   Color _catColor;
   Product _currentProd;
   CartItem _cart;
@@ -101,39 +102,46 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     //............
-    w = MediaQuery.of(context).size.width;
-    h = MediaQuery.of(context).size.height;
+    // w = MediaQuery.of(context).size.width;
+    // h = MediaQuery.of(context).size.height;
     _catColor = _categoryProvider.currentCatColor;
 
     //............
 
     // numOfItems = _currentProd?.minimumOrder;
 
-    //+++++++++++++++++++++++++++++++++++++++++++++++++
+    //..............................
+    return ResponsiveSafeArea(
+      //------
+      builder: (context, size) {
+        //++++++
+        _width = size.width;
+        _height = size.height;
+        //++++++
 
-    return Scaffold(
-      // backgroundColor: Colors.grey[100],
+        return Scaffold(
+          // backgroundColor: Colors.grey[100],
 
-      backgroundColor: AppColors.canvaColor,
+          backgroundColor: AppColors.canvaColor,
 
-      //+++++
+          //+++++
 
-      appBar: AppBar(
-        brightness: Brightness.light,
-        // leading: null,
-        automaticallyImplyLeading: true,
+          appBar: AppBar(
+            brightness: Brightness.light,
+            // leading: null,
+            automaticallyImplyLeading: true,
 
-        iconTheme: IconThemeData(color: AppColors.icongray),
-        backgroundColor: CustomAppBar.backgroundColor,
-        // title: AppBarCustom.logoHeader(),
-        centerTitle: false, //  CustomAppBar.centerTitle,
+            iconTheme: IconThemeData(color: AppColors.icongray),
+            backgroundColor: CustomAppBar.backgroundColor,
+            // title: AppBarCustom.logoHeader(),
+            centerTitle: false, //  CustomAppBar.centerTitle,
 
-        elevation: CustomAppBar.elevation,
-        toolbarHeight: CustomAppBar.toolbarHeight,
-        // title: CustomAppBar.logoHeader(),
-        actions: <Widget>[CustomAppBar.builsActionIcons()],
+            elevation: CustomAppBar.elevation,
+            toolbarHeight: CustomAppBar.toolbarHeight,
+            // title: CustomAppBar.logoHeader(),
+            actions: <Widget>[CustomAppBar.builsActionIcons()],
 
-        /*
+            /*
           title: Text(
             'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
             style: TextStyle(
@@ -146,470 +154,475 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
           */
 
-        //........ TITRE .......
-        title: Container(
-          //color: Colors.red,
-          padding: const EdgeInsets.all(0),
-          margin: const EdgeInsets.all(0),
-          width: double.infinity,
-          // width: double.infinity,
-          child: Text(
-            //  'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
-            '$_productName  ',
-            style: TextStyle(
-              color: AppColors.darkblue2,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w600,
-              // color: _catColor,
+            //........ TITRE .......
+            title: Container(
+              //color: Colors.red,
+              padding: const EdgeInsets.all(0),
+              margin: const EdgeInsets.all(0),
+              width: double.infinity,
+              // width: double.infinity,
+              child: Text(
+                //  'ACTIVIA BRASSE MUESLI-MIEL 105 G PRODUIT DANONE',
+                '$_productName  ',
+                style: TextStyle(
+                  color: AppColors.darkblue2,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w600,
+                  // color: _catColor,
+                ),
+
+                softWrap: true,
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.left,
+              ),
             ),
 
-            softWrap: true,
-            overflow: TextOverflow.visible,
-            textAlign: TextAlign.left,
+            //-----------------------------------
+            //  actions: AppBarCustom.actionIcon(),
           ),
-        ),
 
-        //-----------------------------------
-        //  actions: AppBarCustom.actionIcon(),
-      ),
+          //-----------------
+          body: Container(
+            height: _height,
+            // color: Colors.red,
+            child: Stack(overflow: Overflow.visible,
+                //fit: StackFit.loose,
+                children: [
+                  //::::::::::::: incriment/decriment Bloc ::::::::::::
 
-      //-----------------
-      body: SafeArea(
-        child: Container(
-          height: h,
-          // color: Colors.red,
-          child: Stack(overflow: Overflow.visible,
-              //fit: StackFit.loose,
-              children: [
-                //::::::::::::: incriment/decriment Bloc ::::::::::::
+                  //--------Counter ANIMATION -01 --------
 
-                //--------Counter ANIMATION -01 --------
-
-                CustomFadeTranslateAnimation(
-                  begin: -50,
-                  delay: 600,
-                  duration: 1000,
-                  // begin: -100,
-                  // delay: 1000,
-                  // duration: 1,
-                  widthContent: w,
-                  heightContent: (h * 5 / 7),
-                  childContent: Container(
-                    padding: const EdgeInsets.all(0),
-                    margin: const EdgeInsets.only(bottom: 30.0),
-                    width: w,
-                    height: (h * 1 / 2) + 110.0,
-                    child: Container(
-                      width: w,
-                      // height: (h * 1 / 4),
-                      decoration: BoxDecoration(
-                        //color: AppColors.lightblue,
-                        gradient: LinearGradient(
-                          colors: [
-                            // Color(0xFF0090DF),
-                            // Color(0xFF0090DF).withOpacity(0.4),
-                            //...........................
-                            _catColor,
-                            _catColor.withOpacity(0.5),
-                            //...........................
+                  CustomFadeTranslateAnimation(
+                    begin: -50,
+                    delay: 600,
+                    duration: 1000,
+                    // begin: -100,
+                    // delay: 1000,
+                    // duration: 1,
+                    widthContent: _width,
+                    heightContent: (_height * 5 / 7),
+                    childContent: Container(
+                      padding: const EdgeInsets.all(0),
+                      margin: const EdgeInsets.only(bottom: 30.0),
+                      width: _width,
+                      height: (_height * 1 / 2) + 110.0,
+                      child: Container(
+                        width: _width,
+                        // height: (h * 1 / 4),
+                        decoration: BoxDecoration(
+                          //color: AppColors.lightblue,
+                          gradient: LinearGradient(
+                            colors: [
+                              // Color(0xFF0090DF),
+                              // Color(0xFF0090DF).withOpacity(0.4),
+                              //...........................
+                              _catColor,
+                              _catColor.withOpacity(0.5),
+                              //...........................
+                            ],
+                            begin: Alignment(0.5, 0.8),
+                            end: Alignment(0, 0),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 20,
+                              spreadRadius: 8,
+                              color: AppColors.darkblue.withOpacity(0.2),
+                            )
                           ],
-                          begin: Alignment(0.5, 0.8),
-                          end: Alignment(0, 0),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
+                          ),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 20,
-                            spreadRadius: 8,
-                            color: AppColors.darkblue.withOpacity(0.2),
-                          )
-                        ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
-                        ),
-                      ),
-                      //-----
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: CustomFadeTranslateAnimation(
-                          begin: -50.0,
-                          delay: 800,
-                          duration: 1000,
-                          // begin: -50,
-                          // delay: 2,
-                          // duration: 2,
-                          widthContent: w,
-                          heightContent: h / 6,
-                          childContent: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4.0, vertical: 20.0),
-                            //++++++++++++++++++++
-                            child: _isCartItemsOrdred
-                                //+++++++++++++++++++
-                                ? Center(
-                                    child: Container(
-                                      // padding: const EdgeInsets.all(8),
-                                      width: w,
-                                      // decoration: BoxDecoration(
-                                      //   color: AppColors.pinck,
-                                      // ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          //......
-                                          TitleText(
-                                            text: 'Commande en cours',
-                                            color: AppColors.white,
-                                            fontSize: 16,
-                                            letterSpacing: 0.8,
-                                          ),
-                                          //.....
+                        //-----
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: CustomFadeTranslateAnimation(
+                            begin: -50.0,
+                            delay: 800,
+                            duration: 1000,
+                            // begin: -50,
+                            // delay: 2,
+                            // duration: 2,
+                            widthContent: _width,
+                            heightContent: _height / 6,
+                            childContent: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4.0, vertical: 20.0),
+                              //++++++++++++++++++++
+                              child: _isCartItemsOrdred
+                                  //+++++++++++++++++++
+                                  ? Center(
+                                      child: Container(
+                                        // padding: const EdgeInsets.all(8),
+                                        width: _width,
+                                        // decoration: BoxDecoration(
+                                        //   color: AppColors.pinck,
+                                        // ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            //......
+                                            TitleText(
+                                              text: 'Commande en cours',
+                                              color: AppColors.white,
+                                              fontSize: 16,
+                                              letterSpacing: 0.8,
+                                            ),
+                                            //.....
 
-                                          TitleText(
-                                            //0000012526
-                                            text: 'N°: $_transactionNumber',
-                                            color: AppColors.white,
-                                            fontSize: 18,
-                                          ),
+                                            TitleText(
+                                              //0000012526
+                                              text: 'N°: $_transactionNumber',
+                                              color: AppColors.white,
+                                              fontSize: 18,
+                                            ),
 
-                                          BodyText(
-                                            text:
-                                                'Vider votre panier pour créer une nouvelle commande',
-                                            color: AppColors.white,
-                                            fontSize: 12,
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
+                                            BodyText(
+                                              text:
+                                                  'Vider votre panier pour créer une nouvelle commande',
+                                              color: AppColors.white,
+                                              fontSize: 12,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                : _buildCartCounter(),
+                                    )
+                                  : _buildCartCounter(),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                //#########. STACK - [ Image  + Price ] .#########
+                  //#########. STACK - [ Image  + Price ] .#########
 
-                Stack(
-                  children: [
-                    //::::::::::::: PRODUCT PRICE :::::::::::::::::
+                  Stack(
+                    children: [
+                      //::::::::::::: PRODUCT PRICE :::::::::::::::::
 
-                    Container(
-                      width: w,
-                      height: (h * 1 / 2),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 12,
-                            spreadRadius: 8,
-                            color: AppColors.darkblue.withOpacity(0.5),
-                          )
-                        ],
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40),
+                      Container(
+                        width: _width,
+                        height: (_height * 1 / 2),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 12,
+                              spreadRadius: 8,
+                              color: AppColors.darkblue.withOpacity(0.5),
+                            )
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40),
+                          ),
                         ),
-                      ),
 
-                      //::::::::::::: PRODUCT IMAGE + Zoom :::::::::::::::::
-                      child: InteractiveViewer(
-                        //+++++
+                        //::::::::::::: PRODUCT IMAGE + Zoom :::::::::::::::::
+                        child: InteractiveViewer(
+                          //+++++
 
-                        maxScale: 2.0,
-                        minScale: 1.0,
-                        transformationController: _controller,
-                        //++++
-                        child: Container(
-                          width: w,
-                          padding: const EdgeInsets.all(16.0),
-                          child: FadeInImage(
-                            image: NetworkImage('${IMAGEURL + _image}',
-                                headers: {"header": "value"}),
-                            // image: AssetImage('assets/images/products/${_image}'),
-                            fadeInCurve: Curves.decelerate,
-                            fadeInDuration: const Duration(milliseconds: 1700),
-                            placeholder:
-                                AssetImage('assets/images/logo-jari1.webp'),
+                          maxScale: 2.0,
+                          minScale: 1.0,
+                          transformationController: _controller,
+                          //++++
+                          child: Container(
+                            width: _width,
+                            padding: const EdgeInsets.all(16.0),
+                            child: FadeInImage(
+                              image: NetworkImage('${IMAGEURL + _image}',
+                                  headers: {"header": "value"}),
+                              // image: AssetImage('assets/images/products/${_image}'),
+                              fadeInCurve: Curves.decelerate,
+                              fadeInDuration:
+                                  const Duration(milliseconds: 1700),
+                              placeholder:
+                                  AssetImage('assets/images/logo-jari1.webp'),
 
-                            fit: BoxFit.contain,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    //+++++
+                      //+++++
 
-                    Container(
-                      // color: Colors.red.withOpacity(0.5),
-                      child: CustomFadeTranslateAnimation(
-                        begin: 50,
-                        delay: 300,
-                        duration: 1000,
-                        widthContent: w,
-                        heightContent: h / 2,
-                        childContent: Container(
-                          // color: Colors.red,
-                          child: Stack(
-                            children: [
-                              //=============
-                              Align(
-                                alignment: Alignment(0.75, 0.75),
-                                // widthFactor: 3,
-                                // heightFactor: 2,
-                                child: Container(
-                                  width: 110.0,
-                                  height: 110.0,
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          // Color(0xFF0090DF),
-                                          // Color(0xFF0090DF).withOpacity(0.4),
-                                          //...........................
-                                          _catColor,
-                                          _catColor.withOpacity(0.6),
-                                          //...........................
-                                        ],
-                                      ),
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: AppColors.white,
-                                        width: 6.0,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 6.0,
-                                          spreadRadius: 3.0,
-                                          color: _catColor.withOpacity(0.2),
+                      Container(
+                        // color: Colors.red.withOpacity(0.5),
+                        child: CustomFadeTranslateAnimation(
+                          begin: 50,
+                          delay: 300,
+                          duration: 1000,
+                          widthContent: _width,
+                          heightContent: _height / 2,
+                          childContent: Container(
+                            // color: Colors.red,
+                            child: Stack(
+                              children: [
+                                //=============
+                                Align(
+                                  alignment: Alignment(0.75, 0.75),
+                                  // widthFactor: 3,
+                                  // heightFactor: 2,
+                                  child: Container(
+                                    width: 110.0,
+                                    height: 110.0,
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            // Color(0xFF0090DF),
+                                            // Color(0xFF0090DF).withOpacity(0.4),
+                                            //...........................
+                                            _catColor,
+                                            _catColor.withOpacity(0.6),
+                                            //...........................
+                                          ],
                                         ),
-                                      ]),
-                                  child: Center(
-                                    child: RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                            text:
-                                                '${_priceUnit.toStringAsFixed(2)}',
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: AppColors.white,
+                                          width: 6.0,
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 6.0,
+                                            spreadRadius: 3.0,
+                                            color: _catColor.withOpacity(0.2),
+                                          ),
+                                        ]),
+                                    child: Center(
+                                      child: RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text:
+                                                  '${_priceUnit.toStringAsFixed(2)}',
+                                              style: TextStyle(
+                                                color: AppColors.white,
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w600,
+                                              )),
+                                          TextSpan(
+                                            text: ' DA',
                                             style: TextStyle(
                                               color: AppColors.white,
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                        TextSpan(
-                                          text: ' DA',
-                                          style: TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w400,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w400,
+                                            ),
                                           ),
-                                        ),
-                                      ]),
+                                        ]),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              //=============
+                                //=============
 
-                              Selector<ProductsProvider, bool>(
-                                  selector: (context, _productsProvider) =>
-                                      _productsProvider
-                                          .isProductExist(_productId),
-                                  builder: (context, isProductExist, child) {
-                                    print(
-                                        'PRODUCT IS EXIST ::::$isProductExist');
-                                    //--------------------
-                                    return !isProductExist
-                                        ? Center()
-                                        : Align(
-                                            alignment: Alignment(0.8, 0.3),
-                                            child: Container(
-                                              width: 42.0,
-                                              height: 42.0,
-                                              decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      AppColors.orange,
-                                                      AppColors.darkOrange
-                                                      //...........................
-                                                      // _catColor,
-                                                      // _catColor.withOpacity(1),
-                                                      //...........................
-                                                    ],
-                                                  ),
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                    color: AppColors.darkOrange,
-                                                    width: 3.0,
-                                                  ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      blurRadius: 6.0,
-                                                      spreadRadius: 3.0,
-                                                      color: _catColor
-                                                          .withOpacity(0.2),
+                                Selector<ProductsProvider, bool>(
+                                    selector: (context, _productsProvider) =>
+                                        _productsProvider
+                                            .isProductExist(_productId),
+                                    builder: (context, isProductExist, child) {
+                                      print(
+                                          'PRODUCT IS EXIST ::::$isProductExist');
+                                      //--------------------
+                                      return !isProductExist
+                                          ? Center()
+                                          : Align(
+                                              alignment: Alignment(0.8, 0.3),
+                                              child: Container(
+                                                width: 42.0,
+                                                height: 42.0,
+                                                decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        AppColors.orange,
+                                                        AppColors.darkOrange
+                                                        //...........................
+                                                        // _catColor,
+                                                        // _catColor.withOpacity(1),
+                                                        //...........................
+                                                      ],
                                                     ),
-                                                  ]),
-                                              child: Icon(
-                                                JariIcons.shopping_box,
-                                                color: AppColors.white,
-                                                size: 24,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color:
+                                                          AppColors.darkOrange,
+                                                      width: 3.0,
+                                                    ),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 6.0,
+                                                        spreadRadius: 3.0,
+                                                        color: _catColor
+                                                            .withOpacity(0.2),
+                                                      ),
+                                                    ]),
+                                                child: Icon(
+                                                  JariIcons.shopping_box,
+                                                  color: AppColors.white,
+                                                  size: 24,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                    // child: Text(
-                                    //   '$isProductExist',
-                                    //   style: TextStyle(
-                                    //       color: AppColors.black, fontSize: 48),
-                                    // ),
-                                  })
+                                            );
+                                      // child: Text(
+                                      //   '$isProductExist',
+                                      //   style: TextStyle(
+                                      //       color: AppColors.black, fontSize: 48),
+                                      // ),
+                                    })
 
-                              //============================
-                            ],
+                                //============================
+                              ],
+                            ),
+                            //-------------------------
                           ),
-                          //-------------------------
                         ),
                       ),
-                    ),
 
-                    //++++
-                  ],
-                ),
+                      //++++
+                    ],
+                  ),
 
-                //....... /.  Stack 1 ............
+                  //....... /.  Stack 1 ............
 
-                //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
-                Positioned(
-                  bottom: 20,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    // color: Colors.yellow.withOpacity(0.5),
-                    child: CustomFadeTranslateAnimation(
-                      begin: 50,
-                      delay: 400,
-                      duration: 1000,
-                      widthContent: w,
-                      heightContent: (h * 1 / 7),
-                      childContent: Center(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                              width: w - (w / 10),
-                              height: 60,
-                              child: RaisedButton(
-                                //*+++++++++++++++...................++++++++++++++
-                                disabledColor:
-                                    AppColors.darkblue4.withOpacity(0.35),
-                                disabledTextColor: AppColors.white,
-                                //+++++++++++++++++
-                                textColor: AppColors.gold,
-                                onPressed: _isCartItemsOrdred
-                                    ? null
-                                    : _isProgress
-                                        ? () {}
-                                        : () async {
-                                            //?TODO : is product exist
-                                            //?__1 - non : Add product
-                                            //?__2 -oui : Update product
-                                            //......................
+                  //::::::::: BUTTON CONFIRME/ CANCEL:::::::::::::::::
+                  Positioned(
+                    bottom: 20,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      // color: Colors.yellow.withOpacity(0.5),
+                      child: CustomFadeTranslateAnimation(
+                        begin: 50,
+                        delay: 400,
+                        duration: 1000,
+                        widthContent: _width,
+                        heightContent: (_height * 1 / 7),
+                        childContent: Center(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                                width: _width - (_width / 10),
+                                height: 60,
+                                child: RaisedButton(
+                                  //*+++++++++++++++...................++++++++++++++
+                                  disabledColor:
+                                      AppColors.darkblue4.withOpacity(0.35),
+                                  disabledTextColor: AppColors.white,
+                                  //+++++++++++++++++
+                                  textColor: AppColors.gold,
+                                  onPressed: _isCartItemsOrdred
+                                      ? null
+                                      : _isProgress
+                                          ? () {}
+                                          : () async {
+                                              //?TODO : is product exist
+                                              //?__1 - non : Add product
+                                              //?__2 -oui : Update product
+                                              //......................
 
-                                            setState(() {
-                                              _isProgress = true;
-                                            });
-                                            // if (mounted) { }
+                                              setState(() {
+                                                _isProgress = true;
+                                              });
+                                              // if (mounted) { }
 
-                                            final _qty = numOfItems;
-                                            final _pricetotal =
-                                                _qty * _priceUnit;
-                                            bool _isProductExist =
-                                                _productsProvider
-                                                    .isProductExist(_productId);
+                                              final _qty = numOfItems;
+                                              final _pricetotal =
+                                                  _qty * _priceUnit;
+                                              bool _isProductExist =
+                                                  _productsProvider
+                                                      .isProductExist(
+                                                          _productId);
 
-                                            await Future.delayed(
-                                                Duration(milliseconds: 1000),
-                                                () {
-                                              if (mounted) {
-                                                setState(() {
-                                                  _isProgress = false;
-                                                });
+                                              await Future.delayed(
+                                                  Duration(milliseconds: 1000),
+                                                  () {
+                                                if (mounted) {
+                                                  setState(() {
+                                                    _isProgress = false;
+                                                  });
+                                                }
+                                              });
+                                              //......................
+                                              if (_isProductExist) {
+                                                await _productsProvider
+                                                    .updateProductCart(
+                                                        _productId,
+                                                        _qty,
+                                                        _priceUnit,
+                                                        _pricetotal);
+                                              } else {
+                                                _cart = CartItem(
+                                                    _productId,
+                                                    _productName,
+                                                    _qty,
+                                                    _priceUnit,
+                                                    _pricetotal,
+                                                    _image);
+                                                await _productsProvider
+                                                    .addProductToCart(_cart);
                                               }
-                                            });
-                                            //......................
-                                            if (_isProductExist) {
-                                              await _productsProvider
-                                                  .updateProductCart(
-                                                      _productId,
-                                                      _qty,
-                                                      _priceUnit,
-                                                      _pricetotal);
-                                            } else {
-                                              _cart = CartItem(
-                                                  _productId,
-                                                  _productName,
-                                                  _qty,
-                                                  _priceUnit,
-                                                  _pricetotal,
-                                                  _image);
-                                              await _productsProvider
-                                                  .addProductToCart(_cart);
-                                            }
 
-                                            //..
-                                          },
-                                //*+++++++++++++++...................++++++++++++++
+                                              //..
+                                            },
+                                  //*+++++++++++++++...................++++++++++++++
 
-                                color: AppColors.darkblue4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                ),
+                                  color: AppColors.darkblue4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
 
-                                child: _isProgress
-                                    ? Center(
-                                        child: CircularProgressIndicator(
-                                          backgroundColor: AppColors.white,
+                                  child: _isProgress
+                                      ? Center(
+                                          child: CircularProgressIndicator(
+                                            backgroundColor: AppColors.white,
+                                          ),
+                                        )
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              JariIcons.shopping_box,
+                                              // Icons.check,
+                                              color: AppColors.white,
+                                            ),
+                                            SizedBox(
+                                              width: 16.0,
+                                            ),
+                                            TitleText(
+                                              text: 'Ajouter au panier',
+                                              //++++++++++++++++++++
+                                              color: _isCartItemsOrdred
+                                                  ? AppColors.white
+                                                  : AppColors.gold,
+                                              //++++++++++++++++++++
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16,
+                                              letterSpacing: 2.0,
+                                            ),
+                                          ],
                                         ),
-                                      )
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            JariIcons.shopping_box,
-                                            // Icons.check,
-                                            color: AppColors.white,
-                                          ),
-                                          SizedBox(
-                                            width: 16.0,
-                                          ),
-                                          TitleText(
-                                            text: 'Ajouter au panier',
-                                            //++++++++++++++++++++
-                                            color: _isCartItemsOrdred
-                                                ? AppColors.white
-                                                : AppColors.gold,
-                                            //++++++++++++++++++++
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16,
-                                            letterSpacing: 2.0,
-                                          ),
-                                        ],
-                                      ),
-                                //...........................................
-                              )),
+                                  //...........................................
+                                )),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
 
-                //:::::::::::: IMAGE BLOC ::::::::::::::::::
-              ]),
-        ),
-      ),
+                  //:::::::::::: IMAGE BLOC ::::::::::::::::::
+                ]),
+          ),
+        );
+
+        //.........................
+      },
     );
   }
 //++++++++++++++++++++++
@@ -734,7 +747,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         Flexible(
           flex: 5,
           child: Container(
-            width: w * 2 / 5,
+            width: _width * 2 / 5,
             height: 56.0,
             padding: const EdgeInsets.only(
                 top: 16.0, bottom: 16.0, left: 8.0, right: 8.0),
