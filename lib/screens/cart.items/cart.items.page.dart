@@ -676,7 +676,6 @@ class _CartItemsPageState extends State<CartItemsPage> {
                   //   'Lancez la commande',
                   //   style: TextStyle(
                   //     fontSize: 18,
-                  //     fontFamily: 'Poppins',
                   //     letterSpacing: 2,
                   //     color: AppColors.gold,
                   //   ),
