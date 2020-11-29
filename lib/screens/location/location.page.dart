@@ -238,7 +238,7 @@ class _LocationPageState extends State<LocationPage> {
                                       //----Build Erreur
 
                                       return Center(
-                                        child: Text("hasn't data"),
+                                        child: Text("Données indisponibles !"),
                                       );
                                     }
 
@@ -359,7 +359,7 @@ class _LocationPageState extends State<LocationPage> {
                                                               child: Text(
                                                                 item.id
                                                                     .toString()
-                                                                    .padRight(
+                                                                    .padLeft(
                                                                         2, '0'),
                                                                 style: TextStyle(
                                                                     color: AppColors
@@ -447,7 +447,8 @@ class _LocationPageState extends State<LocationPage> {
                                           if (!snapShot.hasData) {
                                             //----Build Erreur
                                             return Center(
-                                              child: Text("hasn't data"),
+                                              child: Text(
+                                                  "Données indisponibles !"),
                                             );
                                           }
                                           citiesList = [...snapShot.data];
@@ -579,7 +580,8 @@ class _LocationPageState extends State<LocationPage> {
                                           if (!snapShot.hasData) {
                                             //----Build Erreur
                                             return Center(
-                                              child: Text("hasn't data"),
+                                              child: Text(
+                                                  "Données indisponibles !"),
                                             );
                                           }
                                           localitiesList = [...snapShot.data];
