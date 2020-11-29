@@ -229,9 +229,15 @@ class _MapPageState extends State<MapPage> {
                       //----Build Erreur
 
                       return Center(
-                        child: Text(
-                          "Désolé! Information livreur est temporairement indisponible ",
-                          style: TextStyle(fontSize: 18),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: error(
+                              "Désolé! Information livreur est temporairement indisponible "),
+                          // child: Text(
+                          //   "Désolé! Information livreur est temporairement indisponible ",
+                          //   style: TextStyle(fontSize: 21),
+                          //   textAlign: TextAlign.center,
+                          // ),
                         ),
                       );
                     }
