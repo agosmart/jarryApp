@@ -229,7 +229,10 @@ class _MapPageState extends State<MapPage> {
                       //----Build Erreur
 
                       return Center(
-                        child: Text("hasn't data"),
+                        child: Text(
+                          "Désolé! Information livreur est temporairement indisponible ",
+                          style: TextStyle(fontSize: 18),
+                        ),
                       );
                     }
 
