@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/screens/home/home.page.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
+import 'package:jarryApp/screens/home/home.page.dart';
+import 'package:jarryApp/themes/colors.dart';
 
-import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
-import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
+import 'package:jarryApp/widgets/animations/custom.fade.scale.animation.dart';
+import 'package:jarryApp/widgets/animations/custom.fade.translate.animation.dart';
 import 'package:page_transition/page_transition.dart';
 
 enum AniProps { width, height, opacity }

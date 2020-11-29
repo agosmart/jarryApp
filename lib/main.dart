@@ -1,24 +1,31 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jariapp/providers/category.dart';
-import 'package:jariapp/providers/location.api.dart';
-import 'package:jariapp/providers/map.dart';
-import 'package:jariapp/providers/order.dart';
-import 'package:jariapp/providers/products.dart';
-import 'package:jariapp/responsive/size_config.dart';
-import 'package:jariapp/root/routes.dart';
-import 'package:jariapp/screens/landing/landing_page.dart';
-
 import 'package:flutter/services.dart';
+
+import 'package:jarryApp/providers/category.dart';
+import 'package:jarryApp/providers/location.api.dart';
+import 'package:jarryApp/providers/map.dart';
+import 'package:jarryApp/providers/order.dart';
+import 'package:jarryApp/providers/products.dart';
+import 'package:jarryApp/responsive/size_config.dart';
+import 'package:jarryApp/root/routes.dart';
+import 'package:jarryApp/screens/landing/landing_page.dart';
 
 import 'package:provider/provider.dart';
 
 //import 'package:device_preview/device_preview.dart';
 
+/*
 void main() {
 //----- Smooth Scrolling +++++++++
   // GestureBinding.instance.resamplingEnabled = true;
   runApp(MyApp());
+}
+*/
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(MyApp()));
 }
 
 /*

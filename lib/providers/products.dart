@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/models/product.dart';
-import 'package:jariapp/providers/exeptions/exeptions.dart';
-import 'package:jariapp/utils/constantes.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:jarryApp/models/cart.item.dart';
+import 'package:jarryApp/models/product.dart';
+import 'package:jarryApp/providers/exeptions/exeptions.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
 class ProductsProvider extends ChangeNotifier {
 //+++++++++++++++++++++++++++++++

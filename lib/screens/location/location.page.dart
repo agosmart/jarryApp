@@ -1,24 +1,20 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:jariapp/models/location.dart';
-import 'package:jariapp/providers/map.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/screens/map/map.page.dart';
-import 'package:jariapp/providers/exeptions/exeptions.dart';
+import 'package:jarryApp/models/location.dart';
+import 'package:jarryApp/providers/map.dart';
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
 
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/widgets/animations/custom.fade.translate.animation.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 //-----
 import 'package:provider/provider.dart';
-//import 'package:jariapp/providers/location.local.dart';
-import 'package:jariapp/providers/location.api.dart';
+//import 'package:jarryApp/providers/location.local.dart';
+import 'package:jarryApp/providers/location.api.dart';
 
 import 'package:geolocator/geolocator.dart';
 

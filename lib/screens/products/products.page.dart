@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/models/product.dart';
+import 'package:jarryApp/models/product.dart';
 
-import 'package:jariapp/providers/category.dart';
-import 'package:jariapp/providers/products.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/constantes.dart';
+import 'package:jarryApp/providers/category.dart';
+import 'package:jarryApp/providers/products.dart';
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {

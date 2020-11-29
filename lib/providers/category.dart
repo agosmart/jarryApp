@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/category.dart';
-import 'package:jariapp/utils/constantes.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:jariapp/utils/helpers.dart';
+import 'package:jarryApp/models/category.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
 import 'exeptions/exeptions.dart';
 

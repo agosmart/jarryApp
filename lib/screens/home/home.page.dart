@@ -1,19 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/category.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/screens/products/products.page.dart';
-import 'package:jariapp/providers/category.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/models/category.dart';
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
 
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/providers/category.dart';
+ 
+import 'package:jarryApp/themes/colors.dart';
 
-import 'package:jariapp/widgets/custom.appbar.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+
+import 'package:jarryApp/widgets/custom.appbar.dart';
 import 'package:provider/provider.dart';
-import 'package:jariapp/root/routes.dart';
-// import 'package:jariapp/utils/_text.dart';
+
+// import 'package:jarryApp/utils/_text.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     categoryList = [];
+
     //_categoryProvider = CategoryProvider();
 
     _categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
@@ -82,6 +84,7 @@ class _HomePageState extends State<HomePage> {
       //++++++
       _width = size.width;
       _height = size.height;
+
       //. . . . . . . . . . . . . . . .
 
       return WillPopScope(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jariapp/providers/products.dart';
+import 'package:jarryApp/providers/products.dart';
 
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
 
- 
 import 'package:provider/provider.dart';
 
 // class CustomAppBarIcons {

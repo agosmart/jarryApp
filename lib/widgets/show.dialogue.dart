@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
 
 class CustomDialigue extends StatelessWidget {
   //+++++++++++

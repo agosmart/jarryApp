@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:jariapp/providers/order.dart';
-import 'package:jariapp/providers/products.dart';
-import 'package:jariapp/screens/home/home.page.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/providers/order.dart';
+import 'package:jarryApp/providers/products.dart';
+import 'package:jarryApp/screens/home/home.page.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/helpers.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/helpers.dart';
 
 class LocationPage extends StatefulWidget {
   @override

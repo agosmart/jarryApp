@@ -1,22 +1,20 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/models/product.dart';
-import 'package:jariapp/providers/order.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/screens/products/products.page.dart';
-import 'package:jariapp/screens/terms.condistions/cgv.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/utils/constantes.dart';
-import 'package:jariapp/providers/products.dart';
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/widgets/animations/custom.fade.translate.animation.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/show.dialogue.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/models/cart.item.dart';
+import 'package:jarryApp/models/product.dart';
+
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
+
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/constantes.dart';
+import 'package:jarryApp/providers/products.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+
+import 'package:jarryApp/widgets/animations/custom.fade.translate.animation.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/show.dialogue.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
-import 'package:jariapp/screens/location/location.page.dart';
+
 import 'package:tuple/tuple.dart';
 
 class CartItemsPage extends StatefulWidget {

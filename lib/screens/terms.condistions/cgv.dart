@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 
 class CGVPage extends StatelessWidget {
   const CGVPage({Key key}) : super(key: key);

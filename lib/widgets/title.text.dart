@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/themes/colors.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
 

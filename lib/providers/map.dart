@@ -3,13 +3,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/models/deliver.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:jariapp/models/product.dart';
-import 'package:jariapp/providers/exeptions/exeptions.dart';
-import 'package:jariapp/utils/constantes.dart';
+import 'package:jarryApp/models/deliver.dart';
+import 'package:jarryApp/providers/exeptions/exeptions.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
 /*
 class OrderItem {

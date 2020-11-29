@@ -3,22 +3,22 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:jariapp/models/cart.item.dart';
+import 'package:jarryApp/models/cart.item.dart';
 
-import 'package:jariapp/models/deliver.dart';
-import 'package:jariapp/providers/location.api.dart';
+import 'package:jarryApp/models/deliver.dart';
+import 'package:jarryApp/providers/location.api.dart';
 
-import 'package:jariapp/providers/map.dart';
-import 'package:jariapp/providers/order.dart';
-import 'package:jariapp/providers/products.dart';
-import 'package:jariapp/responsive/responsive_safe_area.dart';
-import 'package:jariapp/screens/order/order.page.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/providers/map.dart';
+import 'package:jarryApp/providers/order.dart';
+import 'package:jarryApp/providers/products.dart';
+import 'package:jarryApp/responsive/responsive_safe_area.dart';
+import 'package:jarryApp/screens/order/order.page.dart';
+import 'package:jarryApp/themes/colors.dart';
 
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';

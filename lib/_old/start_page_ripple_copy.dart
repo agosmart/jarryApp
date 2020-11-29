@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:jariapp/_old/btn.start.dart';
-import 'package:jariapp/screens/home/home.page.dart';
-import 'package:jariapp/widgets/animations/custom.fade.scale.animation.dart';
+import 'package:jarryApp/_old/btn.start.dart';
+import 'package:jarryApp/screens/home/home.page.dart';
+import 'package:jarryApp/widgets/animations/custom.fade.scale.animation.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:supercharged/supercharged.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/themes/colors.dart';
 
 class AppTheme {
   const AppTheme();

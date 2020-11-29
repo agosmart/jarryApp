@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:jariapp/models/deliver.dart';
-import 'package:jariapp/providers/location.api.dart';
+import 'package:jarryApp/models/deliver.dart';
+import 'package:jarryApp/providers/location.api.dart';
 
-import 'package:jariapp/providers/map.dart';
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/providers/map.dart';
+import 'package:jarryApp/themes/colors.dart';
 
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/utils/helpers.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/utils/helpers.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 
 class MapPage extends StatefulWidget {

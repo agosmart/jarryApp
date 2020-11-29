@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'package:jariapp/models/location.dart';
-import 'package:jariapp/utils/constantes.dart';
+import 'package:jarryApp/models/location.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
 import 'exeptions/exeptions.dart';
 

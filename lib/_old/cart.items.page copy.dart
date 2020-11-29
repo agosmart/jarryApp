@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jariapp/models/cart.item.dart';
-import 'package:jariapp/providers/products.dart';
+import 'package:jarryApp/models/cart.item.dart';
+import 'package:jarryApp/providers/products.dart';
 
-import 'package:jariapp/utils/jari_icons_v2.dart';
-import 'package:jariapp/themes/colors.dart';
-import 'package:jariapp/widgets/custom.appbar.dart';
-import 'package:jariapp/widgets/title.text.dart';
+import 'package:jarryApp/utils/jari_icons_v2.dart';
+import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/widgets/custom.appbar.dart';
+import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 
 class CartItemsPage extends StatelessWidget {

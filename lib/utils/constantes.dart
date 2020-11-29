@@ -1,6 +1,6 @@
 const currency = ' DA';
 
-const ROOTURL = 'http://danone.cooffa.shop';
+const ROOTURL = 'https://jari.danonepromo.dz';
 const BASEURL = ROOTURL + '/api/v1/clients';
 
 //http://danone.cooffa.shop/api/v1/clients/articles/images/

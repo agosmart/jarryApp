@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:jariapp/themes/colors.dart';
+import 'package:jarryApp/themes/colors.dart';
 
 abstract class TextStyles {
   //+++++

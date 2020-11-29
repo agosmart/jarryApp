@@ -1,9 +1,6 @@
-
 import 'dart:convert';
 
-import 'package:jariapp/models/cart.item.dart';
-
- 
+import 'package:jarryApp/models/cart.item.dart';
 
 class Cart {
   int id;
