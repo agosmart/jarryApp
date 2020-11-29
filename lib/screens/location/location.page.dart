@@ -238,7 +238,7 @@ class _LocationPageState extends State<LocationPage> {
                                       //----Build Erreur
 
                                       return Center(
-                                        child: Text("Données indisponibles!"),
+                                        child: error("Données indisponibles!"),
                                       );
                                     }
 
@@ -447,7 +447,7 @@ class _LocationPageState extends State<LocationPage> {
                                           if (!snapShot.hasData) {
                                             //----Build Erreur
                                             return Center(
-                                              child: Text(
+                                              child: error(
                                                   "Données indisponibles!"),
                                             );
                                           }
@@ -580,7 +580,7 @@ class _LocationPageState extends State<LocationPage> {
                                           if (!snapShot.hasData) {
                                             //----Build Erreur
                                             return Center(
-                                              child: Text(
+                                              child: error(
                                                   "Données indisponibles!"),
                                             );
                                           }
