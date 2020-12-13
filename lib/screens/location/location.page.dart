@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:jarryApp/models/location.dart';
 import 'package:jarryApp/providers/map.dart';
 import 'package:jarryApp/responsive/responsive_safe_area.dart';
@@ -110,7 +110,7 @@ class _LocationPageState extends State<LocationPage> {
         : false;
   }
 
-  Function refreshData() {
+  refreshData() {
     //_futureFetchingCat = _categoryProvider.fetchCategoriesAPI();
 
     Navigator.popAndPushNamed(context, '/locationPage');

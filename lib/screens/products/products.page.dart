@@ -26,7 +26,8 @@ class ProductsPage extends StatefulWidget {
 
 class _ProductsPageState extends State<ProductsPage> {
   //+++++
-  double _width, _height;
+  //double _width;
+  //double _height;
   Color _catColor;
   IconData _catIcon;
   String _catName;
@@ -74,8 +75,8 @@ class _ProductsPageState extends State<ProductsPage> {
         //------
         builder: (context, size) {
       //++++++
-      _width = size.width;
-      _height = size.height;
+      //  _width = size.width;
+      //  _height = size.height;
       //. . . . . . . . . . . . . . . .
       return Scaffold(
         //+++++

@@ -7,8 +7,8 @@ abstract class AppColors {
 
   static const List<Color> menuColorsList = [
     Color(0xFF046A38),
-    Color(0xFF001489),
     Color(0xFFE93E49),
+    Color(0xFF001489),
     Color(0xFFF68D2E),
     Color(0xFFCA1157),
     Color(0xFF3F2021),

@@ -22,7 +22,6 @@ import 'package:jarryApp/widgets/title.text.dart';
 import 'package:provider/provider.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({Key key}) : super(key: key);
@@ -33,7 +32,8 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   //+++++
-  double _width, _height;
+  double _width;
+  // double _height;
   List<Deliver> deliversList;
   List<CartItem> _cartItems;
   String _localityID;
@@ -180,7 +180,7 @@ class _MapPageState extends State<MapPage> {
       builder: (context, size) {
         //++++++
         _width = size.width;
-        _height = size.height;
+        // _height = size.height;
         //++++++
 
         return Scaffold(

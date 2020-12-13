@@ -5,8 +5,9 @@ import 'package:jarryApp/models/category.dart';
 import 'package:jarryApp/responsive/responsive_safe_area.dart';
 
 import 'package:jarryApp/providers/category.dart';
- 
+
 import 'package:jarryApp/themes/colors.dart';
+import 'package:jarryApp/utils/constantes.dart';
 
 import 'package:jarryApp/utils/helpers.dart';
 import 'package:jarryApp/utils/jari_icons_v2.dart';
@@ -59,14 +60,7 @@ class _HomePageState extends State<HomePage> {
     //============================================
   }
 
-  // Future<List<Category>> _getFutureCategories() async {
-  //   // return await _orderProvider.fetchNotTraitedOrdersLocal(idUser: 1);
-  //   return await categoryProvider.fetchCategoriesLocal();
-  // }
-
-  //+++++
-
-  Function refreshData() {
+  refreshData() {
     //_futureFetchingCat = _categoryProvider.fetchCategoriesAPI();
 
     Navigator.popAndPushNamed(context, '/homePage');
@@ -74,10 +68,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //++++++++++++++++++++++++++++++++++++++++
-    // w = MediaQuery.of(context).size.width;
-    // h = MediaQuery.of(context).size.height;
-    //+++++++++++++++++++++++++++++++++++++++++
     return ResponsiveSafeArea(
         //------
         builder: (context, size) {
@@ -115,33 +105,12 @@ class _HomePageState extends State<HomePage> {
             leading: null,
             automaticallyImplyLeading: false,
             brightness: Brightness.light,
-
             centerTitle: CustomAppBar.centerTitle,
             backgroundColor: CustomAppBar.backgroundColor,
             elevation: CustomAppBar.elevation,
             toolbarHeight: CustomAppBar.toolbarHeight,
             title: CustomAppBar.logoHeader(),
             actions: <Widget>[CustomAppBar.builsActionIcons()],
-            // title: Image.asset(
-            //   'assets/images/logo-jari-only.png',
-            //   //fit: BoxFit.scaleDown,
-            //   height: 58.0,
-            // ),
-            // actions: <Widget>[
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 16.0),
-            //     child: IconButton(
-            //       icon: Icon(
-            //         JariIcons.shopping_cart,
-            //         size: 32.0,
-            //         color: AppColors.icongray,
-            //       ),
-            //       onPressed: () {},
-
-            //       // Icons.shopping_basket,
-            //     ),
-            //   )
-            // ],
           ),
 
           //-----------------
@@ -434,6 +403,7 @@ class _HomePageState extends State<HomePage> {
 
     final _color = AppColors.menuColorsList[_index];
     final _icon = iconsMenuList[_index];
+    final _imageIcon = (index + 1).toString() + '.png';
     final _categoryName = categoryName;
     final _categoryID = categoryId;
 
@@ -483,15 +453,48 @@ class _HomePageState extends State<HomePage> {
               //mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  flex: 2,
-                  child: Icon(
+                    flex: 2,
+                    /* child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: FadeInImage(
+                      image: NetworkImage('${IMAGEICONURL + _imageIcon}',
+                          headers: {"header": "value"}),
+                      // image: AssetImage('assets/images/products/${_image}'),
+                      fadeInCurve: Curves.decelerate,
+                      fadeInDuration: const Duration(milliseconds: 1700),
+                      placeholder: AssetImage('assets/icons/$_imageIcon'),
+
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                */
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(
+                        '${IMAGEICONURL + _imageIcon}',
+                        fit: BoxFit.contain,
+                        //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
+
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace stackTrace) {
+                          // Appropriate logging or analytics, e.g.
+                          // myAnalytics.recordError(
+                          //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+                          //   exception,
+                          //   stackTrace,
+                          // );
+                          return Image.asset('assets/icons/$_imageIcon');
+                        },
+                      ),
+                    )
+                    /*child: Icon(
                     // iconsMenuList[_index],
                     // color: AppColors.menuColorsList[_index],
                     _icon,
                     color: _color,
                     size: 48.0,
-                  ),
-                ),
+                  ),*/
+                    ),
                 Expanded(
                   flex: 1,
                   child: Padding(
