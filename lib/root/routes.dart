@@ -7,7 +7,7 @@ import 'package:jarryApp/screens/map/map.page.dart';
 import 'package:jarryApp/screens/order/order.page.dart';
 import 'package:jarryApp/screens/products/product.details.page.dart';
 import 'package:jarryApp/screens/products/products.page.dart';
-import 'package:jarryApp/screens/terms.condistions/cgv.dart';
+import 'package:jarryApp/screens/terms.conditions/cgv.dart';
 
 abstract class Routes {
   static MaterialPageRoute materialRoutes(

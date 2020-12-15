@@ -11,7 +11,7 @@
      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
      <!-- geolocation -->
 
-     <application android:name="io.flutter.app.FlutterApplication" android:label="jarryApp" android:icon="@drawable/ic_launcher"> 
+     <application android:name="io.flutter.app.FlutterApplication" android:label="jarry" android:icon="@mipmap/ic_launcher"> 
 
           <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyBMN_RlvAKNdRj0LPw3fQzSHtyiQct4VYc"/>
 
