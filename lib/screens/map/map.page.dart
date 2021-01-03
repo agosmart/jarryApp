@@ -109,6 +109,7 @@ class _MapPageState extends State<MapPage> {
     //+++++++++++++++++ orderDetails ==  body +++++++++++++++++++++++
 
     _orderDetails = {
+      "clientMobile": "",
       'latitude': _mapProvider?.latitudeClient.toString(),
       'longitude': _mapProvider?.longitudeClient.toString(),
       'order': _cartItems.map((CartItem item) {
