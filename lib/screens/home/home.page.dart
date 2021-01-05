@@ -206,11 +206,12 @@ class _HomePageState extends State<HomePage> {
 
                             //++++++
                             Expanded(
-                                child: Padding(
-                              padding: const EdgeInsets.only(right: 30),
-                              child:
-                                  Image.asset('assets/images/logo-jari1.webp'),
-                            )),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: Image.asset(
+                                    'assets/images/logo-jari1.webp'),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -403,7 +404,8 @@ class _HomePageState extends State<HomePage> {
 
     final _color = AppColors.menuColorsList[_index];
     final _icon = iconsMenuList[_index];
-    final _imageIcon = (index + 1).toString() + '.png';
+    // final _imageIcon = (index + 1).toString() + '.png';
+    final _imageIcon = (index + 1).toString() + '.jpg';
     final _categoryName = categoryName;
     final _categoryID = categoryId;
 

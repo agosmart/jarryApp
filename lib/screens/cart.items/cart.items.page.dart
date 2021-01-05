@@ -366,9 +366,8 @@ class _CartItemsPageState extends State<CartItemsPage> {
       },
     );
   }
-//++++++++++++++++++++++
 
-  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//............ liSt TILE .....................
 
   Widget _buildItemTile(
       BuildContext context, int index, CartItem item, bool isCartItemsOrdred) {
@@ -376,205 +375,221 @@ class _CartItemsPageState extends State<CartItemsPage> {
     int prodId = item.productId;
     //...
     final Product _currentProdById = _productsProvider.getProductById(prodId);
+
     //....
 
-    //... START  Dismissible ..........
-    return Dismissible(
-      //++++++++++++++++++++
-      key: UniqueKey(),
-      //++++++++++++++++++++
-      confirmDismiss: (DismissDirection direction) async {
-        return await showDialog(
-          context: context,
-          builder: (_) {
-            return CustomDialigue(
-              //.............
-              title: 'Confirmation',
-              action: 2,
-              textContent:
-                  'Êtes-vous sûr de bien vouloir supprimer le produit de votre panier?',
-              submit: () async {
-                //+++++++
-                await _productsProvider.removeProductFromCart(prodId);
-                Navigator.of(context).pop();
+    Widget _background = Container(
+      color: AppColors.orange,
+      child: Container(
+        padding: EdgeInsets.only(right: 20),
+        alignment: Alignment.centerRight,
+        child: Icon(JariIcons.x_circle, color: Colors.white),
+      ),
+    );
 
-                //+++++++
-              },
-              //.............
-            );
-          },
-        );
-      },
-      //++++++++++++++++++++
-      /*  onDismissed: (_) {
-        _cartlist = [..._productsProvider.getCartItems];
-      }, */
-      //++++++++++++++++++++
-      direction: DismissDirection.endToStart,
-      //++++++++++++++++++++
-      background: Container(
+    //+++++++++++++++++++++++++++++
+    Widget _listTileProducts = ListTile(
+      onTap: isCartItemsOrdred
+          ? () {}
+          : () {
+              print('_currentProdById ::::: $_currentProdById');
+              //+.+.+.+.+.+ SET CURRENT PRODUCT .+.+.+.+.+.+.+
+              _productsProvider.setCurrentProduct(_currentProdById);
+              //+.+.+.+.+.+.+.+.+.+.++.+.+.+.+.+.+.+.+.+.+.+.+
+
+              Navigator.pushNamed(context, '/productDetailsPage');
+            },
+      //........................
+      isThreeLine: false,
+      //........................
+      title: Text(
+        '${item.productName}',
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14.0,
+        ),
+      ),
+      //........................
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          //-------------
+          children: [
+            RichText(
+              text: TextSpan(children: [
+                // TextSpan(
+                //     text: 'Montant : ',
+                //     style: TextStyle(
+                //       color: AppColors.darkgray,
+                //       fontSize: 16.0,
+                //       fontWeight: FontWeight.w400,
+                //     )),
+                TextSpan(
+                    text: '${item.priceTotal.toStringAsFixed(2)}',
+                    style: TextStyle(
+                      color: AppColors.darkgray,
+                      fontSize: 21.0,
+                      fontWeight: FontWeight.w600,
+                    )),
+                TextSpan(
+                    text: ' DA',
+                    style: TextStyle(
+                      color: AppColors.darkblue,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w300,
+                    )),
+              ]),
+            ),
+            //-------
+          ],
+        ),
+      ),
+      //..............................
+      trailing: Container(
+        width: 36,
+        height: 36,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
           color: AppColors.orange,
-          child: Container(
-            padding: EdgeInsets.only(right: 20),
-            alignment: Alignment.centerRight,
-            child: Icon(JariIcons.x_circle, color: Colors.white),
-          )),
-      //++++++++++++++++++++
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: TitleText(
+          text: 'x${item.qty}',
+          fontSize: 14,
+          color: AppColors.white,
+        ),
+      ),
+      //........................
+      contentPadding:
+          const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
 
-      child: Column(
-        children: [
-          ListTile(
-            onTap: isCartItemsOrdred
-                ? () {}
-                : () {
-                    print('_currentProdById ::::: $_currentProdById');
-                    //+.+.+.+.+.+ SET CURRENT PRODUCT .+.+.+.+.+.+.+
-                    _productsProvider.setCurrentProduct(_currentProdById);
-                    //+.+.+.+.+.+.+.+.+.+.++.+.+.+.+.+.+.+.+.+.+.+.+
+      //......................................
+      leading: Container(
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.white,
+            boxShadow: [
+              BoxShadow(
+                  blurRadius: 8,
+                  spreadRadius: 5,
+                  color: AppColors.black.withOpacity(0.2))
+            ]),
 
-                    Navigator.pushNamed(context, '/productDetailsPage');
+        //=================
+        child: CircleAvatar(
+          backgroundColor: AppColors.white,
+          //backgroundImage:
 
-                    /*  Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            //-------------------------------------------------
-                                            builder: (BuildContext context) {
-                                              return ProductDetailsPage();
-                                            },
-                                            fullscreenDialog: true,
+          child: Image.network(
+            '${IMAGEURL + item.image}',
+            //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
 
-                                            //--------------------------------------------------
-                                          ),
-                                        );*/
-                  },
-            //........................
-            isThreeLine: false,
-            //........................
-            title: Text(
-              '${item.productName}',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.0,
-              ),
-            ),
-            //........................
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                //-------------
-                children: [
-                  RichText(
-                    text: TextSpan(children: [
-                      // TextSpan(
-                      //     text: 'Montant : ',
-                      //     style: TextStyle(
-                      //       color: AppColors.darkgray,
-                      //       fontSize: 16.0,
-                      //       fontWeight: FontWeight.w400,
-                      //     )),
-                      TextSpan(
-                          text: '${item.priceTotal.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            color: AppColors.darkgray,
-                            fontSize: 21.0,
-                            fontWeight: FontWeight.w600,
-                          )),
-                      TextSpan(
-                          text: ' DA',
-                          style: TextStyle(
-                            color: AppColors.darkblue,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w300,
-                          )),
-                    ]),
-                  ),
-                  //-------
-                ],
-              ),
-            ),
-            //..............................
-            trailing: Container(
-              width: 35,
-              height: 35,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.orange,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TitleText(
-                text: 'x${item.qty}',
-                fontSize: 12,
-                color: AppColors.white,
-              ),
-            ),
-            //........................
-            contentPadding: const EdgeInsets.only(
-                left: 16.0, right: 16.0, top: 8.0, bottom: 8.0),
-
-            //......................................
-            leading: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 8,
-                        spreadRadius: 5,
-                        color: AppColors.black.withOpacity(0.2))
-                  ]),
-
-              //=================
-              child: CircleAvatar(
-                backgroundColor: AppColors.white,
-                //backgroundImage:
-
-                child: Image.network(
-                  '${IMAGEURL + item.image}',
-                  //'http://danone.cooffa.shop/data_app/storage/app/public/products/images/placehoder.png',
-
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace stackTrace) {
-                    // Appropriate logging or analytics, e.g.
-                    // myAnalytics.recordError(
-                    //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
-                    //   exception,
-                    //   stackTrace,
-                    // );
-                    return Text(
-                      '😢',
-                      style: TextStyle(fontSize: 24),
-                    );
-                  },
-                ),
-
-                // child: item.image != '1.png'
-                //     ? Image.asset('assets/images/products/${item.image}')
-                //     : Image.asset('assets/images/products/3.png'),
-              ),
-              //=================
-            ),
-
-            //...
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace stackTrace) {
+              // Appropriate logging or analytics, e.g.
+              // myAnalytics.recordError(
+              //   'An error occurred loading "https://example.does.not.exist/image.jpg"',
+              //   exception,
+              //   stackTrace,
+              // );
+              return Text(
+                '😢',
+                style: TextStyle(fontSize: 24),
+              );
+            },
           ),
 
-          //++...............+++++++++++
-
-          //...........
-          Divider(
-            thickness: 1,
-            height: 2,
-            color: AppColors.icongray.withOpacity(0.3),
-          ),
-          //...........
-        ],
+          // child: item.image != '1.png'
+          //     ? Image.asset('assets/images/products/${item.image}')
+          //     : Image.asset('assets/images/products/3.png'),
+        ),
+        //=================
       ),
 
-      //... END  Dismissible ..........
+      //...
     );
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    return isCartItemsOrdred
+        ? Column(
+            children: [
+              //...........
+              _listTileProducts,
+              //...........
+              Divider(
+                thickness: 1,
+                height: 2,
+                color: AppColors.icongray.withOpacity(0.3),
+              ),
+              //...........
+            ],
+          )
+
+        //... END NOT  Dismissible ..........
+
+        :
+
+        //... START  Dismissible ..........
+        Dismissible(
+            //++++++++++++++++++++
+            key: UniqueKey(),
+            //++++++++++++++++++++
+            confirmDismiss: (DismissDirection direction) async {
+              return await showDialog(
+                context: context,
+                builder: (_) {
+                  return CustomDialigue(
+                    //.............
+                    title: 'Confirmation',
+                    action: 2,
+                    textContent:
+                        'Êtes-vous sûr de bien vouloir supprimer le produit de votre panier?',
+                    submit: () async {
+                      //+++++++
+                      await _productsProvider.removeProductFromCart(prodId);
+                      Navigator.of(context).pop();
+
+                      //+++++++
+                    },
+                    //.............
+                  );
+                },
+              );
+            },
+            //++++++++++++++++++++
+            /*  onDismissed: (_) {
+        _cartlist = [..._productsProvider.getCartItems];
+      }, */
+            //++++++++++++++++++++
+            direction: isCartItemsOrdred ? null : DismissDirection.endToStart,
+            //++++++++++++++++++++
+            background: _background,
+            //++++++++++++++++++++
+
+            child: Column(
+              children: [
+                //...........
+                _listTileProducts,
+                //...........
+                Divider(
+                  thickness: 1,
+                  height: 2,
+                  color: AppColors.icongray.withOpacity(0.3),
+                ),
+                //...........
+              ],
+            ),
+
+            //... END  Dismissible ..........
+          );
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   }
+
+  //.......................
 
   Widget _price() {
     return Row(
